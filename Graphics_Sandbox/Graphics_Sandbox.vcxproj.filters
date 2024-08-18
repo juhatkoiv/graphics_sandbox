@@ -1,0 +1,650 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{ee81d5d1-7a77-4797-9e35-eb329bbacb0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AssetLoading">
+      <UniqueIdentifier>{ef0c06e7-f69d-464b-bd30-09272cc572eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ECS">
+      <UniqueIdentifier>{1e225fef-af53-487f-ba4e-c9dadbf66216}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ECS\Serialization">
+      <UniqueIdentifier>{85f32767-fc55-4abf-b00e-568e25739cbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Editor">
+      <UniqueIdentifier>{29b6516a-b73c-4b1e-bf1f-725debe206e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene">
+      <UniqueIdentifier>{31763a67-c06a-44c9-9ef6-241190708396}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\World">
+      <UniqueIdentifier>{af5bb885-5ee2-4b31-a21d-a6ac3ce79c5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Precompiled">
+      <UniqueIdentifier>{9645276f-757e-4937-b7d9-4d30f18f0f91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Rendering">
+      <UniqueIdentifier>{79dc3c73-ee13-4d0b-bace-0e404a77e33a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Window">
+      <UniqueIdentifier>{8cda9f55-8b0f-4855-afcd-92b4ae43e56f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Test">
+      <UniqueIdentifier>{d8525900-69fd-4ef1-991c-67267e957f2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Camera">
+      <UniqueIdentifier>{3dceb92d-8a5f-4bd5-86c9-afd6205595e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Editor\EditorMenus">
+      <UniqueIdentifier>{759ab202-9b78-412a-97f2-5b5c938286aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resources">
+      <UniqueIdentifier>{6324d446-1e5c-4621-9733-460a0f4d98e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GL">
+      <UniqueIdentifier>{4ee7fd21-3df0-4fa4-a0b8-6ad4484e43ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{f95eb025-bd54-4662-939c-0fbdbb1f4649}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tracy">
+      <UniqueIdentifier>{ff73018d-8615-4176-a909-f7d3047aae23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Drafts">
+      <UniqueIdentifier>{2781e533-697f-44c6-a98b-3ec3754f5a49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ECS\System">
+      <UniqueIdentifier>{1043506a-d48f-4299-8653-adc3429a5c9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Screen">
+      <UniqueIdentifier>{31130cb6-0f7a-4591-8154-869e7c7848ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Rendering\OpenGL">
+      <UniqueIdentifier>{439ced05-0ad5-45c3-9184-05ef5ae4e299}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Rendering\Serialization">
+      <UniqueIdentifier>{aa2a760f-9cb3-4ea1-ba87-ed88206f9008}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Profiling">
+      <UniqueIdentifier>{17bd9c16-793f-4c60-929d-d747befe045f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Serialization">
+      <UniqueIdentifier>{8b6d0b87-b87a-4884-b10f-939b3f5bc574}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Solution Files">
+      <UniqueIdentifier>{e67ddfae-fe66-4530-bedf-93ec881349b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Containers">
+      <UniqueIdentifier>{9a6553e0-5d82-42ce-a782-fa32d9b2d8a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AppData">
+      <UniqueIdentifier>{26332a5a-9a79-4e6e-8f7d-b99144cbec20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Hash">
+      <UniqueIdentifier>{bedc399c-6989-46e7-bcbb-6c4931f51f85}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\EditorMenus.cpp">
+      <Filter>Source Files\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\EditorRenderer.cpp">
+      <Filter>Source Files\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\EditorTransform.cpp">
+      <Filter>Source Files\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Editor.cpp">
+      <Filter>Source Files\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="ECS\Transform.cpp">
+      <Filter>Source Files\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="MainLoop.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\EditorManager.cpp">
+      <Filter>Source Files\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\ShaderBase.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\ShaderProgram.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\VertexBuffer.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Precompiled\Logger.cpp">
+      <Filter>Source Files\Precompiled</Filter>
+    </ClCompile>
+    <ClCompile Include="ECS\Serialization\GlmSerializationDefines.cpp">
+      <Filter>Source Files\ECS\Serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetLoading\AssimpMeshLoader.cpp">
+      <Filter>Source Files\AssetLoading</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetLoading\AssimpVertexParser.cpp">
+      <Filter>Source Files\AssetLoading</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetLoading\TextureLoader.cpp">
+      <Filter>Source Files\AssetLoading</Filter>
+    </ClCompile>
+    <ClCompile Include="ECS\Renderer.cpp">
+      <Filter>Source Files\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="World\Ray.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Window\Window.cpp">
+      <Filter>Source Files\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetLoading\JsonFileSystem.cpp">
+      <Filter>Source Files\AssetLoading</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\EditorMenus\SceneConfigMenu.cpp">
+      <Filter>Source Files\Editor\EditorMenus</Filter>
+    </ClCompile>
+    <ClCompile Include="ECS\World.cpp">
+      <Filter>Source Files\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\EditorMenus\InstructionsMenu.cpp">
+      <Filter>Source Files\Editor\EditorMenus</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneData.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources\ResourceSystem.cpp">
+      <Filter>Source Files\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="GL\glad.c">
+      <Filter>Source Files\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\EditorMenus\RenderingSettingsMenu.cpp">
+      <Filter>Source Files\Editor\EditorMenus</Filter>
+    </ClCompile>
+    <ClCompile Include="tracy\public\TracyClient.cpp">
+      <Filter>Source Files\Tracy</Filter>
+    </ClCompile>
+    <ClCompile Include="ECS\System\CameraSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClCompile>
+    <ClCompile Include="ECS\System\InputSystem.cpp">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\InputState.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Screen\ScreenMutable.cpp">
+      <Filter>Source Files\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="Screen\Screen.cpp">
+      <Filter>Source Files\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\InputStateMutable.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\OpenGL\RenderFunctionsGL.cpp">
+      <Filter>Source Files\Rendering\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\RenderFeature.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\FrameBuilder.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\RenderGraph.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\Serialization\RendererSerializationDefines.cpp">
+      <Filter>Source Files\Rendering\Serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\GfxDeviceFactory.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Precompiled\Precompiled.cpp">
+      <Filter>Source Files\Precompiled</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\OpenGL\GLConstBuffer.cpp">
+      <Filter>Source Files\Rendering\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\OpenGL\GLFunctions.cpp">
+      <Filter>Source Files\Rendering\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\PassResources.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\GfxWorker.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\GraphFilters.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\OpenGL\GfxDeviceOpenGL.cpp">
+      <Filter>Source Files\Rendering\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\FrameResources.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\SpatialPartition.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\Defaults.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="AppData\ConfigRepository.cpp">
+      <Filter>Source Files\AppData</Filter>
+    </ClCompile>
+    <ClCompile Include="ECS\ModelSerializer.cpp">
+      <Filter>Source Files\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\EditorMenus\RenderGraphMenu.cpp">
+      <Filter>Source Files\Editor\EditorMenus</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\RenderQueue.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Hash\Hash.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Editor\EditorManager.h">
+      <Filter>Source Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\EditorMenus.h">
+      <Filter>Source Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\EditorRenderer.h">
+      <Filter>Source Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\EditorTransform.h">
+      <Filter>Source Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Editor.h">
+      <Filter>Source Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainLoop.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\EditorStates.h">
+      <Filter>Source Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\ComponentIncludes.h">
+      <Filter>Source Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\EntityMoveParam.h">
+      <Filter>Source Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\EntitySpawnParams.h">
+      <Filter>Source Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\Transform.h">
+      <Filter>Source Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\UniqueId.h">
+      <Filter>Source Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\ShaderBase.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\ShaderProgram.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\Vertex.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\VertexBuffer.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\Mesh.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Precompiled\Logger.h">
+      <Filter>Source Files\Precompiled</Filter>
+    </ClInclude>
+    <ClInclude Include="Precompiled\MaterialIds.h">
+      <Filter>Source Files\Precompiled</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\Texture.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\Material.h">
+      <Filter>Source Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\Light.h">
+      <Filter>Source Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\Mesh.h">
+      <Filter>Source Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\Serialization\GlmSerializationDefines.h">
+      <Filter>Source Files\ECS\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\Serialization\ComponentSerializationDefinitions.h">
+      <Filter>Source Files\ECS\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetLoading\AssimpMeshLoader.h">
+      <Filter>Source Files\AssetLoading</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetLoading\AssimpVertexParser.h">
+      <Filter>Source Files\AssetLoading</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetLoading\JsonFileSystem.h">
+      <Filter>Source Files\AssetLoading</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetLoading\ResourceBuffer.h">
+      <Filter>Source Files\AssetLoading</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetLoading\TextureLoader.h">
+      <Filter>Source Files\AssetLoading</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\Renderer.h">
+      <Filter>Source Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\RenderEffect.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="World\Ray.h">
+      <Filter>Source Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\Material.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneData.h">
+      <Filter>Source Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Window\Window.h">
+      <Filter>Source Files\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Tests\Tests.h">
+      <Filter>Source Files\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\EditorMenus\SceneConfigMenu.h">
+      <Filter>Source Files\Editor\EditorMenus</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\EditorMenus\IMenu.h">
+      <Filter>Source Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\EditorMenus\InstructionsMenu.h">
+      <Filter>Source Files\Editor\EditorMenus</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\World.h">
+      <Filter>Source Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\ResourceSystem.h">
+      <Filter>Source Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\Handle.h">
+      <Filter>Source Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\ResourceContainer.h">
+      <Filter>Source Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\Camera.h">
+      <Filter>Source Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\RenderEffects.h">
+      <Filter>Source Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\EditorMenus\RenderingSettingsMenu.h">
+      <Filter>Source Files\Editor\EditorMenus</Filter>
+    </ClInclude>
+    <ClInclude Include="tracy\public\tracy\Tracy.hpp">
+      <Filter>Source Files\Tracy</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\System\CameraSystem.h">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\System\InputSystem.h">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\System\System.h">
+      <Filter>Source Files\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\InputState.h">
+      <Filter>Source Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Precompiled\AppState.h">
+      <Filter>Source Files\Precompiled</Filter>
+    </ClInclude>
+    <ClInclude Include="Screen\Screen.h">
+      <Filter>Source Files\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="Screen\ScreenMutable.h">
+      <Filter>Source Files\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\InputStateDefinition.h">
+      <Filter>Source Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\InputStateMutable.h">
+      <Filter>Source Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\RenderingSettings.h">
+      <Filter>Source Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\RenderingFlags.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Precompiled\EnumClassFlagsDefines.h">
+      <Filter>Source Files\Precompiled</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\OpenGL\UniformFunctions.h">
+      <Filter>Source Files\Rendering\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\RenderGraph.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\RenderPass.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\RenderDefinitions.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\FrameBuilder.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\RenderFeature.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\Serialization\RendererSerializationDefines.h">
+      <Filter>Source Files\Rendering\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\Serialization\RendererJsons.h">
+      <Filter>Source Files\Rendering\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\GfxDevice.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\GfxDeviceFactory.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Profiling\ProfilingDefinitions.h">
+      <Filter>Source Files\Profiling</Filter>
+    </ClInclude>
+    <ClInclude Include="Serialization\SerializationDefinitions.h">
+      <Filter>Source Files\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\RenderCommandQueue.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\RenderCommands.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Containers\DynamicVector.h">
+      <Filter>Source Files\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Containers\LinearMap.h">
+      <Filter>Source Files\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Containers\SmallVector.h">
+      <Filter>Source Files\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Precompiled\PrecompilationMacros.h">
+      <Filter>Source Files\Precompiled</Filter>
+    </ClInclude>
+    <ClInclude Include="Precompiled\Precompiled.h">
+      <Filter>Source Files\Precompiled</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\Component.h">
+      <Filter>Source Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\RenderingPrecompilationMacros.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\GfxBufferImpl.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\MemoryUtils.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\OpenGL\GLFunctions.h">
+      <Filter>Source Files\Rendering\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\OpenGL\GLConstBuffer.h">
+      <Filter>Source Files\Rendering\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Result.h">
+      <Filter>Source Files\Precompiled</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\PassResources.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\GraphFilters.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\FrameResources.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\GfxWorker.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\OpenGL\GfxDeviceOpenGL.h">
+      <Filter>Source Files\Rendering\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\Passes.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\RenderQueue.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\SpatialPartition.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\EditorMenus\RenderGraphMenu.h">
+      <Filter>Source Files\Editor\EditorMenus</Filter>
+    </ClInclude>
+    <ClInclude Include="AppData\ConfigRepository.h">
+      <Filter>Source Files\AppData</Filter>
+    </ClInclude>
+    <ClInclude Include="AppData\RepositoryItem.h">
+      <Filter>Source Files\AppData</Filter>
+    </ClInclude>
+    <ClInclude Include="AppData\RepositoryItemTypes.h">
+      <Filter>Source Files\AppData</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\ModelSerializer.h">
+      <Filter>Source Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\Defaults.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\RenderFunctions.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Containers\SparseMap.h">
+      <Filter>Source Files\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Hash\Hash.h">
+      <Filter>Source Files\Hash</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
+    <None Include=".gitignore">
+      <Filter>Solution Files</Filter>
+    </None>
+    <None Include="data\shaders\debug_line.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="data\shaders\empty.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="data\shaders\error.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="data\shaders\full_screen.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="data\shaders\full_screen.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="data\shaders\full_screen_blur_horizontal.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="data\shaders\full_screen_blur_vertical.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="data\shaders\full_screen_chrome_aberrated.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="data\shaders\full_screen_color_corrected.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="data\shaders\full_screen_inverted_color.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="data\shaders\full_screen_pixelated.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="data\shaders\lambertian.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="data\shaders\lambertian_diffuse_texture.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="data\shaders\model_view_projection.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="data\shaders\model_view_projection_instanced.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="data\shaders\model_view_projection_scaled.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="data\shaders\outline_2d.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="data\shaders\single_color.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="data\shaders\spherical_billboarding.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="data\shaders\sprite_default.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="data\shaders\skybox.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="data\shaders\skybox.frag">
+      <Filter>Shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>

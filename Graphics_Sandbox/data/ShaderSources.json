@@ -1,0 +1,77 @@
+[
+    {
+        "fragmentSourceFile": "data//shaders//lambertian.frag",
+        "name": "LAMBERTIAN",
+        "vertexSourceFile": "data//shaders//model_view_projection.vert"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//lambertian.frag",
+        "name": "LAMBERTIAN_TRANSPARENT",
+        "vertexSourceFile": "data//shaders//model_view_projection.vert"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//single_color.frag",
+        "name": "LIGHTS",
+        "vertexSourceFile": "data//shaders//model_view_projection.vert"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//single_color.frag",
+        "name": "SINGLE_COLOR_BORDER",
+        "vertexSourceFile": "data//shaders//model_view_projection_scaled.vert"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//sprite_default.frag",
+        "name": "SPRITE_DEFAULT",
+        "vertexSourceFile": "data//shaders//model_view_projection.vert"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//sprite_default.frag",
+        "name": "LAMBERTIAN_INSTANCED",
+        "vertexSourceFile": "data//shaders//model_view_projection_instanced.vert"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//full_screen.frag",
+        "name": "FULL_SCREEN_QUAD",
+        "vertexSourceFile": "data//shaders//full_screen.vert"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//full_screen_inverted_color.frag",
+        "name": "FULL_SCREEN_COLOR_INVERTED",
+        "vertexSourceFile": "data//shaders//full_screen.vert"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//full_screen_blur_vertical.frag",
+        "name": "FULL_SCREEN_BLUR_VERTICAL",
+        "vertexSourceFile": "data//shaders//full_screen.vert"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//full_screen_blur_horizontal.frag",
+        "name": "FULL_SCREEN_BLUR_HORIZONTAL",
+        "vertexSourceFile": "data//shaders//full_screen.vert"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//full_screen_pixelated.frag",
+        "name": "FULL_SCREEN_PIXELATED",
+        "vertexSourceFile": "data//shaders//full_screen.vert"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//full_screen_chrome_aberrated.frag",
+        "name": "FULL_SCREEN_CHROME_ABERRATION",
+        "vertexSourceFile": "data//shaders//full_screen.vert"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//full_screen_color_corrected.frag",
+        "name": "FULL_SCREEN_COLOR_CORRECTION",
+        "vertexSourceFile": "data//shaders//full_screen.vert"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//skybox.frag",
+        "name": "SKYBOX",
+        "vertexSourceFile": "data//shaders//skybox.vert"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//error.frag",
+        "name": "NULL_SHADER",
+        "vertexSourceFile": "data//shaders//model_view_projection.vert"
+    }
+]

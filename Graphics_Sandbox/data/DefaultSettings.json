@@ -1,0 +1,7 @@
+{
+    "meshPath": "data//meshes//",
+    "modelPath": "data//models//",
+    "scenePath": "data//scenes//",
+    "shaderPath": "data//ShaderSources.json",
+    "texturePath": "data//textures//"
+}

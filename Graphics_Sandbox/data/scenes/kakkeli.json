@@ -1,0 +1,114 @@
+{
+    "entities": [
+        {
+            "material": {
+                "meshColor": {
+                    "values": [
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                },
+                "renderQueue": "Opaque",
+                "shaderName": "LAMBERTIAN",
+                "texturePaths": [
+                    "data//meshes//sphere.obj",
+                    "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"
+                ],
+                "textureTypes": [
+                    "Diffuse",
+                    "Specular"
+                ]
+            },
+            "mesh": {
+                "name": "cube.obj",
+                "path": "data//meshes//cube.obj"
+            },
+            "render_effects": {
+                "renderEffects": [
+                    "HighlightOutline3D"
+                ]
+            },
+            "transform": {
+                "position": {
+                    "values": [
+                        -1.7000000476837158,
+                        0.0,
+                        -1.7000000476837158
+                    ]
+                },
+                "rotation": {
+                    "values": [
+                        1.0,
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                "scale": {
+                    "values": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
+            "light": {
+                "attenuation": 1.0,
+                "intensity": 1.0,
+                "lightColor": {
+                    "values": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            },
+            "material": {
+                "meshColor": {
+                    "values": [
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                },
+                "renderQueue": "Opaque",
+                "shaderName": "LIGHTS",
+                "texturePaths": [],
+                "textureTypes": []
+            },
+            "mesh": {
+                "name": "cube.obj",
+                "path": "data//meshes//cube.obj"
+            },
+            "transform": {
+                "position": {
+                    "values": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                "rotation": {
+                    "values": [
+                        1.0,
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                },
+                "scale": {
+                    "values": [
+                        0.20000000298023224,
+                        0.20000000298023224,
+                        0.20000000298023224
+                    ]
+                }
+            }
+        }
+    ]
+}

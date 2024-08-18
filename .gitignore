@@ -396,5 +396,18 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-
 *.opendb
+
+# Generated assembly files
+asm/
+asm/*
+*.asm
+
+# Asset models
+!data/*
+!data/**/*
+!Graphics_Sandbox/data/meshes/*.obj
+!Graphics_Sandbox/data/**/*
+!Graphics_Sandbox/data/*
+!models/*
+!models/**/*
