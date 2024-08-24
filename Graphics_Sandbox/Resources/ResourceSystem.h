@@ -36,12 +36,12 @@ public:
 	Handle addTexture( const std::string& fileName );
 	Handle addMesh( const std::string& fileName );
 	
-	Handle findHandle( const std::string& fileName );
+	Handle findHandle( const std::string& fileName ) const;
 	
-	id::TextureId findTextureId( const std::string& fileName );
-	id::MeshId findMeshId( const std::string& fileName );
-	id::ShaderId findShaderId( const std::string& shaderName );
-	SkyboxArgs getSkyboxArgs( const std::string& skyboxName );
+	id::TextureId findTextureId( const std::string& fileName ) const;
+	id::MeshId findMeshId( const std::string& fileName ) const;
+	id::ShaderId findShaderId( const std::string& shaderName ) const;
+	SkyboxArgs getSkyboxArgs( const std::string& skyboxName ) const;
 	std::string getShaderName( id::ShaderId shader ) const;
 	Result<const std::string&> getMeshName( id::MeshId mesh ) const;
 	Result<const std::string&> getTextureName( id::TextureId texture ) const;

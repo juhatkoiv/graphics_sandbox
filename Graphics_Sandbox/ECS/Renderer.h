@@ -19,14 +19,14 @@ DECLARE1( class, ecs, World );
 DECLARE1( class, rendering, RenderCommandQueue );
 DECLARE1( class, rendering, GfxDevice );
 DECLARE1( class, rendering, GfxWorker );
-DECLARE1( class, resources, ResourceContainer );
+DECLARE1( class, resources, ResourceSystem );
 
 BEGIN_NAMESPACE1( ecs )
 
 class Renderer : public System
 {
 public:
-	Renderer( rendering::GfxWorker* worker, const resources::ResourceContainer* resourceContainer );
+	Renderer( rendering::GfxWorker* worker, const resources::ResourceSystem* resourceContainer );
 	~Renderer();
 
 	void update( ecs::World& world, float dt );
@@ -37,7 +37,7 @@ public:
 	void setMeshInstanced( id::EntityId id, const Mesh& mesh );
 	void setLight( id::EntityId id, const Light& param );
 	void setEffect( id::EntityId id, rendering::RenderEffect effects );
-	void setTexture( id::EntityId id, id::TextureId textureId, rendering::TextureType type, const rendering::TextureData& textureData );
+	void setTexture( id::EntityId id, id::TextureId textureId, rendering::TextureType type );
 	void setSkybox( const Mesh& mesh, id::TextureId textureId );
 
 	void updateModelMatrix( id::EntityId id, const glm::mat4& modelMatrix );
@@ -49,7 +49,7 @@ public:
 	void destroy( id::EntityId id );
 
 private:
-	const resources::ResourceContainer* _resourceContainer = nullptr;
+	const resources::ResourceSystem* _resourceSystem = nullptr;
 	rendering::GfxWorker* _worker = nullptr;
 };
 

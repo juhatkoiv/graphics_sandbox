@@ -225,25 +225,7 @@ MainLoop::MainLoop( Args args )
 	_systemContainer
 		.withSystem( std::make_unique<ecs::InputSystem>( *_window ) )
 		.withSystem( std::make_unique<ecs::CameraSystem>( *_window ) )
-		.withSystem( [=]() -> std::unique_ptr<ecs::System>
-			{
-				auto renderer = std::make_unique<ecs::Renderer>( _gfxWorker.get(), &_resouceSystem->getResourceContainer() );
-				auto meshId = _resouceSystem->findMeshId( "data//meshes//quad.obj" );
-				ecs::Mesh mesh
-				{
-					.meshId = meshId
-				};
-				renderer->setFullScreenQuad( mesh );
-
-				auto skybox = _resouceSystem->getSkyboxArgs( "bay" );
-				ecs::Mesh skyboxMesh
-				{
-					.meshId = skybox.meshId
-				};	
-				renderer->setSkybox( skyboxMesh, skybox.textureId );
-				return renderer;
-			} );
-
+		.withSystem( std::make_unique<ecs::Renderer>( _gfxWorker.get(), _resouceSystem.get() ) );
 
 	_editor.reset( new editor::Editor( *_window, _world, *_resouceSystem.get(), _appData ) );
 }

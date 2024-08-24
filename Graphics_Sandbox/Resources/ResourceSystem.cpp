@@ -158,7 +158,7 @@ Handle ResourceSystem::addMesh( const std::string& fileName )
 	return handle;
 }
 
-Handle ResourceSystem::findHandle( const std::string& fileName )
+Handle ResourceSystem::findHandle( const std::string& fileName ) const
 {
 	for (auto& [name, handle_] : _nameHandleMap)
 	{
@@ -168,7 +168,7 @@ Handle ResourceSystem::findHandle( const std::string& fileName )
 	return Handle{};
 }
 
-id::TextureId ResourceSystem::findTextureId( const std::string& fileName )
+id::TextureId ResourceSystem::findTextureId( const std::string& fileName ) const
 {
 	Handle handle = findHandle( fileName );
 	if (!_container.isTexture( handle ))
@@ -178,7 +178,7 @@ id::TextureId ResourceSystem::findTextureId( const std::string& fileName )
 	return static_cast<id::TextureId>(handle.id);
 }
 
-id::MeshId ResourceSystem::findMeshId( const std::string& fileName )
+id::MeshId ResourceSystem::findMeshId( const std::string& fileName ) const
 {
 	Handle handle = findHandle( fileName );
 	if (!_container.isMesh( handle ))
@@ -188,12 +188,12 @@ id::MeshId ResourceSystem::findMeshId( const std::string& fileName )
 	return static_cast<id::MeshId>(handle.id);
 }
 
-id::ShaderId ResourceSystem::findShaderId( const std::string& shaderName )
+id::ShaderId ResourceSystem::findShaderId( const std::string& shaderName ) const
 {
 	return shader::getShaderId( shaderName.c_str() );
 }
 
-SkyboxArgs ResourceSystem::getSkyboxArgs( const std::string& skyboxName )
+SkyboxArgs ResourceSystem::getSkyboxArgs( const std::string& skyboxName ) const
 {
 	id::MeshId meshId = findMeshId( "data//meshes//cube.obj" );
 

@@ -146,13 +146,25 @@ namespace
 	}
 }
 
-Renderer::Renderer( rendering::GfxWorker* worker, const resources::ResourceContainer* resourceContainer )
-	: _resourceContainer( resourceContainer ), _worker( worker )
+Renderer::Renderer( rendering::GfxWorker* worker, const resources::ResourceSystem* resourceSystem )
+	: _resourceSystem( resourceSystem ), _worker( worker )
 {
-	// set full screen quad.
-	// set skybox
+	auto meshId = _resourceSystem->findMeshId( "data//meshes//quad.obj" );
+	ecs::Mesh mesh
+	{
+		.meshId = meshId
+	};
+	setFullScreenQuad( mesh );
+
+	auto skybox = _resourceSystem->getSkyboxArgs( "bay" );
+	ecs::Mesh skyboxMesh
+	{
+		.meshId = skybox.meshId
+	};
+	
+	setSkybox( skyboxMesh, skybox.textureId );
+
 	// set ALL resources
-	//"data//meshes//quad.obj"
 }
 
 Renderer::~Renderer() {}
@@ -320,10 +332,7 @@ void Renderer::setMaterial( id::EntityId id, const Material& material )
 			continue;
 		}
 
-		auto result = _resourceContainer->getTextureData( textureId );
-		const rendering::TextureData& textureData = result.get();
-
-		setTexture( id, textureId, flag, textureData );
+		setTexture( id, textureId, flag );
 	}
 }
 
@@ -352,7 +361,7 @@ void Renderer::setEffect( id::EntityId id, RenderEffect effects )
 	QueueRendererCommand( std::move( cmd ) );
 }
 
-void Renderer::setTexture( id::EntityId id, id::TextureId textureId, TextureType type, const rendering::TextureData& textureData )
+void Renderer::setTexture( id::EntityId id, id::TextureId textureId, TextureType type )
 {
 	RenderCommand cmd;
 	cmd.type = CommandType::SetTexture;
