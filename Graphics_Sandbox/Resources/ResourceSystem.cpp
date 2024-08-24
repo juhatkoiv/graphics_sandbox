@@ -1,7 +1,7 @@
 #include "Precompiled/Precompiled.h"
 #include "ResourceSystem.h"
 
-#include "AppData/ConfigRepository.h"
+#include "AppData/AppData.h"
 #include "AppData/RepositoryItemTypes.h"
 #include "Hash/Hash.h"
 #include "AssetLoading/AssimpMeshLoader.h"
@@ -60,7 +60,7 @@ namespace
 	}
 }
 
-ResourceSystem::ResourceSystem( const appdata::ConfigRepository& config ) noexcept
+ResourceSystem::ResourceSystem( const appdata::AppData& config ) noexcept
 {
 	_textureLoader = assets::TextureLoader();
 	_meshLoader = assets::MeshLoader();

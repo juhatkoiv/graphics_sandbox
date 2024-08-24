@@ -7,7 +7,7 @@
 #include <filesystem>
 #include <ranges>
 
-#include "AppData/ConfigRepository.h"
+#include "AppData/AppData.h"
 #include "AssetLoading/JsonFileSystem.h"
 
 #include "ECS/ComponentIncludes.h"
@@ -76,8 +76,8 @@ namespace
 	}
 }
 
-EditorManager::EditorManager( ecs::World& world, resources::ResourceSystem& resourceSystem, const appdata::ConfigRepository& configRepository )
-	: _world( world ), _resourceSystem( resourceSystem ), _configReposiotry( configRepository )
+EditorManager::EditorManager( ecs::World& world, resources::ResourceSystem& resourceSystem, appdata::AppData& appData )
+	: _world( world ), _resourceSystem( resourceSystem ), _appData( appData )
 {}
 
 void EditorManager::syncWithScene( scene::SceneData& scene )
@@ -252,11 +252,11 @@ void EditorManager::generateRandomizedLights( scene::SceneData& scene )
 }
 
 const std::vector<RenderResourcesJson>& EditorManager::getRenderResources() const {
-	return _configReposiotry.getRenderResources();
+	return _appData.getRenderResources();
 }
 
 const RenderGraphJson& EditorManager::getRenderGraph() const {
-	return _configReposiotry.getRenderGraph();
+	return _appData.getRenderGraph();
 }
 
 void EditorManager::clearEditorScene()
@@ -452,7 +452,7 @@ void EditorManager::setClearSettings( const rendering::ClearSettings& clearSetti
 
 void EditorManager::LoadSceneNames( std::vector<std::string>& sceneNames )
 {
-	std::span<std::string> paths = _configReposiotry.getScenePaths();
+	std::span<std::string> paths = _appData.getScenePaths();
 
 	for (auto path : paths)
 	{
@@ -469,6 +469,7 @@ void EditorManager::LoadScene( const std::string& sceneName, SceneData& scene )
 
 	clearEditorScene();
 	ImportScene( sceneName, scene );
+	_appData.setLastSceneName( sceneName );
 }
 
 void EditorManager::SaveScene( const SceneData& scene, const std::string& sceneName )
@@ -479,7 +480,7 @@ void EditorManager::SaveScene( const SceneData& scene, const std::string& sceneN
 		return;
 	}
 
-	auto scenePath = _configReposiotry.getScenePath( sceneName );
+	auto scenePath = _appData.getScenePath( sceneName );
 	ecs::ModelSerializer modelSerializer( _world, _resourceSystem );
 
 	auto& entities = scene.sceneEntities;
@@ -505,7 +506,7 @@ void EditorManager::SaveSceneAs( const scene::SceneData& scene, const std::strin
 		return;
 	}
 
-	auto scenePath = _configReposiotry.getScenePath( sceneName );
+	auto scenePath = _appData.getScenePath( sceneName );
 	ecs::ModelSerializer modelSerializer( _world, _resourceSystem );
 
 	auto& entities = scene.sceneEntities;
@@ -524,7 +525,7 @@ void EditorManager::SaveSceneAs( const scene::SceneData& scene, const std::strin
 
 void EditorManager::ImportScene( const std::string& sceneName, SceneData& scene )
 {
-	auto scenePath = _configReposiotry.getScenePath( sceneName );
+	auto scenePath = _appData.getScenePath( sceneName );
 	json j = assets::JsonFileSystem::LoadJson( scenePath.c_str() );
 
 	if (j.contains( "entities" ))

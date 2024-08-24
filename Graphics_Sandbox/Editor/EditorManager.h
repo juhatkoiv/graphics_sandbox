@@ -19,14 +19,14 @@ DECLARE1( struct, ecs, Mesh );
 DECLARE1( struct, ecs, EntityMoveParam );
 DECLARE1( class, ecs, World );
 DECLARE1( class, resources, ResourceSystem );
-DECLARE1( class, appdata, ConfigRepository );
+DECLARE1( class, appdata, AppData );
 
 BEGIN_NAMESPACE1( editor )
 
 class EditorManager
 {
 public:
-	EditorManager( ecs::World& ecs, resources::ResourceSystem& resourceSystem, const appdata::ConfigRepository& configReposiotry );
+	EditorManager( ecs::World& ecs, resources::ResourceSystem& resourceSystem, appdata::AppData& configReposiotry );
 
 	/* entities */
 	void syncWithScene( scene::SceneData& scene );
@@ -94,7 +94,7 @@ private:
 	id::EntityId _selectedEntity = id::InvalidEntityId;
 	ecs::World& _world;
 	resources::ResourceSystem& _resourceSystem;
-	const appdata::ConfigRepository& _configReposiotry;
+	appdata::AppData& _appData;
 };
 
 END_NAMESPACE1

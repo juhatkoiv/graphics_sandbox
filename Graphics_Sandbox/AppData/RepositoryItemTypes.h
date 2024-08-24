@@ -33,14 +33,16 @@ struct Settings
 	std::string meshPath;
 	std::string shaderPath;
 	std::string scenePath;
-
+	// status
+	std::string lastScenePath{};
+	
 	Settings() = default;
-	Settings( const std::string& modelPath, const std::string& texturePath, const std::string& meshPath, const std::string& shaderPath, const std::string& scenePath )
-		: modelPath( modelPath ), texturePath( texturePath ), meshPath( meshPath ), shaderPath( shaderPath ), scenePath( scenePath )
+	Settings( const std::string& modelPath, const std::string& texturePath, const std::string& meshPath, const std::string& shaderPath, const std::string& scenePath, const std::string& lastScenePath )
+		: modelPath( modelPath ), texturePath( texturePath ), meshPath( meshPath ), shaderPath( shaderPath ), scenePath( scenePath ), lastScenePath( lastScenePath )
 	{
 	}
 };
-DECLARE_SERIALIZABLE( Settings, modelPath, texturePath, meshPath, shaderPath, scenePath );
+DECLARE_SERIALIZABLE( Settings, modelPath, texturePath, meshPath, shaderPath, scenePath, lastScenePath );
 
 struct TextureManifest
 {

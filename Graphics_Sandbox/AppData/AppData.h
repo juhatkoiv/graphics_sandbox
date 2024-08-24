@@ -12,19 +12,21 @@ DECLARE( struct, RenderResourcesJson );
 
 BEGIN_NAMESPACE1( appdata )
 
-class ConfigRepository
+class AppData
 {
 public:
-	ConfigRepository();
-	~ConfigRepository();
+	AppData();
+	~AppData();
 
 	void createDefaults();
 	void initialize();
 
-	const Settings& getUserSettings();
-	const Settings& getDefaultSettings();
+	const Settings& getSettings();
+	void saveUserSettings();
 
-	void saveUserSettings( const Settings& settings );
+	Result<std::string> getLastScenePath() const;
+	void setLastSceneName( const std::string& sceneName );
+
 	const std::string& getScenesPath() const;
 	const std::string& getSceneListFilePath() const;
 	const std::string& getScenePath( const std::string& sceneName ) const;
@@ -39,8 +41,7 @@ public:
 	const std::vector<RenderResourcesJson>& getRenderResources() const;
 
 private:
-	std::unique_ptr<Settings> _userSettings;
-	std::unique_ptr<Settings> _defaultSettings;
+	std::unique_ptr<Settings> _settings;
 };
 
 END_NAMESPACE1

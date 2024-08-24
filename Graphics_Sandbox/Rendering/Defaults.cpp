@@ -27,7 +27,11 @@ RenderGraphJson Defaults::buildGraphJson()
 				.order = 0,
 				.queueName = "opaque",
 				.features
-				{
+				{	
+					RenderFeatureJson
+					{
+	
+					},
 					RenderFeatureJson
 					{
 						.featureName = "opaque_lit",

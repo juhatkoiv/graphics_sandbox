@@ -202,7 +202,7 @@ void Renderer::update( ecs::World& world, float dt )
 			Transform::updateModelMatrices( finalTransforms, modelMatrices );
 
 			if (finalEntities.empty())
-				return;
+				break;
 
 			std::vector<size_t> indices( finalEntities.size() );
 			std::iota( indices.begin(), indices.end(), 0 );
@@ -248,6 +248,7 @@ void Renderer::update( ecs::World& world, float dt )
 	RenderCommand cmd;
 	cmd.type = CommandType::PrepareTransparentQueue;
 	QueueRendererCommand( std::move( cmd ) );
+
 	_worker->update( _renderCommandQueue );
 	
 	_worker->render();

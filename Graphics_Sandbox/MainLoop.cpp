@@ -3,7 +3,7 @@
 
 #include <chrono>
 
-#include "AppData/ConfigRepository.h"
+#include "AppData/AppData.h"
 #include "AppData/RepositoryItemTypes.h"
 #include "ECS/World.h"
 #include "ECS/Renderer.h"
@@ -96,7 +96,7 @@ namespace
 	std::unique_ptr<rendering::GfxDevice> _gfxDevice;
 	std::unique_ptr<rendering::GfxWorker> _gfxWorker;
 	std::unique_ptr<resources::ResourceSystem> _resouceSystem;
-	appdata::ConfigRepository _configRepository;
+	appdata::AppData _appData;
 	SystemContainer _systemContainer;
 
 	std::vector<std::unique_ptr<ecs::System>> _systems;
@@ -135,12 +135,12 @@ namespace
 		return !_window->shouldClose();
 	}
 
-	static rendering::GfxDeviceArgs getDeviceArgs( appdata::ConfigRepository& configRepository )
+	static rendering::GfxDeviceArgs getDeviceArgs( appdata::AppData& appData )
 	{
 		rendering::GfxDeviceArgs deviceArgs{};
 		deviceArgs.windowSize = _window->getSize();
 
-		auto shaderSources = configRepository.getShaderSources();
+		auto shaderSources = appData.getShaderSources();
 		if (shaderSources.empty())
 		{
 			LOG_ERROR( "No shader sources found!" );
@@ -212,11 +212,11 @@ namespace
 MainLoop::MainLoop( Args args )
 {
 	AppContext::initialize();
-	_configRepository.initialize();
+	_appData.initialize();
 	_window.reset( new window::Window( args.title, true ) );
 
-	_resouceSystem.reset( new resources::ResourceSystem( _configRepository ) );
-	rendering::GfxDeviceArgs deviceArgs = getDeviceArgs( _configRepository );
+	_resouceSystem.reset( new resources::ResourceSystem( _appData ) );
+	rendering::GfxDeviceArgs deviceArgs = getDeviceArgs( _appData );
 	rendering::GfxDeviceFactory deviceFactory{ deviceArgs };
 
 	_gfxWorker.reset( new rendering::GfxWorker{ deviceFactory } );
@@ -245,7 +245,7 @@ MainLoop::MainLoop( Args args )
 			} );
 
 
-	_editor.reset( new editor::Editor( *_window, _world, *_resouceSystem.get(), _configRepository ) );
+	_editor.reset( new editor::Editor( *_window, _world, *_resouceSystem.get(), _appData ) );
 }
 
 MainLoop::~MainLoop() {}

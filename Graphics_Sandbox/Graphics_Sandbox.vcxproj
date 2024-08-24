@@ -169,7 +169,7 @@ xcopy "$(ProjectDir)data\*.*" "$(SolutionDir)x64\Debug\data" /Y /I /E</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AppData\ConfigRepository.cpp" />
+    <ClCompile Include="AppData\AppData.cpp" />
     <ClCompile Include="AssetLoading\AssimpMeshLoader.cpp" />
     <ClCompile Include="AssetLoading\AssimpVertexParser.cpp" />
     <ClCompile Include="AssetLoading\JsonFileSystem.cpp" />
@@ -233,7 +233,7 @@ xcopy "$(ProjectDir)data\*.*" "$(SolutionDir)x64\Debug\data" /Y /I /E</Command>
     <ClCompile Include="World\Ray.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AppData\ConfigRepository.h" />
+    <ClInclude Include="AppData\AppData.h" />
     <ClInclude Include="AppData\RepositoryItem.h" />
     <ClInclude Include="AppData\RepositoryItemTypes.h" />
     <ClInclude Include="Application.h" />

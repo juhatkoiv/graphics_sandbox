@@ -10,7 +10,7 @@
 #include <string>
 #include <vector>
 
-DECLARE1( class, appdata, ConfigRepository );
+DECLARE1( class, appdata, AppData );
 
 BEGIN_NAMESPACE1( resources )
 
@@ -30,7 +30,7 @@ private:
 	ResourceContainer _container;
 
 public:
-	ResourceSystem( const appdata::ConfigRepository& config ) noexcept;
+	ResourceSystem( const appdata::AppData& config ) noexcept;
 
 	void cleanup() noexcept;
 	Handle addTexture( const std::string& fileName );

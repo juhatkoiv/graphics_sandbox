@@ -8,6 +8,7 @@
 #include "Editor/EditorManager.h"
 #include "Editor/EditorStates.h"
 #include "Editor/EditorRenderer.h"
+#include "AppData/AppData.h"
 
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
@@ -25,14 +26,19 @@ namespace
 	scene::SceneData _scene;
 }
 
-Editor::Editor( window::Window& window, ecs::World& ecs, resources::ResourceSystem& resourceSystem, const appdata::ConfigRepository& configRepository )
+Editor::Editor( window::Window& window, ecs::World& ecs, resources::ResourceSystem& resourceSystem, appdata::AppData& appData )
 	: _world( ecs )
 {
-	_editorManager.reset( new EditorManager( _world, resourceSystem, configRepository ) );
+	_editorManager.reset( new EditorManager( _world, resourceSystem, appData ) );
 	_editorRenderer.reset( new EditorRenderer( window ) );
 	_editorMenus.reset( new EditorMenus( *_editorManager ) );
 
 	_editorMenus->InitMenus( *_editorRenderer );
+	auto lastSceneResult = appData.getLastScenePath();
+	if (lastSceneResult.success) 
+	{
+		_editorManager->LoadScene( lastSceneResult.value, _scene );
+	}
 }
 
 Editor::~Editor()
@@ -54,5 +60,6 @@ void Editor::render( float deltaTime )
 
 	_editorRenderer->RenderEditorGUI( _scene );
 }
+
 
 END_NAMESPACE1

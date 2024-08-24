@@ -1,11 +1,12 @@
 #include "Precompiled/Precompiled.h"
-#include "ConfigRepository.h"
+#include "AppData.h"
 
 #include "RepositoryItemTypes.h"
 #include "AssetLoading/JsonFileSystem.h"
 #include "Rendering/FrameBuilder.h"
 #include "Rendering/Defaults.h"
 #include "Rendering/Texture.h"
+#include "Rendering/GfxDeviceFactory.h"
 
 #include <filesystem>
 #include <cassert>
@@ -23,8 +24,7 @@ namespace {
 	static constexpr const char* DEFAULT_SCENES_PATH = "data//scenes//";
 	static constexpr const char* DEFAULT_SKYBOXES_PATH = "data//skyboxes//";
 
-	static constexpr const char* USER_SETTINGS_FILE = "data//UserSettings.json";
-	static constexpr const char* DEFAULT_SETTINGS_FILE = "data//DefaultSettings.json";
+	static constexpr const char* SETTINGS_FILE = "data//Settings.json";
 	static constexpr const char* SHADER_SOURCE_FILE = "data//ShaderSources.json";
 	static constexpr const char* RENDER_GRAPH_FILE = "data//RenderGraph.json";
 	static constexpr const char* FRAME_RESOURCES_FILE = "data//RenderResources.json";
@@ -52,8 +52,7 @@ namespace {
 				DEFAULT_SKYBOXES_PATH
 			},
 			.files = {
-				USER_SETTINGS_FILE,
-				DEFAULT_SETTINGS_FILE,
+				SETTINGS_FILE,
 				SHADER_SOURCE_FILE,
 				RENDER_GRAPH_FILE,
 				FRAME_RESOURCES_FILE,
@@ -93,13 +92,13 @@ namespace {
 	std::vector<RenderResourcesJson> _renderResources;
 }
 
-ConfigRepository::ConfigRepository() {}
+AppData::AppData() {}
 
-ConfigRepository::~ConfigRepository() {
-	// saveUserSettings( _userSettings
+AppData::~AppData() {
+	saveUserSettings();
 }
 
-void ConfigRepository::createDefaults() {
+void AppData::createDefaults() {
 	auto k = getDefaultModels();
 	UNUSED_VAR( k );
 
@@ -119,11 +118,11 @@ void ConfigRepository::createDefaults() {
 			DEFAULT_TEXTURES_PATH,
 			DEFAULT_MESHES_PATH,
 			SHADER_SOURCE_FILE,
-			DEFAULT_SCENES_PATH
+			DEFAULT_SCENES_PATH,
+			""
 		};
 
-		JsonFileSystem::SaveAsJson<Settings>( defaultSettings, DEFAULT_SETTINGS_FILE );
-		JsonFileSystem::SaveAsJson<Settings>( defaultSettings, USER_SETTINGS_FILE );
+		JsonFileSystem::SaveAsJson<Settings>( defaultSettings, SETTINGS_FILE );
 	}
 
 	// Default shader sources
@@ -209,11 +208,9 @@ void ConfigRepository::createDefaults() {
 			throw std::runtime_error( "File does not exist: " + path );
 		}
 	}
-
-
 }
 
-void ConfigRepository::initialize() {
+void AppData::initialize() {
 	AppDefaults appDefaults = getAppDefaults();
 
 	for (const auto& path : appDefaults.folders) {
@@ -222,21 +219,14 @@ void ConfigRepository::initialize() {
 		}
 	}
 
-	if (!std::filesystem::exists( DEFAULT_SETTINGS_FILE )) {
+	if (!std::filesystem::exists( SETTINGS_FILE )) {
 		createDefaults();
 	}
 
 	Settings defaultSettings{};
-	JsonFileSystem::LoadFromJson<Settings>( defaultSettings, DEFAULT_SETTINGS_FILE );
-	_defaultSettings = std::make_unique<Settings>( defaultSettings );
-
-	Settings userSettings{};
-	if (std::filesystem::exists( USER_SETTINGS_FILE )) {
-		JsonFileSystem::LoadFromJson<Settings>( userSettings, USER_SETTINGS_FILE );
-		_userSettings = std::make_unique<Settings>( userSettings );
-	} else {
-		_userSettings = std::make_unique<Settings>( defaultSettings );
-	}
+	JsonFileSystem::LoadFromJson<Settings>( defaultSettings, SETTINGS_FILE );
+	_settings = std::make_unique<Settings>( defaultSettings );
+	
 
 	auto scenePath = getScenesPath();
 	for (const auto& path : std::filesystem::directory_iterator( scenePath )) {
@@ -244,13 +234,13 @@ void ConfigRepository::initialize() {
 			_scenePaths.push_back( path.path().string() );
 	}
 
-	auto meshPath = _userSettings->meshPath;
+	auto meshPath = _settings->meshPath;
 	for (const auto& path : std::filesystem::directory_iterator( meshPath )) {
 		if (path.path().extension() == OBJ_EXTENSION)
 			_meshPaths.push_back( path.path().string() );
 	}
 
-	auto texturePaths = _userSettings->texturePath;
+	auto texturePaths = _settings->texturePath;
 	for (const auto& path : std::filesystem::directory_iterator( texturePaths )) {
 		if (std::filesystem::is_directory( path ))
 			continue;
@@ -258,7 +248,7 @@ void ConfigRepository::initialize() {
 		_texturePaths.push_back( path.path().string() );
 	}
 
-	auto modelPath = _userSettings->modelPath;
+	auto modelPath = _settings->modelPath;
 	for (const auto& path : std::filesystem::directory_iterator( modelPath )) {
 		if (path.path().extension() == JSON_EXTENSION)
 			_modelPaths.push_back( path.path().string() );
@@ -277,31 +267,39 @@ void ConfigRepository::initialize() {
 	//JsonFileSystem::LoadFromJson<std::vector<TextureManifest>>( _skyBoxManifests, SKYBOX_LIST_FILE );
 }
 
-const Settings& ConfigRepository::getUserSettings() {
-	assert( _userSettings != nullptr );
-	return *_userSettings.get();
+const Settings& AppData::getSettings() {
+	assert( _settings != nullptr );
+	return *_settings.get();
 }
 
-const Settings& ConfigRepository::getDefaultSettings() {
-	assert( _defaultSettings != nullptr );
-	return *_defaultSettings.get();
+void AppData::saveUserSettings() {
+	JsonFileSystem::SaveAsJson<Settings>( *_settings, SETTINGS_FILE );
 }
 
-void ConfigRepository::saveUserSettings( const Settings& settings ) {
-	JsonFileSystem::SaveAsJson<Settings>( settings, USER_SETTINGS_FILE );
+Result<std::string> AppData::getLastScenePath() const
+{
+	if (_settings->lastScenePath.empty())
+		return Result<std::string>::failed();
+
+	return Result<std::string>::ok( _settings->lastScenePath );
 }
 
-const std::string& ConfigRepository::getScenesPath() const {
+void AppData::setLastSceneName( const std::string& sceneName )
+{
+	_settings->lastScenePath = sceneName;
+}
+
+const std::string& AppData::getScenesPath() const {
 	static std::string path = DEFAULT_SCENES_PATH;
 	return path;
 }
 
-const std::string& ConfigRepository::getSceneListFilePath() const {
+const std::string& AppData::getSceneListFilePath() const {
 	static std::string path = SCENE_LIST_FILE;
 	return path;
 }
 
-const std::string& ConfigRepository::getScenePath( const std::string& sceneName ) const {
+const std::string& AppData::getScenePath( const std::string& sceneName ) const {
 	for (const auto& path : _scenePaths) {
 		bool found = path.find( sceneName ) != std::string::npos;
 		if (found) {
@@ -316,35 +314,35 @@ const std::string& ConfigRepository::getScenePath( const std::string& sceneName 
 	return _scenePaths.back();
 }
 
-std::span<std::string> ConfigRepository::getScenePaths() const {
+std::span<std::string> AppData::getScenePaths() const {
 	return std::span<std::string>{ _scenePaths.data(), _scenePaths.size() };
 }
 
-std::span<std::string> ConfigRepository::getMeshPaths() const {
+std::span<std::string> AppData::getMeshPaths() const {
 	return std::span<std::string>{ _meshPaths.data(), _meshPaths.size() };
 }
 
-std::span<std::string> ConfigRepository::getTexturePaths() const {
+std::span<std::string> AppData::getTexturePaths() const {
 	return std::span<std::string>{ _texturePaths.data(), _texturePaths.size() };
 }
 
-std::span<std::string> ConfigRepository::getModelPaths() const {
+std::span<std::string> AppData::getModelPaths() const {
 	return std::span<std::string>{ _modelPaths.data(), _modelPaths.size() };
 }
 
-std::span<ShaderSource> ConfigRepository::getShaderSources() const {
+std::span<ShaderSource> AppData::getShaderSources() const {
 	return std::span<ShaderSource>{ _shaderSources.data(), _shaderSources.size() };
 }
 
-std::span<TextureManifest> ConfigRepository::getSkyBoxManifests() const {
+std::span<TextureManifest> AppData::getSkyBoxManifests() const {
 	return std::span<TextureManifest>{_skyBoxManifests.data(), _skyBoxManifests.size()};
 }
 
-const RenderGraphJson& ConfigRepository::getRenderGraph() const {
+const RenderGraphJson& AppData::getRenderGraph() const {
 	return _renderGraph;
 }
 
-const std::vector<RenderResourcesJson>& ConfigRepository::getRenderResources() const {
+const std::vector<RenderResourcesJson>& AppData::getRenderResources() const {
 	return _renderResources;
 }
 

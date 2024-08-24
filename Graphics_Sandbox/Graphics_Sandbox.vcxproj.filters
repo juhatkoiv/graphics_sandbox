@@ -245,7 +245,7 @@
     <ClCompile Include="Rendering\Defaults.cpp">
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="AppData\ConfigRepository.cpp">
+    <ClCompile Include="AppData\AppData.cpp">
       <Filter>Source Files\AppData</Filter>
     </ClCompile>
     <ClCompile Include="ECS\ModelSerializer.cpp">
@@ -553,7 +553,7 @@
     <ClInclude Include="Editor\EditorMenus\RenderGraphMenu.h">
       <Filter>Source Files\Editor\EditorMenus</Filter>
     </ClInclude>
-    <ClInclude Include="AppData\ConfigRepository.h">
+    <ClInclude Include="AppData\AppData.h">
       <Filter>Source Files\AppData</Filter>
     </ClInclude>
     <ClInclude Include="AppData\RepositoryItem.h">

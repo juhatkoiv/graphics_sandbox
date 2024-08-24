@@ -9,7 +9,7 @@ BEGIN_NAMESPACE1(scene)
 
 struct SceneData
 {
-	unsigned int sceneId;
+	std::string name;
 	std::vector<id::EntityId> sceneEntities;
 };
 

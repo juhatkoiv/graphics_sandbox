@@ -37,9 +37,7 @@
 *   x + Remove context
 *   X + Ensure serialization of components.
 *   X + Ensure that scene saving and loading works.
-*   + Render render graph
-*	  - Show data used by passes
-*	  - Show if each queues, feature, pass is enabled or not.
+
 * - Renderer encoding and and architecture improvements
 *   + simplify configurations and data flow to renderer
 *   + move pass data and pass definition data to same data.
@@ -78,7 +76,9 @@
 *	+ Clean up editor code - continue this after scene loading is done.
 *   + Add possibility to add, remove and configure components.
 *   + Add entity transform by mouse (current coordinates and absolute)
-*
+*   + Render render graph
+*	  - Show data used by passes
+*	  - Show if each queues, feature, pass is enabled or not.*
 * ============================
 * Architectural considerations
 * ============================
@@ -105,7 +105,7 @@
 *	TODO - Materials vs full screen shaders: shader != material.
 *	TODO - Move buffers into BufferRef, move resources to ResourceRef
 *   TODO - WASD camera movement is sluggish.
-*   TODO - Screen is not updated if objects are not visible.
+*   TODO - Handle transparent ordering in Renderer.
 */
 
 int main( int argc, char** argv )
