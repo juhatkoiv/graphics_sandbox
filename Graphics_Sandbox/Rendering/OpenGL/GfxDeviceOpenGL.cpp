@@ -134,6 +134,7 @@ GfxDeviceOpenGL::GfxDeviceOpenGL( const GfxDeviceArgs& args )
 			_vertexBufferLookup[args.meshIds[i]] = createVertexBuffer( args.meshIds[i], *args.vertexData[i] );
 		}
 	}
+
 }
 
 GfxTexture GfxDeviceOpenGL::createTexture( id::TextureId textureId, unsigned bindPosition, Dimensions dimensions, const TextureData& textureData )

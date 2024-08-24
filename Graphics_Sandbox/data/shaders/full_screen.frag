@@ -4,10 +4,9 @@ layout (location = 0) out vec4 outColor;
 
 in vec2 TexCoords;
 
-uniform sampler2D screenTexture;
-
-uniform float exposure;
-uniform float gamma;
+layout (location = 0) uniform sampler2D screenTexture;
+layout (location = 10) uniform float exposure;
+layout (location = 11) uniform float gamma;
 
 void main()
 {

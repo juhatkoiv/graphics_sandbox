@@ -8,10 +8,8 @@ namespace shader
 {
 	static constexpr const char* LAMBERTIAN = "LAMBERTIAN";
 	static constexpr const char* LAMBERTIAN_TRANSPARENT = "LAMBERTIAN_TRANSPARENT";
-	static constexpr const char* LAMBERTIAN_DIFFUSE_TEXTURE = "LAMBERTIAN_DIFFUSE_TEXTURE";
 	static constexpr const char* LIGHTS = "LIGHTS";
 	static constexpr const char* SINGLE_COLOR_BORDER = "SINGLE_COLOR_BORDER";
-	static constexpr const char* SPRITE_DEFAULT = "SPRITE_DEFAULT";
 	static constexpr const char* LAMBERTIAN_INSTANCED = "LAMBERTIAN_INSTANCED";
 
 	static constexpr const char* FULL_SCREEN = "FULL_SCREEN_QUAD";
@@ -33,9 +31,7 @@ namespace shader
 		{
 			names.push_back({ id::NewShaderId(), LAMBERTIAN });
 			names.push_back({ id::NewShaderId(), LIGHTS });
-			names.push_back({ id::NewShaderId(), LAMBERTIAN_DIFFUSE_TEXTURE });
 			names.push_back({ id::NewShaderId(), SINGLE_COLOR_BORDER });
-			names.push_back({ id::NewShaderId(), SPRITE_DEFAULT });
 			names.push_back({ id::NewShaderId(), LAMBERTIAN_TRANSPARENT });
 			names.push_back({ id::NewShaderId(), LAMBERTIAN_INSTANCED });
 			names.push_back({ id::NewShaderId(), FULL_SCREEN });

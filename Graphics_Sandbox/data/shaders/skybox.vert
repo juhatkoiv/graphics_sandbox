@@ -6,8 +6,8 @@ layout (location = 2) in vec2 aTexCoord;
 
 out vec3 TexCoords;
 
-uniform mat4 view;
-uniform mat4 projection;
+layout (location = 20) uniform mat4 view;
+layout (location = 21) uniform mat4 projection;
 
 void main() 
 {    

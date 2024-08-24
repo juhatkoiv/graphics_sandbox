@@ -620,9 +620,6 @@
     <None Include="data\shaders\lambertian.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="data\shaders\lambertian_diffuse_texture.frag">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="data\shaders\model_view_projection.vert">
       <Filter>Shaders</Filter>
     </None>
@@ -632,13 +629,7 @@
     <None Include="data\shaders\model_view_projection_scaled.vert">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="data\shaders\outline_2d.frag">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="data\shaders\single_color.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="data\shaders\spherical_billboarding.vert">
       <Filter>Shaders</Filter>
     </None>
     <None Include="data\shaders\sprite_default.frag">

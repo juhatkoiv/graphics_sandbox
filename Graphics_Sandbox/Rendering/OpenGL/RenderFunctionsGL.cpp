@@ -319,7 +319,7 @@ void drawSingleDirectImpl( GfxQueue& gfx, GfxDevice* device, id::EntityId id, co
 	}
 
 	if (material.shaderId == shader::getShaderId( shader::LAMBERTIAN ) ||
-		material.shaderId == shader::getShaderId( shader::LAMBERTIAN_DIFFUSE_TEXTURE ))
+		material.shaderId == shader::getShaderId( shader::LAMBERTIAN_TRANSPARENT))
 	{
 		drawSingleLitImpl( gfx, device, id, material );
 	}
@@ -509,12 +509,12 @@ void executeDrawSkybox( GfxQueue& gfx, GfxDevice* device, const PassResources& r
 
 	shader.setMatrix( VIEW_MATRIX, gfx.getViewMatrixStripTransform() );
 	shader.setMatrix( PROJECTION_MATRIX, gfx.getProjectionMatrix() );
-	shader.setInt( CUBEMAP_TEXTURE, 10 );
+	shader.setInt( CUBEMAP_TEXTURE, 0 );
 
 	auto vbId = gfx.frame->skyboxMesh;
 	auto textureId = gfx.frame->skyboxTexture;
 
-	device->bindTexture( textureId, 10 );
+	device->bindTexture( textureId, 0 );
 	device->dispatchIndexedDirect( vbId );
 }
 

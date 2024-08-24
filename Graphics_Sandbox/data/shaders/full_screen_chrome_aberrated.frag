@@ -4,9 +4,8 @@ layout (location = 0) out vec4 outColor;
 
 in vec2 TexCoords;
 
-uniform sampler2D screenTexture;
-
-uniform float aberration;
+layout (location = 0)  uniform sampler2D screenTexture;
+layout (location = 10) uniform float aberration;
 
 void main()
 {     

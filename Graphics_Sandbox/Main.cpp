@@ -33,15 +33,9 @@
 * =====
 * TASKS
 * =====
-* - Necessary editor support.
-*   x + Remove context
-*   X + Ensure serialization of components.
-*   X + Ensure that scene saving and loading works.
-
 * - Renderer encoding and and architecture improvements
 *   + simplify configurations and data flow to renderer
 *   + move pass data and pass definition data to same data.
-*   + fix render graph menu
 *   + Strealmine data flow to renderer > encoding and data packing
 *   + Remove single entity rendering functions
 *   + Fix 3d outline - Render effects vs materials
@@ -51,7 +45,8 @@
 *   + implement support to either convert hlsl to glsl > glsl to hlsl > spirv etc. Investigate pre-existing solutions here.
 *   + Implement support to read shader arguments from shaders and tag them as configurable or not.
 *   + Implement editor support to change shader arguments
-* - Implement missing rendering support - OpenGL first.
+* - Implement missing rendering support (not in any particular order) - OpenGL first.
+*   + Noise textures
 *	+ z-prepass
 *   + Deferred shading
 *		- Depth prepass
@@ -65,20 +60,24 @@
 *   + MSAA / FXAA
 *   + BRDF
 *   + spot lights
+*	+ decals
 *   + shadows
 *   + global illumination - AO,
 *   + Blur, SSAO, Bloom, Depth of field, Motion blur, Volumetric lighting, GI
 *   + Bump maps
+*	+ Debug rendering: Lines, points, normals, tangents, bitangents, bounding boxes, bounding spheres, frustums, cameras, lights, shadows, 
 * - Remove hard dependency from glm
 * - Experiment with multithreaded rendering - requires decoupling the glfw context from the window.
 * - Implement other API
 * - If bored: 
-*	+ Clean up editor code - continue this after scene loading is done.
+*	+ Add clear scene
+*	+ Add
 *   + Add possibility to add, remove and configure components.
 *   + Add entity transform by mouse (current coordinates and absolute)
 *   + Render render graph
 *	  - Show data used by passes
-*	  - Show if each queues, feature, pass is enabled or not.*
+*	  - Show if each queues, feature, pass is enabled or not.
+*   + Render settings should not be in camera -> global is fine
 * ============================
 * Architectural considerations
 * ============================

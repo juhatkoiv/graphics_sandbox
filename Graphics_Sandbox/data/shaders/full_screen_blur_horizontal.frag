@@ -6,11 +6,10 @@ layout (location = 0) out vec4 outColor;
 
 in vec2 TexCoords;
 
-uniform sampler2D screenTexture;
-
-uniform int kernelSize;
-uniform float sigma;
-uniform vec2 windowSizeInverted;
+layout (location = 0) uniform sampler2D screenTexture;
+layout (location = 10) uniform int kernelSize;
+layout (location = 11) uniform float sigma;
+layout (location = 12) uniform vec2 windowSizeInverted;
 
 int ensureOdd(int k)
 {    

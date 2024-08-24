@@ -354,15 +354,12 @@ xcopy "$(ProjectDir)data\*.*" "$(SolutionDir)x64\Debug\data" /Y /I /E</Command>
     <None Include="data\shaders\full_screen_inverted_color.frag" />
     <None Include="data\shaders\full_screen_pixelated.frag" />
     <None Include="data\shaders\lambertian.frag" />
-    <None Include="data\shaders\lambertian_diffuse_texture.frag" />
     <None Include="data\shaders\model_view_projection.vert" />
     <None Include="data\shaders\model_view_projection_instanced.vert" />
     <None Include="data\shaders\model_view_projection_scaled.vert" />
     <None Include="data\shaders\skybox.vert" />
-    <None Include="data\shaders\outline_2d.frag" />
     <None Include="data\shaders\single_color.frag" />
     <None Include="data\shaders\skybox.frag" />
-    <None Include="data\shaders\spherical_billboarding.vert" />
     <None Include="data\shaders\sprite_default.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

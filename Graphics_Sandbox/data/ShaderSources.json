@@ -21,11 +21,6 @@
     },
     {
         "fragmentSourceFile": "data//shaders//sprite_default.frag",
-        "name": "SPRITE_DEFAULT",
-        "vertexSourceFile": "data//shaders//model_view_projection.vert"
-    },
-    {
-        "fragmentSourceFile": "data//shaders//sprite_default.frag",
         "name": "LAMBERTIAN_INSTANCED",
         "vertexSourceFile": "data//shaders//model_view_projection_instanced.vert"
     },
