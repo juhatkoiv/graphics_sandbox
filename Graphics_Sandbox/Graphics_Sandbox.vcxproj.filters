@@ -260,6 +260,9 @@
     <ClCompile Include="Hash\Hash.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Rendering\FeatureFilters.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor\EditorManager.h">
@@ -574,6 +577,7 @@
     <ClInclude Include="Hash\Hash.h">
       <Filter>Source Files\Hash</Filter>
     </ClInclude>
+    <ClInclude Include="Rendering\FeatureFilters.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

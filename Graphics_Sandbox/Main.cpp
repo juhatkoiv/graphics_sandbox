@@ -53,12 +53,14 @@
 *   + implement support to either convert hlsl to glsl > glsl to hlsl > spirv etc. Investigate pre-existing solutions here.
 *   + Implement support to read shader arguments from shaders and tag them as configurable or not.
 *   + Implement editor support to change shader arguments
-* - Task 5 - Implement missing rendering support - OpenGL first.
+* - Implement missing rendering support - OpenGL first.
+*	+ z-prepass
 *   + Deferred shading
 *		- Depth prepass
 *		- Opengl multiple render targets
 *			- Color attachment 1, 2, 3, depth
 *			- GBuffer: Position, Normal, Albedo, Depth
+* 			- or any material data that makes sense
 *		- Lighting pass
 *		- Post processing pass
 *   + Buffer update, application, per frame > constant buffers
@@ -69,9 +71,9 @@
 *   + global illumination - AO,
 *   + Blur, SSAO, Bloom, Depth of field, Motion blur, Volumetric lighting, GI
 *   + Bump maps
-* - Task 6 - Remove hard dependency from glm
-* - Task 6.1 - Experiment with multithreaded rendering - requires decoupling the glfw context from the window.
-* - Task 7 - Implement other API
+* - Remove hard dependency from glm
+* - Experiment with multithreaded rendering - requires decoupling the glfw context from the window.
+* - Implement other API
 * - If bored: 
 *	+ Clean up editor code - continue this after scene loading is done.
 *   + Add possibility to add, remove and configure components.

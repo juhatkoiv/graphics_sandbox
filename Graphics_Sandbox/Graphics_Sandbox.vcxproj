@@ -203,6 +203,7 @@ xcopy "$(ProjectDir)data\*.*" "$(SolutionDir)x64\Debug\data" /Y /I /E</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Rendering\Defaults.cpp" />
+    <ClCompile Include="Rendering\FeatureFilters.cpp" />
     <ClCompile Include="Rendering\FrameBuilder.cpp" />
     <ClCompile Include="Rendering\FrameResources.cpp" />
     <ClCompile Include="Rendering\GfxDeviceFactory.cpp" />
@@ -285,6 +286,7 @@ xcopy "$(ProjectDir)data\*.*" "$(SolutionDir)x64\Debug\data" /Y /I /E</Command>
     <ClInclude Include="Precompiled\Precompiled.h" />
     <ClInclude Include="Profiling\ProfilingDefinitions.h" />
     <ClInclude Include="Rendering\Defaults.h" />
+    <ClInclude Include="Rendering\FeatureFilters.h" />
     <ClInclude Include="Rendering\FrameBuilder.h" />
     <ClInclude Include="Rendering\FrameResources.h" />
     <ClInclude Include="Rendering\GfxBufferImpl.h" />

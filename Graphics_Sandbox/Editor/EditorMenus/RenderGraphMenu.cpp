@@ -23,7 +23,7 @@ namespace
 				ImGui::Text( "\t\tFeature: %s", feature.featureName.c_str() );
 				for ( const auto& pass : feature.passes )
 				{
-					ImGui::Text( "\t\t\tPass: %s", pass.passName.c_str() );
+					ImGui::Text( "\t\t\tPass: (%d): %s", (int)pass.passIndex, pass.passName.c_str() );
 				}
 			}
 		}
