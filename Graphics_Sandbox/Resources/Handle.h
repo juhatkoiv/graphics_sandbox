@@ -2,8 +2,6 @@
 
 #include "Precompiled/PrecompilationMacros.h"
 
-#include "ECS/Serialization/ComponentSerializationDefinitions.h"
-
 BEGIN_NAMESPACE1( resources )
 
 struct Handle
@@ -21,7 +19,6 @@ struct Handle
 	}
 };
 
-DECLARE_SERIALIZABLE( Handle, id );
 
 END_NAMESPACE1
 

@@ -24,7 +24,7 @@ namespace
 
 }
 
-Window::Window( const char* title, bool windowed )
+Window::Window( const char* title, WindowMode windowMode )
 {
 	if (title == nullptr)
 		throw;
@@ -46,14 +46,18 @@ Window::Window( const char* title, bool windowed )
 	glfwWindowHint( GLFW_REFRESH_RATE, mode->refreshRate );
 	glfwWindowHint( GLFW_SAMPLES, 4 );
 
-	if (windowed)
+	if (windowMode == WindowMode::Windowed)
 	{
 		_window = glfwCreateWindow( mode->width, mode->height, title, NULL, NULL );
 		glfwMaximizeWindow( _window );
 	}
-	else
+	else if (windowMode == WindowMode::Fullscreen)
 	{
 		_window = glfwCreateWindow( mode->width, mode->height, title, monitor, NULL );
+	}
+	else
+	{
+		throw;
 	}
 	
 	if (!isValid())

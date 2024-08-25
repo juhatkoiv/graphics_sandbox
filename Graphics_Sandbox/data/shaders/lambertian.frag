@@ -18,12 +18,12 @@ struct LightProperties
 
 uniform LightProperties lights[LIGHT_COUNT];
 
-layout (location = 0)  uniform sampler2D diffuseTexture;
-layout (location = 1) uniform sampler2D specularTexture;
+layout (binding = 0)   uniform sampler2D diffuseTexture;
+layout (binding = 1)   uniform sampler2D specularTexture;
 layout (location = 10)  uniform vec3 viewPos;
-layout (location = 11) uniform int lightCount;
+layout (location = 11)  uniform int lightCount;
 layout (location = 12)  uniform float diffuseCoeff;
-layout (location = 13) uniform float specularCoeff;
+layout (location = 13)  uniform float specularCoeff;
 layout (location = 14)  uniform vec4 hue;
 
 float calculate_damping_factor(vec3 lightPos, vec3 fragPos, float attenuation)

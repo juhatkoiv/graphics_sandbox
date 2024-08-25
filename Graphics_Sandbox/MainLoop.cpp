@@ -213,7 +213,7 @@ MainLoop::MainLoop( Args args )
 {
 	AppContext::initialize();
 	_appData.initialize();
-	_window.reset( new window::Window( args.title, true ) );
+	_window.reset( new window::Window( args.title, window::WindowMode::Windowed ) );
 
 	_resouceSystem.reset( new resources::ResourceSystem( _appData ) );
 	rendering::GfxDeviceArgs deviceArgs = getDeviceArgs( _appData );

@@ -37,6 +37,7 @@
 *   + simplify configurations and data flow to renderer
 *   + move pass data and pass definition data to same data.
 *   + Strealmine data flow to renderer > encoding and data packing
+* - Renderer improvements
 *   + Remove single entity rendering functions
 *   + Fix 3d outline - Render effects vs materials
 * - Multi sources shader suuport: SPIRV, HLSL, GLSL

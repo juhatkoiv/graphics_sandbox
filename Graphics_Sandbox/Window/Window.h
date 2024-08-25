@@ -4,10 +4,16 @@ DECLARE( struct, GLFWwindow );
 
 BEGIN_NAMESPACE1( window )
 
+enum class WindowMode
+{
+	Windowed,
+	Fullscreen
+};
+
 class Window
 {
 public:
-	Window( const char* title, bool windowed );
+	Window( const char* title, WindowMode windowMode );
 	Window( int width, int height, const char* title, bool setContextCurrent = true );
 
 	bool shouldClose() const;

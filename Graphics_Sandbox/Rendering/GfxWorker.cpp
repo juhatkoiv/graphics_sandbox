@@ -44,8 +44,7 @@ GfxWorker::GfxWorker( rendering::GfxDeviceFactory& deviceFactory )
 void GfxWorker::setApi( int api )
 {
 	_device = _deviceFactory.createDevice( api );
-	// prepare -> create full screen quads needed for post processing
-	// should not be client's responsibility
+	// prepare -> create full screen quads needed for post processing. should not be client's responsibility
 }
 
 void GfxWorker::render()
@@ -59,19 +58,9 @@ void GfxWorker::render()
 	{
 		value.batches.clear();
 	}
-
 }
 
-void GfxWorker::clear()
-{
-	/*
-	for (auto& pair : _gfx.meshIdLookup)
-	{
-		_gfx.destroyQueue.insert(pair->first);
-	}
-	flushDestroyedQueue();
-	*/
-}
+void GfxWorker::clear() {}
 
 void GfxWorker::update( RenderCommandQueue& queue )
 {
@@ -96,19 +85,7 @@ bool GfxWorker::isQueuedDestroyed( unsigned id )
 	return frame.destroyQueue.count( id ) != 0;
 }
 
-void GfxWorker::flushDestroyedQueue()
-{
-	/*for (auto& id : _gfx.destroyQueue)
-	{
-		_gfx.lightProperties.erase( id );
-		_gfx.shaders.erase( id );
-
-		id::MeshId meshId = _gfx.meshIdLookup.getAt( id );
-		_device->deleteVexterBuffer( meshId );
-		_gfx.meshIdLookup.erase( id );
-	}
-	_gfx.destroyQueue.clear();*/
-}
+void GfxWorker::flushDestroyedQueue() {}
 
 //////// UPDATE DATA ////////
 
@@ -147,46 +124,7 @@ void GfxWorker::updateCameraTransform( const UpdateCameraTransformCmd& param )
 
 void GfxWorker::setToEffectQueue( unsigned id, const SubmitToEffectQueueCmd& param )
 {
-	/*
-	id::ShaderId shaderId = frame.shaders[id].shaderId;
-
-	RenderEffect effect = param.effect;
-	static id::ShaderId effectShader = shader::getShaderId( shader::SINGLE_COLOR_BORDER );
-
-	if (effect == RenderEffect::None)
-	{
-		auto& e = frame.effectLookup.mutableAt( id );
-		if (!has( e, ~RenderEffect::None ))
-			return;
-
-		DrawCallBatch& batch = frame.batches[effectShader];
-		std::vector<unsigned>& batchEntities = batch.entities;
-		std::erase_if( batchEntities, [id]( unsigned e )
-			{
-				return e == id;
-			} );
-
-		if (batchEntities.empty())
-		{
-			_gfx.batches.erase( effectShader );
-		}
-		frame.effectLookup.erase( id );
-
-	}
-	else if (frame.effectLookup.has( id ))
-	{
-		auto& e = frame.effectLookup.mutableAt( id );
-		if (has( effect, e ))
-			return;
-
-		frame.batches[effectShader].entities.push_back( id );
-		frame.effectLookup[id] |= effect;
-	}
-	else
-	{
-		_gfx.batches[effectShader].entities.push_back( id );
-		_gfx.effectLookup[id] |= effect;
-	}*/
+	// TODO -- implement effect queue
 }
 
 void GfxWorker::createTexture( const CreateTextureCmd& cmd )
@@ -215,7 +153,7 @@ void GfxWorker::updateModelMatrix( unsigned id, const UpdateModelMatrixCmd& para
 	}
 }
 
-void GfxWorker::spawnLight( unsigned id, const SetLightCmd& cmd )
+void GfxWorker::setLight( unsigned id, const SetLightCmd& cmd )
 {
 	const auto& mat = frame.modelMatrices[id];
 
@@ -282,6 +220,7 @@ void GfxWorker::prepareDraw()
 		// reverse the order of entities in transparent queue
 		std::reverse( batch.entities.begin(), batch.entities.end() );
 	}
+
 }
 
 void GfxWorker::setTexture( unsigned id, const SetTextureCmd& cmd )
@@ -356,7 +295,7 @@ void GfxWorker::executeRenderCommand( const RenderCommand& cmd )
 		queueDestroy( cmd.id );
 		break;
 	case CommandType::SetLight:
-		spawnLight( cmd.id, cmd.setlightCmd );
+		setLight( cmd.id, cmd.setlightCmd );
 		break;
 	case CommandType::SetMaterial:
 		setMaterial( cmd.id, cmd.setEntityMaterialCmd );

@@ -45,7 +45,7 @@ private:
 	void updateWindow( const UpdateWindowCmd& param );
 	void updateCameraTransform( const UpdateCameraTransformCmd& param );
 	void setToEffectQueue( unsigned id, const SubmitToEffectQueueCmd& param );
-	void spawnLight( unsigned id, const SetLightCmd& cmd );
+	void setLight( unsigned id, const SetLightCmd& cmd );
 	void setMaterial( unsigned id, const SetEntityMaterialCmd& param );
 	void setMeshInstanced( unsigned id, const SetEntityMeshCmd& param );
 	void setMesh( unsigned id, const SetEntityMeshCmd& param );

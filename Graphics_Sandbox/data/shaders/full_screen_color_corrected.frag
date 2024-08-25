@@ -4,7 +4,7 @@ layout (location = 0) out vec4 outColor;
 
 in vec2 TexCoords;
 
-layout (location = 0)  uniform sampler2D screenTexture;
+layout (binding = 0)  uniform sampler2D screenTexture;
 layout (location = 10) uniform vec3 colorCorrection;
 
 void main() 
