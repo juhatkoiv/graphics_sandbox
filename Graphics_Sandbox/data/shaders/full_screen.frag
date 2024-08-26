@@ -6,18 +6,14 @@ in vec2 TexCoords;
 
 layout (binding = 0) uniform sampler2D screenTexture;
 
-layout (std140, binding = 4) uniform PostProcessing {
-    uint args1;
-    uint args2;
-    uint args3;
-    uint args4;
+layout (std140, binding = 5) uniform LightingSettings
+{
+    float exposure;
+    float gamma;
 };
 
 void main()
 {
-    float exposure = uintBitsToFloat(args1);
-    float gamma = uintBitsToFloat(args2);
-
     vec4 color =  texture(screenTexture, TexCoords);
     vec3 mapped = pow(vec3(1.0) - exp(-color.rgb * exposure), vec3(1.0 / gamma));
 

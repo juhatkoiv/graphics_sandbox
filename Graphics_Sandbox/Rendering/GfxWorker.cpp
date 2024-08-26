@@ -47,6 +47,8 @@ namespace
 	GLuint cameraBuffer = ~0u;
 	GLuint lightBuffer = ~0u;
 	GLuint postProcessingBuffer = ~0u;
+	GLuint globalLightingSettingsBuffer = ~0u;
+
 	//GLuint objectBuffer = ~0u;
 
 	GfxPostProcessing resolvePostProcessingArgs( GfxFrame& frame )
@@ -59,12 +61,6 @@ namespace
 
 		auto& settings = frame.settings;
 
-
-		if (settings.fullScreenEffect == PostProcessingEffects::Nothing)
-		{
-			args.args1 = *reinterpret_cast<unsigned int*>(&settings.lightingSettings.exposure);
-			args.args2 = *reinterpret_cast<unsigned int*>(&settings.lightingSettings.gamma);
-		}
 		if (settings.fullScreenEffect == PostProcessingEffects::Pixelation)
 		{
 			// bitwise cast floats
@@ -144,6 +140,15 @@ void GfxWorker::setApi( int api )
 		glBindBufferRange( GL_UNIFORM_BUFFER, 4, postProcessingBuffer, 0, sizeof( GfxPostProcessing ) );
 	}
 
+	// allocate global lighting settings buffer
+	{
+		glGenBuffers( 1, &globalLightingSettingsBuffer );
+		glBindBuffer( GL_UNIFORM_BUFFER, globalLightingSettingsBuffer );
+		glBufferData( GL_UNIFORM_BUFFER, sizeof( LightingSettings ), NULL, GL_DYNAMIC_DRAW );
+		glBindBuffer( GL_UNIFORM_BUFFER, 0 );
+
+		glBindBufferRange( GL_UNIFORM_BUFFER, 5, globalLightingSettingsBuffer, 0, sizeof( LightingSettings ) );
+	}
 }
 
 void GfxWorker::render()
@@ -350,7 +355,13 @@ void GfxWorker::prepareDraw()
 		glBindBuffer( GL_UNIFORM_BUFFER, postProcessingBuffer );
 		glBufferSubData( GL_UNIFORM_BUFFER, 0, sizeof( GfxPostProcessing ), (void*)&args );
 		glBindBuffer( GL_UNIFORM_BUFFER, 0 );
+	}
 
+	// update global lighting settings
+	{
+		glBindBuffer( GL_UNIFORM_BUFFER, globalLightingSettingsBuffer );
+		glBufferSubData( GL_UNIFORM_BUFFER, 0, sizeof( LightingSettings ), (void*)&frame.settings.lightingSettings );
+		glBindBuffer( GL_UNIFORM_BUFFER, 0 );
 	}
 }
 
