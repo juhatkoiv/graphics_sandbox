@@ -16,10 +16,10 @@ namespace gl
 	bool validate(unsigned handle, GLenum type)
 	{
 		int success;
-		char infoLog[512];
 		glGetProgramiv(handle, type, &success);
 		if (!success)
 		{
+			char infoLog[512];
 			glGetProgramInfoLog(handle, 512, NULL, infoLog);
 			Logger::LogError(infoLog);
 		}

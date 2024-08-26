@@ -6,10 +6,14 @@ layout (location = 0) out vec4 outColor;
 
 in vec2 TexCoords;
 
+layout (std140, binding = 4) uniform PostProcessing {
+    uint args1;
+    uint args2;
+    uint args3;
+    uint args4;
+};
+
 layout (binding = 0) uniform sampler2D screenTexture;
-layout (location = 10) uniform int kernelSize;
-layout (location = 11) uniform float sigma;
-layout (location = 12) uniform vec2 windowSizeInverted;
 
 int ensureOdd(int k)
 {    
@@ -28,6 +32,10 @@ float gauss1D(float deltaR, float s)
 
 void main()
 {
+    int kernelSize = int(args1);
+    float sigma = uintBitsToFloat(args2);
+    float windowSizeInvY = uintBitsToFloat(args4);
+
     int kernel = ensureOdd(kernelSize);
 
     int halfKernel = (kernel / 2);
@@ -37,13 +45,13 @@ void main()
     
     for (int i = -halfKernel; i < halfKernel; ++i)
     {
-        float deltaR = windowSizeInverted.y * i;
+        float deltaR = windowSizeInvY * i;
         float gauss = gauss1D(deltaR, sigma);
         
         vec2 coordinate = TexCoords.st + vec2(0, deltaR);
         color += gauss * texture(screenTexture, coordinate);
         sum += gauss;
     }
-
+    
     outColor = (color / sum);
 }

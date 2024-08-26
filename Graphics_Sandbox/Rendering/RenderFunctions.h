@@ -41,12 +41,8 @@ void executeClear( GfxQueue& gfx, GfxDevice* device, const PassResources& resour
 void executeBindAndClearFrameBuffer( GfxQueue& gfx, GfxDevice* device, const PassResources& resources );
 void executeLit( GfxQueue& gfx, GfxDevice* device, const PassResources& resources );
 void executeLights( GfxQueue& gfx, GfxDevice* device, const PassResources& resources );
-void executeColorBuffersToFullScreen( GfxQueue& gfx, GfxDevice* device, const PassResources& input );
-void executeBlur( GfxQueue& gfx, GfxDevice* device, const PassResources& input );
+void executePostProcessingEffect( GfxQueue& gfx, GfxDevice* device, const PassResources& input );
 void executeWriteBorderStencil( GfxQueue& gfx, GfxDevice* device, const PassResources& resources );
-void executePixelatedToFullScreen( GfxQueue& gfx, GfxDevice* device, const PassResources& input );
-void executeColorCorrectedToFullScreen( GfxQueue& gfx, GfxDevice* device, const PassResources& input );
-void executeChromaticAberrationToFullScreen( GfxQueue& gfx, GfxDevice* device, const PassResources& input );
 void executeDrawOutlineBorder( GfxQueue& gfx, GfxDevice* device, const PassResources& resources );
 void executeDrawSkybox( GfxQueue& gfx, GfxDevice* device, const PassResources& resources );
 void executeError( GfxQueue& gfx, GfxDevice* device, const PassResources& resources );

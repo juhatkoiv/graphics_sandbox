@@ -60,19 +60,19 @@ namespace
 			return pass::executeLights;
 
 		if (passType == "colorBuffersToFullScreen")
-			return pass::executeColorBuffersToFullScreen;
+			return pass::executePostProcessingEffect;
 
 		if (passType == "blur")
-			return pass::executeBlur;
+			return pass::executePostProcessingEffect;
 		
 		if (passType == "chromaticAberrationToFullScreen")
-			return pass::executeChromaticAberrationToFullScreen;
+			return pass::executePostProcessingEffect;
 
 		if (passType == "pixelatedToFullScreen")
-			return pass::executePixelatedToFullScreen;
+			return pass::executePostProcessingEffect;
 
 		if (passType == "colorCorrectedToFullScreen")
-			return pass::executeColorCorrectedToFullScreen;
+			return pass::executePostProcessingEffect;
 
 		if (passType == "writeBorderStencil")
 			return pass::executeWriteBorderStencil;

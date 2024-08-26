@@ -316,64 +316,10 @@ void executeLights( GfxQueue& gfx, GfxDevice* device, const PassResources& resou
 	}
 }
 
-void executeBlur( GfxQueue& gfx, GfxDevice* device, const PassResources& input )
+void executePostProcessingEffect( GfxQueue& gfx, GfxDevice* device, const PassResources& input ) 
 {
 	id::ShaderId shaderId = input.getShaderId();
-	auto& shader = device->bindShader( shaderId );
-
-	const auto& blurSettings = gfx.getFsBlurSettings();
-	shader.setInt( KERNEL_SIZE, blurSettings.kernelSize );
-	shader.setFloat( SIGMA, blurSettings.sigma );
-	shader.setVec2( WINDOW_SIZE_INVERTED, gfx.getWindowSize().getInverted() );
-
-	for (unsigned int i = 0; i < input.sourceFramebuffers.size(); i++)
-	{
-		const auto sourceBuffer = input.sourceFramebuffers[i];
-		device->bindRenderTargetResource( sourceBuffer, i );
-	}
-	device->dispatchIndexedDirect( gfx.frame->fullScreenQuad );
-}
-
-void executeColorBuffersToFullScreen( GfxQueue& gfx, GfxDevice* device, const PassResources& input )
-{
-	id::ShaderId shaderId = input.getShaderId();
-	auto& shader = device->bindShader( shaderId );
-
-	const auto& lightingSettings = gfx.getLightingSettings();
-	shader.setFloat( EXPOSURE, lightingSettings.exposure );
-	shader.setFloat( GAMMA, lightingSettings.gamma );
-
-	for (unsigned int i = 0; i < input.sourceFramebuffers.size(); i++)
-	{
-		const auto sourceBuffer = input.sourceFramebuffers[i];
-		device->bindRenderTargetResource( sourceBuffer, i );
-	}
-	device->dispatchIndexedDirect( gfx.frame->fullScreenQuad );
-}
-
-void executePixelatedToFullScreen( GfxQueue& gfx, GfxDevice* device, const PassResources& input )
-{
-	id::ShaderId shaderId = input.getShaderId();
-	auto& shader = device->bindShader( shaderId );
-
-	const auto& postProcessingEffects = gfx.getPixelatedSettings();
-	shader.setFloat( FRAGMENT_SCALE, postProcessingEffects.fragmentScale );
-
-	for (unsigned int i = 0; i < input.sourceFramebuffers.size(); i++)
-	{
-		const auto sourceBuffer = input.sourceFramebuffers[i];
-		device->bindRenderTargetResource( sourceBuffer, i );
-	}
-	device->dispatchIndexedDirect( gfx.frame->fullScreenQuad );
-}
-
-void executeColorCorrectedToFullScreen( GfxQueue& gfx, GfxDevice* device, const PassResources& input )
-{
-	id::ShaderId shaderId = input.getShaderId();
-	auto& shader = device->bindShader( shaderId );
-
-	const auto& postProcessingEffects = gfx.getColorCorrectionSettings();
-	shader.setVec3( COLOR_CORRECTION, postProcessingEffects.colorCorrection );
+	device->bindShader( shaderId );
 
 	for (unsigned int i = 0; i < input.sourceFramebuffers.size(); i++)
 	{
@@ -388,6 +334,9 @@ void executeWriteBorderStencil( GfxQueue& gfx, GfxDevice* device, const PassReso
 	id::ShaderId shaderId = resources.getShaderId();
 	if (!gfx.batches.has( shaderId ))
 		return;
+
+	// Get entities in effect queue and render
+
 
 /*	const DrawCallBatch& batch = gfx.batches.at(shaderId);
 
@@ -412,22 +361,6 @@ void executeDrawSkybox( GfxQueue& gfx, GfxDevice* device, const PassResources& r
 
 	device->bindTexture( textureId, 0 );
 	device->dispatchIndexedDirect( vbId );
-}
-
-void executeChromaticAberrationToFullScreen( GfxQueue& gfx, GfxDevice* device, const PassResources& input )
-{
-	id::ShaderId shaderId = input.getShaderId();
-	auto& shader = device->bindShader( shaderId );
-
-	const auto& postProcessingEffects = gfx.getChromeAberrationSettings();
-	shader.setFloat( ABERRATION, postProcessingEffects.aberration );
-
-	for (unsigned int i = 0; i < input.sourceFramebuffers.size(); i++)
-	{
-		const auto sourceBuffer = input.sourceFramebuffers[i];
-		device->bindRenderTargetResource( sourceBuffer, i );
-	}
-	device->dispatchIndexedDirect( gfx.frame->fullScreenQuad );
 }
 
 void executeDrawOutlineBorder( GfxQueue& gfx, GfxDevice* device, const PassResources& resources )

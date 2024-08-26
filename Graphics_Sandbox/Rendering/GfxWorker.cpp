@@ -36,9 +36,72 @@ namespace
 
 	GfxFrame frame{};
 
+	struct GfxPostProcessing {
+		unsigned args1 = ~0u;
+		unsigned args2 = ~0u;
+		unsigned args3 = ~0u;
+		unsigned args4 = ~0u;
+	};
+
+
 	GLuint cameraBuffer = ~0u;
 	GLuint lightBuffer = ~0u;
-	GLuint objectBuffer = ~0u;
+	GLuint postProcessingBuffer = ~0u;
+	//GLuint objectBuffer = ~0u;
+
+	GfxPostProcessing resolvePostProcessingArgs( GfxFrame& frame )
+	{
+		GfxPostProcessing args;
+		args.args1 = 0;
+		args.args2 = 0;
+		args.args3 = 0;
+		args.args4 = 0;
+
+		auto& settings = frame.settings;
+
+
+		if (settings.fullScreenEffect == PostProcessingEffects::Nothing)
+		{
+			args.args1 = *reinterpret_cast<unsigned int*>(&settings.lightingSettings.exposure);
+			args.args2 = *reinterpret_cast<unsigned int*>(&settings.lightingSettings.gamma);
+		}
+		if (settings.fullScreenEffect == PostProcessingEffects::Pixelation)
+		{
+			// bitwise cast floats
+			args.args1 = *reinterpret_cast<unsigned int*>(&settings.pixelatedSettings.fragmentScale);
+		}
+
+		if (settings.fullScreenEffect == PostProcessingEffects::ColorCorrection)
+		{
+			// bitwise cast floats
+			args.args1 = *reinterpret_cast<unsigned int*>(&settings.colorCorrectionSettings.colorCorrection.x);
+			args.args2 = *reinterpret_cast<unsigned int*>(&settings.colorCorrectionSettings.colorCorrection.y);
+			args.args3 = *reinterpret_cast<unsigned int*>(&settings.colorCorrectionSettings.colorCorrection.z);
+		}
+
+		if (settings.fullScreenEffect == PostProcessingEffects::ChromeAberration)
+		{
+			// bitwise cast floats
+			args.args1 = *reinterpret_cast<unsigned int*>(&settings.chromeAberrationSettings.aberration);
+		}
+
+		if (settings.fullScreenEffect == PostProcessingEffects::Blur)
+		{
+			args.args1 = *reinterpret_cast<unsigned int*>(&settings.fullScreenBlurSettings.kernelSize);
+			args.args2 = *reinterpret_cast<unsigned int*>(&settings.fullScreenBlurSettings.sigma);
+
+			glm::vec2 windowSizeInverted = frame.camera.windowSize.getInverted();
+
+			args.args3 = *reinterpret_cast<unsigned int*>(&windowSizeInverted.x);
+			args.args4 = *reinterpret_cast<unsigned int*>(&windowSizeInverted.y);
+		}
+
+		if (settings.fullScreenEffect == PostProcessingEffects::Inverted)
+		{
+		}
+
+		return args;
+	}
 }
 
 GfxWorker::GfxWorker( rendering::GfxDeviceFactory& deviceFactory )
@@ -46,7 +109,7 @@ GfxWorker::GfxWorker( rendering::GfxDeviceFactory& deviceFactory )
 {}
 
 void GfxWorker::setApi( int api )
-{	
+{
 	// prepare -> create full screen quads needed for post processing. should not be client's responsibility
 
 	_device = _deviceFactory.createDevice( api );
@@ -73,12 +136,12 @@ void GfxWorker::setApi( int api )
 
 	// allocate object buffer
 	{
-		glGenBuffers( 1, &objectBuffer );
-		glBindBuffer( GL_UNIFORM_BUFFER, objectBuffer );
-		glBufferData( GL_UNIFORM_BUFFER, sizeof( glm::mat3 ), NULL, GL_DYNAMIC_DRAW );
+		glGenBuffers( 1, &postProcessingBuffer );
+		glBindBuffer( GL_UNIFORM_BUFFER, postProcessingBuffer );
+		glBufferData( GL_UNIFORM_BUFFER, sizeof( GfxPostProcessing ), NULL, GL_DYNAMIC_DRAW );
 		glBindBuffer( GL_UNIFORM_BUFFER, 0 );
 
-		glBindBufferRange( GL_UNIFORM_BUFFER, 1, objectBuffer, 0, sizeof( glm::mat4 ) );
+		glBindBufferRange( GL_UNIFORM_BUFFER, 4, postProcessingBuffer, 0, sizeof( GfxPostProcessing ) );
 	}
 
 }
@@ -215,9 +278,9 @@ void GfxWorker::setMaterial( unsigned id, const SetEntityMaterialCmd& param )
 
 	DrawCallBatch& batch = queue.batches[param.shaderId];
 	auto& entities = batch.entities;
-	if (std::find( entities.begin(), entities.end(), id ) == entities.end()) 
+	if (std::find( entities.begin(), entities.end(), id ) == entities.end())
 	{
-		batch.entities.push_back( id );	
+		batch.entities.push_back( id );
 	}
 }
 
@@ -278,6 +341,16 @@ void GfxWorker::prepareDraw()
 		glBindBuffer( GL_UNIFORM_BUFFER, lightBuffer );
 		glBufferSubData( GL_UNIFORM_BUFFER, 0, sizeof( GfxLighing ), (void*)&frame.lighting );
 		glBindBuffer( GL_UNIFORM_BUFFER, 0 );
+	}
+
+	// update post provcessing data
+	{
+		GfxPostProcessing args = resolvePostProcessingArgs( frame );
+
+		glBindBuffer( GL_UNIFORM_BUFFER, postProcessingBuffer );
+		glBufferSubData( GL_UNIFORM_BUFFER, 0, sizeof( GfxPostProcessing ), (void*)&args );
+		glBindBuffer( GL_UNIFORM_BUFFER, 0 );
+
 	}
 }
 
