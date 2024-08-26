@@ -8,14 +8,19 @@ out vec3 Normal;
 out vec2 TexCoord;
 out vec3 FragPos; 
 
-struct PerObjectBuffer
+struct PerObjectData
 {
     mat4 model;
 };
-uniform PerObjectBuffer perObjectBuffer[100];
 
-layout (location = 20) uniform mat4 view;
-layout (location = 21) uniform mat4 projection;
+layout(std140, binding = 4) uniform PerObjectBuffer {
+    PerObjectData perObjectBuffer[100];
+};
+
+layout(std140, binding = 0) uniform CameraData {
+    mat4 view;
+    mat4 projection;
+};
 
 void main() 
 {    

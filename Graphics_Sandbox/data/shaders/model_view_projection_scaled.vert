@@ -9,8 +9,11 @@ out vec2 TexCoord;
 out vec3 FragPos; 
 
 layout (location = 20) uniform mat4 model;
-layout (location = 21) uniform mat4 view;
-layout (location = 22) uniform mat4 projection;
+
+layout(std140, binding = 0) uniform CameraData {
+    mat4 view;
+    mat4 projection;
+};
 
 void main() 
 {

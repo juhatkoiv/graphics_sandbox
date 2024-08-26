@@ -7,9 +7,6 @@
 int ConstBuffer::getBufferEnum( unsigned usage )
 {
 	static int bufferEnumMap[2]{ GL_UNIFORM_BUFFER, GL_SHADER_STORAGE_BUFFER };
-	size_t bufferUsage = static_cast<size_t>(usage);
-
-	(void)bufferUsage;
 	return bufferEnumMap[usage];
 }
 

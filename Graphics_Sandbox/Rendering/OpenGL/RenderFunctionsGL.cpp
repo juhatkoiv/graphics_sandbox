@@ -195,14 +195,6 @@ void clearFunc( const GfxFlags& flags )
 	setBlend( flags );
 }
 
-// Shader binding
-
-void bindCameraMatrices( GfxQueue& gfx, ShaderProgram& shader )
-{
-	shader.setMatrix( VIEW_MATRIX, gfx.getViewMatrix() );
-	shader.setMatrix( PROJECTION_MATRIX, gfx.getProjectionMatrix() );
-}
-
 void bindMaterialTextures( GfxQueue& gfx, GfxDevice* device, ShaderProgram& shader, id::EntityId id )
 {
 	if (gfx.frame->diffuseMaterials.has( id ))
@@ -224,67 +216,9 @@ void bindMaterialTextures( GfxQueue& gfx, GfxDevice* device, ShaderProgram& shad
 	}
 }
 
-void bindLights( GfxQueue& gfx, ShaderProgram& shader )
-{
-	shader.setVec3( VIEW_POSITION, gfx.frame->getViewPosition() );
-
-	if (gfx.frame->lightProperties.empty())
-		return;
-
-	const auto& lightProperties = gfx.frame->lightProperties;
-	size_t lightCount = lightProperties.size();
-
-	shader.setInt( LIGHT_COUNT, static_cast<int>(lightCount) );
-
-	int lightPropertiesIndex = 0;
-
-	for (const auto& [id, data] : lightProperties)
-	{
-		if (lightPropertiesIndex >= MAX_LIGHT_COUNT)
-			return;
-
-		shader.setVec3( getLightPositionUniformKey( lightPropertiesIndex ), data.lightPosition );
-		shader.setVec3( getLightColorUniformKey( lightPropertiesIndex ), data.lightColor );
-		shader.setFloat( getLightIntensityUniformKey( lightPropertiesIndex ), data.intensity );
-		shader.setFloat( getLightAttenuationUniformKey( lightPropertiesIndex ), data.attenuation );
-
-		lightPropertiesIndex++;
-	}
-}
-
 END_NAMESPACE2
 
 BEGIN_NAMESPACE2( rendering, draw )
-
-
-void drawSingleLightImpl( GfxQueue& gfx, GfxDevice* device, id::EntityId id, const GfxShader& material )
-{
-	auto& shader = device->bindShader( material.shaderId );
-
-	auto meshId = gfx.frame->meshIdLookup[id];
-	auto& mat = gfx.frame->modelMatrices[id];
-
-	shader.setMatrix( MODEL_MATRIX, mat );
-	fn::bindCameraMatrices( gfx, shader );
-	shader.setVec3( FRAG_COLOR, gfx.meshColors[id] );
-
-	device->dispatchIndexedDirect( meshId );
-}
-
-void drawSingleLitImpl( GfxQueue& gfx, GfxDevice* device, id::EntityId id, const GfxShader& material )
-{
-	auto& shader = device->bindShader( material.shaderId );
-
-	auto meshId = gfx.frame->meshIdLookup[id];
-	auto& mat = gfx.frame->modelMatrices[id];
-
-	shader.setMatrix( MODEL_MATRIX, mat );
-	fn::bindCameraMatrices( gfx, shader );
-	fn::bindMaterialTextures( gfx, device, shader, id );
-	fn::bindLights( gfx, shader );
-
-	device->dispatchIndexedDirect( meshId );
-}
 
 void drawLitInstancedImpl( GfxQueue& gfx, GfxDevice* device, const GfxShader& material )
 {
@@ -301,43 +235,9 @@ void drawLitInstancedImpl( GfxQueue& gfx, GfxDevice* device, const GfxShader& ma
 		auto& mat = gfx.frame->modelMatrices[entity];
 		shader.setMatrix( "perObjectBuffer[" + std::to_string( instanceId++ ) + "].model", mat );
 	}
-	fn::bindCameraMatrices( gfx, shader );
 	fn::bindMaterialTextures( gfx, device, shader, id );
-	fn::bindLights( gfx, shader );
-
+	
 	device->dispatchIndexedInstancedDirect( meshId, (unsigned)gfx.frame->instancedData.groupEntities.size() );
-}
-
-void drawSingleDirectImpl( GfxQueue& gfx, GfxDevice* device, id::EntityId id, const GfxShader& material )
-{
-	if (gfx.isQueuedDestroyed( id ))
-		return;
-
-	if (material.shaderId == shader::getShaderId( shader::LIGHTS ))
-	{
-		drawSingleLightImpl( gfx, device, id, material );
-	}
-
-	if (material.shaderId == shader::getShaderId( shader::LAMBERTIAN ) ||
-		material.shaderId == shader::getShaderId( shader::LAMBERTIAN_TRANSPARENT))
-	{
-		drawSingleLitImpl( gfx, device, id, material );
-	}
-
-	if (material.shaderId == shader::getShaderId( shader::LAMBERTIAN_INSTANCED ))
-	{
-		drawLitInstancedImpl( gfx, device, material );
-	}
-}
-
-void renderColorBuffers( const std::vector<RenderTargetType>& renderTargets, id::MeshId meshId, GfxDevice* device )
-{
-	for (unsigned int i = 0; i < renderTargets.size(); i++)
-	{
-		const auto sourceBuffer = renderTargets[i];
-		device->bindRenderTargetResource( sourceBuffer, i );
-	}
-	device->dispatchIndexedDirect( meshId );
 }
 
 END_NAMESPACE2
@@ -380,9 +280,6 @@ void executeLit( GfxQueue& gfx, GfxDevice* device, const PassResources& resource
 
 	auto& shader = device->bindShader( shaderId );
 
-	fn::bindCameraMatrices( gfx, shader );
-	fn::bindLights( gfx, shader );
-
 	for (auto id : batch.entities)
 	{
 		auto meshId = gfx.frame->meshIdLookup[id];
@@ -415,7 +312,6 @@ void executeLights( GfxQueue& gfx, GfxDevice* device, const PassResources& resou
 		shader.setMatrix( MODEL_MATRIX, mat );
 		shader.setVec4( FRAG_COLOR, gfx.meshColors[id] );
 
-		fn::bindCameraMatrices( gfx, shader );
 		device->dispatchIndexedDirect( meshId );
 	}
 }
@@ -493,13 +389,13 @@ void executeWriteBorderStencil( GfxQueue& gfx, GfxDevice* device, const PassReso
 	if (!gfx.batches.has( shaderId ))
 		return;
 
-	const DrawCallBatch& batch = gfx.batches.at( shaderId );
+/*	const DrawCallBatch& batch = gfx.batches.at(shaderId);
 
 	for (auto id : batch.entities)
 	{
 		const auto& material = gfx.shaders[id];
-		draw::drawSingleDirectImpl( gfx, device, id, material );
-	}
+		//draw::drawSingleDirectImpl( gfx, device, id, material );
+	}*/
 }
 
 void executeDrawSkybox( GfxQueue& gfx, GfxDevice* device, const PassResources& resources )
@@ -543,9 +439,7 @@ void executeDrawOutlineBorder( GfxQueue& gfx, GfxDevice* device, const PassResou
 	const DrawCallBatch& batch = gfx.batches.at( shaderId );
 
 	auto& shader = device->bindShader( shaderId );
-	shader.setMatrix( VIEW_MATRIX, gfx.getViewMatrix() );
-	shader.setMatrix( PROJECTION_MATRIX, gfx.getProjectionMatrix() );
-
+	
 	for (auto id : batch.entities)
 	{
 		auto meshId = gfx.frame->meshIdLookup[id];

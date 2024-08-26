@@ -101,22 +101,6 @@ struct CBUFFER LightProperties
 	float attenuation = {};
 };
 
-struct Lighting
-{
-	std::vector<LightProperties> _impl{};
-
-	GfxBufferImpl toBufferData()
-	{
-		return GfxBufferImpl
-		{
-			.size = _impl.size() * sizeof( LightProperties ),
-			.stride = sizeof( LightProperties ),
-			.data = reinterpret_cast<uint8_t*>(_impl.data())
-		};
-
-	}
-};
-
 struct WindowSize
 {
 	glm::vec2 value{};
@@ -140,8 +124,8 @@ struct WindowSize
 struct GfxCamera
 {
 	glm::mat4 viewMatrix = {};
-	glm::vec3 viewPosition = {};
 	glm::mat4 projectionMatrix = {};
+	glm::vec3 viewPosition = {};
 	WindowSize windowSize = {};
 };
 
@@ -209,6 +193,26 @@ FLAG_ENUM( BatchProperty );
 
 struct GfxQueue;
 
+struct GfxLighing 
+{
+	std::array<LightProperties, 20> lightData{};
+	glm::vec3 viewPosition{};
+	int lightCount = 0;
+
+	void setDirty() 
+	{
+		lightCount = 0;
+	}
+
+	void addLight( const LightProperties& light )
+	{
+		if (lightCount >= 20)
+			return;
+
+		lightData[lightCount++] = light;
+	}
+};
+
 struct GfxFrame
 {
 	id::MeshId fullScreenQuad{};
@@ -231,6 +235,7 @@ struct GfxFrame
 	LinearMap<RenderEffect, std::vector<unsigned>> effectQueue{};
 
 	std::unordered_map<Queue, GfxQueue> queues{};
+	GfxLighing lighting{};
 	
 
 

@@ -16,12 +16,17 @@ struct LightProperties
     float attenuation;
 };
 
-uniform LightProperties lights[LIGHT_COUNT];
+layout(std140, binding = 3) uniform Lighting
+{
+    LightProperties lights[LIGHT_COUNT];
+    vec3 viewPos;
+    int lightCount;
+};
 
+// Material properties
 layout (binding = 0)   uniform sampler2D diffuseTexture;
 layout (binding = 1)   uniform sampler2D specularTexture;
-layout (location = 10)  uniform vec3 viewPos;
-layout (location = 11)  uniform int lightCount;
+
 layout (location = 12)  uniform float diffuseCoeff;
 layout (location = 13)  uniform float specularCoeff;
 layout (location = 14)  uniform vec4 hue;

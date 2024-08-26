@@ -51,7 +51,7 @@ namespace
 			halfSize = (maxCorner - minCorner) * 0.5f;
 		}
 	};
-	
+
 	struct Plane {
 		glm::vec3 normal;
 		float d;
@@ -121,7 +121,7 @@ namespace
 			bool withinFrustum = true;
 			for (const auto& plane : frustum.planes) {
 				if (glm::dot( plane.normal, position ) + plane.d < -radius) {
-					withinFrustum = false; 
+					withinFrustum = false;
 					break; // Sphere is outside of this plane
 				}
 			}
@@ -161,7 +161,7 @@ Renderer::Renderer( rendering::GfxWorker* worker, const resources::ResourceSyste
 	{
 		.meshId = skybox.meshId
 	};
-	
+
 	setSkybox( skyboxMesh, skybox.textureId );
 
 	// set ALL resources
@@ -229,11 +229,11 @@ void Renderer::update( ecs::World& world, float dt )
 
 				updateModelMatrix( entityId, modelMatrices[index] );
 
-				if (world.has<Mesh>( entityId )) 
+				if (world.has<Mesh>( entityId ))
 				{
-					setMesh( entityId, *world.get<Mesh>( entityId ));
+					setMesh( entityId, *world.get<Mesh>( entityId ) );
 				}
-			
+
 				if (world.has<Material>( entityId ))
 				{
 					setMaterial( entityId, *world.get<Material>( entityId ) );
@@ -249,7 +249,7 @@ void Renderer::update( ecs::World& world, float dt )
 				}
 			}
 
-			auto [ entities, lights] = world.getPairs<Light>();
+			auto [entities, lights] = world.getPairs<Light>();
 			for (int j = 0; j < entities.size(); j++)
 			{
 				setLight( entities[j], *lights[j] );
@@ -262,7 +262,7 @@ void Renderer::update( ecs::World& world, float dt )
 	QueueRendererCommand( std::move( cmd ) );
 
 	_worker->update( _renderCommandQueue );
-	
+
 	_worker->render();
 }
 
@@ -342,7 +342,7 @@ void Renderer::setLight( id::EntityId id, const Light& lightParam )
 	cmd.id = id;
 	cmd.type = CommandType::SetLight;
 	cmd.setlightCmd = SetLightCmd
-	{ 
+	{
 		.lightColor = lightParam.lightColor,
 		.intensity = lightParam.intensity,
 		.attenuation = lightParam.attenuation
@@ -420,7 +420,7 @@ void Renderer::updateWindow( const glm::uvec2& viewPortSize, const glm::ivec2& v
 		.windowSize = viewPortSize,
 		.windowPosition = viewPortPosition
 	};
-	
+
 	QueueRendererCommand( std::move( cmd ) );
 }
 

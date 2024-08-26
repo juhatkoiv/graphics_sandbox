@@ -35,6 +35,10 @@ namespace
 	using namespace ecs;
 
 	GfxFrame frame{};
+
+	GLuint cameraBuffer = ~0u;
+	GLuint lightBuffer = ~0u;
+	GLuint objectBuffer = ~0u;
 }
 
 GfxWorker::GfxWorker( rendering::GfxDeviceFactory& deviceFactory )
@@ -42,9 +46,41 @@ GfxWorker::GfxWorker( rendering::GfxDeviceFactory& deviceFactory )
 {}
 
 void GfxWorker::setApi( int api )
-{
-	_device = _deviceFactory.createDevice( api );
+{	
 	// prepare -> create full screen quads needed for post processing. should not be client's responsibility
+
+	_device = _deviceFactory.createDevice( api );
+
+	// allocate camera buffer
+	{
+		glGenBuffers( 1, &cameraBuffer );
+		glBindBuffer( GL_UNIFORM_BUFFER, cameraBuffer );
+		glBufferData( GL_UNIFORM_BUFFER, 2 * sizeof( glm::mat4 ), NULL, GL_DYNAMIC_DRAW );
+		glBindBuffer( GL_UNIFORM_BUFFER, 0 );
+
+		glBindBufferRange( GL_UNIFORM_BUFFER, 0, cameraBuffer, 0, 2 * sizeof( glm::mat4 ) );
+	}
+
+	// allocate lights buffer
+	{
+		glGenBuffers( 1, &lightBuffer );
+		glBindBuffer( GL_UNIFORM_BUFFER, lightBuffer );
+		glBufferData( GL_UNIFORM_BUFFER, sizeof( GfxLighing ), NULL, GL_DYNAMIC_DRAW );
+		glBindBuffer( GL_UNIFORM_BUFFER, 0 );
+
+		glBindBufferRange( GL_UNIFORM_BUFFER, 3, lightBuffer, 0, sizeof( GfxLighing ) );
+	}
+
+	// allocate object buffer
+	{
+		glGenBuffers( 1, &objectBuffer );
+		glBindBuffer( GL_UNIFORM_BUFFER, objectBuffer );
+		glBufferData( GL_UNIFORM_BUFFER, sizeof( glm::mat3 ), NULL, GL_DYNAMIC_DRAW );
+		glBindBuffer( GL_UNIFORM_BUFFER, 0 );
+
+		glBindBufferRange( GL_UNIFORM_BUFFER, 1, objectBuffer, 0, sizeof( glm::mat4 ) );
+	}
+
 }
 
 void GfxWorker::render()
@@ -58,6 +94,7 @@ void GfxWorker::render()
 	{
 		value.batches.clear();
 	}
+	frame.lighting.setDirty();
 }
 
 void GfxWorker::clear() {}
@@ -221,7 +258,29 @@ void GfxWorker::prepareDraw()
 		std::reverse( batch.entities.begin(), batch.entities.end() );
 	}
 
+	// update camera buffer
+	{
+		glBindBuffer( GL_UNIFORM_BUFFER, cameraBuffer );
+		glBufferSubData( GL_UNIFORM_BUFFER, 0, sizeof( glm::mat4 ), glm::value_ptr( frame.camera.viewMatrix ) );
+		glBufferSubData( GL_UNIFORM_BUFFER, sizeof( glm::mat4 ), sizeof( glm::mat4 ), glm::value_ptr( frame.camera.projectionMatrix ) );
+		glBindBuffer( GL_UNIFORM_BUFFER, 0 );
+	}
+
+	// update light buffer
+	{
+		for (auto& [id, properties] : frame.lightProperties)
+		{
+			properties.lightPosition = frame.modelMatrices[id][3];
+			frame.lighting.addLight( properties );
+		}
+		frame.lighting.viewPosition = frame.camera.viewPosition;
+
+		glBindBuffer( GL_UNIFORM_BUFFER, lightBuffer );
+		glBufferSubData( GL_UNIFORM_BUFFER, 0, sizeof( GfxLighing ), (void*)&frame.lighting );
+		glBindBuffer( GL_UNIFORM_BUFFER, 0 );
+	}
 }
+
 
 void GfxWorker::setTexture( unsigned id, const SetTextureCmd& cmd )
 {
