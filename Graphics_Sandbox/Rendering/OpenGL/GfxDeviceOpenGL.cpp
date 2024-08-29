@@ -279,6 +279,18 @@ RenderTarget GfxDeviceOpenGL::createRenderTarget( unsigned int width, unsigned i
 	return buffer;
 }
 
+GfxHandle GfxDeviceOpenGL::allocateConstantBuffer( int size, int usage, int bindPosition )
+{
+	GLuint handle;
+	glGenBuffers( 1, &handle );
+	glBindBuffer( GL_UNIFORM_BUFFER, handle );
+	glBufferData( GL_UNIFORM_BUFFER, size, NULL, GL_DYNAMIC_DRAW );
+	glBindBuffer( GL_UNIFORM_BUFFER, 0 );
+
+	glBindBufferRange( GL_UNIFORM_BUFFER, bindPosition, handle, 0, size );
+	return handle;
+}
+
 void GfxDeviceOpenGL::deleteRenderTarget( RenderTarget& frameBuffer )
 {
 	glBindFramebuffer( GL_FRAMEBUFFER, frameBuffer.target );
@@ -397,6 +409,13 @@ void GfxDeviceOpenGL::bindRenderTargetResource( RenderTargetType type, unsigned 
 
 	glActiveTexture( GL_TEXTURE0 + bindPosition );
 	glBindTexture( GL_TEXTURE_2D, renderTarget.colorBuffer );
+}
+
+void GfxDeviceOpenGL::updateConstantBuffer( GfxHandle buffer, void* data, int size, int offset )
+{
+	glBindBuffer( GL_UNIFORM_BUFFER, buffer );
+	glBufferSubData( GL_UNIFORM_BUFFER, offset, size, data );
+	glBindBuffer( GL_UNIFORM_BUFFER, 0 );
 }
 
 void GfxDeviceOpenGL::dispatchIndexedDirect( id::MeshId meshId )

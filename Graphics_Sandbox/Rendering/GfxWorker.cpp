@@ -36,7 +36,8 @@ namespace
 
 	GfxFrame frame{};
 
-	struct GfxPostProcessing {
+	struct GfxPostProcessing 
+	{
 		unsigned args1 = ~0u;
 		unsigned args2 = ~0u;
 		unsigned args3 = ~0u;
@@ -44,10 +45,10 @@ namespace
 	};
 
 
-	GLuint cameraBuffer = ~0u;
-	GLuint lightBuffer = ~0u;
-	GLuint postProcessingBuffer = ~0u;
-	GLuint globalLightingSettingsBuffer = ~0u;
+	GfxHandle cameraBuffer = ~0u;
+	GfxHandle lightBuffer = ~0u;
+	GfxHandle postProcessingBuffer = ~0u;
+	GfxHandle globalLightingSettingsBuffer = ~0u;
 
 	//GLuint objectBuffer = ~0u;
 
@@ -112,43 +113,22 @@ void GfxWorker::setApi( int api )
 
 	// allocate camera buffer
 	{
-		glGenBuffers( 1, &cameraBuffer );
-		glBindBuffer( GL_UNIFORM_BUFFER, cameraBuffer );
-		glBufferData( GL_UNIFORM_BUFFER, 2 * sizeof( glm::mat4 ), NULL, GL_DYNAMIC_DRAW );
-		glBindBuffer( GL_UNIFORM_BUFFER, 0 );
-
-		glBindBufferRange( GL_UNIFORM_BUFFER, 0, cameraBuffer, 0, 2 * sizeof( glm::mat4 ) );
+		cameraBuffer = _device->allocateConstantBuffer( 2 * sizeof( glm::mat4 ), 0, 0 );
 	}
 
 	// allocate lights buffer
 	{
-		glGenBuffers( 1, &lightBuffer );
-		glBindBuffer( GL_UNIFORM_BUFFER, lightBuffer );
-		glBufferData( GL_UNIFORM_BUFFER, sizeof( GfxLighing ), NULL, GL_DYNAMIC_DRAW );
-		glBindBuffer( GL_UNIFORM_BUFFER, 0 );
-
-		glBindBufferRange( GL_UNIFORM_BUFFER, 3, lightBuffer, 0, sizeof( GfxLighing ) );
+		lightBuffer = _device->allocateConstantBuffer( sizeof( GfxLighing ), 0, 3 );
 	}
 
 	// allocate object buffer
 	{
-		glGenBuffers( 1, &postProcessingBuffer );
-		glBindBuffer( GL_UNIFORM_BUFFER, postProcessingBuffer );
-		glBufferData( GL_UNIFORM_BUFFER, sizeof( GfxPostProcessing ), NULL, GL_DYNAMIC_DRAW );
-		glBindBuffer( GL_UNIFORM_BUFFER, 0 );
-
-		glBindBufferRange( GL_UNIFORM_BUFFER, 4, postProcessingBuffer, 0, sizeof( GfxPostProcessing ) );
+		postProcessingBuffer = _device->allocateConstantBuffer( sizeof( GfxPostProcessing ), 0, 4 );
 	}
 
 	// allocate global lighting settings buffer
 	{
-		glGenBuffers( 1, &globalLightingSettingsBuffer );
-		glBindBuffer( GL_UNIFORM_BUFFER, globalLightingSettingsBuffer );
-		glBufferData( GL_UNIFORM_BUFFER, sizeof( LightingSettings ), NULL, GL_DYNAMIC_DRAW );
-		glBindBuffer( GL_UNIFORM_BUFFER, 0 );
-
-		glBindBufferRange( GL_UNIFORM_BUFFER, 5, globalLightingSettingsBuffer, 0, sizeof( LightingSettings ) );
-	}
+		globalLightingSettingsBuffer = _device->allocateConstantBuffer( sizeof( LightingSettings ), 0, 5 );}
 }
 
 void GfxWorker::render()
@@ -326,12 +306,12 @@ void GfxWorker::prepareDraw()
 		std::reverse( batch.entities.begin(), batch.entities.end() );
 	}
 
+	// NOTE - don't update everything every frame
+	// 
 	// update camera buffer
 	{
-		glBindBuffer( GL_UNIFORM_BUFFER, cameraBuffer );
-		glBufferSubData( GL_UNIFORM_BUFFER, 0, sizeof( glm::mat4 ), glm::value_ptr( frame.camera.viewMatrix ) );
-		glBufferSubData( GL_UNIFORM_BUFFER, sizeof( glm::mat4 ), sizeof( glm::mat4 ), glm::value_ptr( frame.camera.projectionMatrix ) );
-		glBindBuffer( GL_UNIFORM_BUFFER, 0 );
+		_device->updateConstantBuffer( cameraBuffer, (void*)glm::value_ptr( frame.camera.viewMatrix ), sizeof( glm::mat4 ), 0 );
+		_device->updateConstantBuffer( cameraBuffer, (void*)glm::value_ptr( frame.camera.projectionMatrix ), sizeof( glm::mat4 ), sizeof( glm::mat4 ) );
 	}
 
 	// update light buffer
@@ -343,25 +323,18 @@ void GfxWorker::prepareDraw()
 		}
 		frame.lighting.viewPosition = frame.camera.viewPosition;
 
-		glBindBuffer( GL_UNIFORM_BUFFER, lightBuffer );
-		glBufferSubData( GL_UNIFORM_BUFFER, 0, sizeof( GfxLighing ), (void*)&frame.lighting );
-		glBindBuffer( GL_UNIFORM_BUFFER, 0 );
+		_device->updateConstantBuffer( lightBuffer, (void*)&frame.lighting, sizeof( GfxLighing ), 0 );
 	}
 
 	// update post provcessing data
 	{
 		GfxPostProcessing args = resolvePostProcessingArgs( frame );
-
-		glBindBuffer( GL_UNIFORM_BUFFER, postProcessingBuffer );
-		glBufferSubData( GL_UNIFORM_BUFFER, 0, sizeof( GfxPostProcessing ), (void*)&args );
-		glBindBuffer( GL_UNIFORM_BUFFER, 0 );
+		_device->updateConstantBuffer( postProcessingBuffer, (void*)&args, sizeof( GfxPostProcessing ), 0 );
 	}
 
 	// update global lighting settings
 	{
-		glBindBuffer( GL_UNIFORM_BUFFER, globalLightingSettingsBuffer );
-		glBufferSubData( GL_UNIFORM_BUFFER, 0, sizeof( LightingSettings ), (void*)&frame.settings.lightingSettings );
-		glBindBuffer( GL_UNIFORM_BUFFER, 0 );
+		_device->updateConstantBuffer( globalLightingSettingsBuffer, (void*)&frame.settings.lightingSettings, sizeof( LightingSettings ), 0 );
 	}
 }
 

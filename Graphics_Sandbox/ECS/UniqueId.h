@@ -35,7 +35,6 @@ UNIQUE_ID( TextureId );
 UNIQUE_ID( MaterialId );
 UNIQUE_ID( CameraId );
 UNIQUE_ID( ShaderId );
-UNIQUE_ID( ConsBufferId );
 UNIQUE_ID( SceneId );
 
 #if defined(__clang__)

@@ -112,6 +112,29 @@ struct GfxDeviceArgs
 	std::vector<id::TextureId> textureDescriptorIds{};
 };
 
+struct GfxBuffer 
+{
+	void* data = nullptr;
+	int size = 0; 
+	int usage = 0;
+};
+
+// THE API FOR CONSTANT BUFFERS SHOULD BE
+/* 
+
+auto handle = device->AllocateConstBuffer(size, usage, bindPosition);
+
+if (handle.dirty())
+{
+	device->UpdateConstBuffer( handle, data, size );
+	// and
+	device->UpdateDynamicBuffer( handle, data, size );
+}
+
+
+*/
+
+
 class GfxDevice
 {
 public:
@@ -122,12 +145,15 @@ public:
 	virtual GfxTexture createTexture( id::TextureId textureId, unsigned bindPosition, const TextureDescriptor& descriptor ) = 0;
 	virtual VertexBuffer createVertexBuffer( id::MeshId meshId, const rendering::VertexData& vertexData ) = 0;
 	virtual RenderTarget createRenderTarget( unsigned int width, unsigned int height ) = 0;
+	virtual GfxHandle allocateConstantBuffer( int size, int usage, int bindPosition ) = 0;
 
 	virtual ShaderProgram& bindShader( id::ShaderId id ) = 0;
 	virtual ShaderProgram& bindShader( id::ShaderId id, const ShaderArgs& args ) = 0;
 	virtual GfxTexture& bindTexture( id::TextureId textureId, unsigned bindPosition = ~0u ) = 0;
 	virtual RenderTarget& bindRenderTarget( RenderTargetType type ) = 0;
 	virtual void bindRenderTargetResource( RenderTargetType type, unsigned bindPosition ) = 0;
+	virtual void updateConstantBuffer( GfxHandle buffer, void* data, int size, int offset ) = 0;
+	
 
 	// drawing 
 	virtual void dispatchIndexedDirect( id::MeshId meshId ) = 0;

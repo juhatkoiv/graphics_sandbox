@@ -171,9 +171,6 @@ struct DrawCallBatch
 };
 
 
-using VSConstBuffer = ConstBuffer;
-using PSConstBuffer = ConstBuffer;
-
 enum class Queue 
 {
 	Opaque,

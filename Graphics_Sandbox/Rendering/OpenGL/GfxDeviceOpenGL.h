@@ -48,8 +48,7 @@ private:
 	LinearMap<id::ShaderId, ShaderProgram, 15> _shadersLookup{};
 	LinearMap<id::TextureId, GfxTexture, 10> _textureLookup{};
 	LinearMap<id::MeshId, VertexBuffer, 10> _vertexBufferLookup{};
-	LinearMap<id::ConsBufferId, VSConstBuffer, 10> _vsConstBuffers;
-	LinearMap<id::ConsBufferId, PSConstBuffer, 10> _psConstBuffers;
+	LinearMap<int, GfxHandle, 10> _constBuffers;
 	
 	id::ShaderId _activeShader = id::InvalidShaderId;
 
@@ -66,13 +65,15 @@ public:
 	GfxTexture createTexture( id::TextureId textureId, unsigned bindPosition, const TextureDescriptor& descriptor ) override;
 	VertexBuffer createVertexBuffer( id::MeshId meshId, const rendering::VertexData& vertexData ) override;
 	RenderTarget createRenderTarget( unsigned int width, unsigned int height ) override;
+	GfxHandle allocateConstantBuffer( int size, int usage, int bindPosition ) override;
 
 	ShaderProgram& bindShader( id::ShaderId id ) override;
 	ShaderProgram& bindShader( id::ShaderId shaderId, const ShaderArgs& args ) override;
 	GfxTexture& bindTexture( id::TextureId textureId, unsigned bindPosition = ~0u ) override;
 	RenderTarget& bindRenderTarget( RenderTargetType type ) override;
 	void bindRenderTargetResource( RenderTargetType type, unsigned bindPosition ) override;
-	
+	void updateConstantBuffer( GfxHandle buffer, void* data, int size, int offset ) override;
+
 	void clear() override;
 
 	// DRAW 
