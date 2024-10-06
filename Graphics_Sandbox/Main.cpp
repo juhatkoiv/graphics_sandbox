@@ -3,6 +3,7 @@
 #include "Editor/Editor.h"
 #include "MainLoop.h"
 
+#include "Rendering/ShaderCompilation/ShaderCompilation.h"
 /*
 * ================
 * GOALS:
@@ -119,6 +120,12 @@
 
 int main( int argc, char** argv )
 {
+	if (shader_compilation::generate_spirv()) {
+		std::cout << "SPIRV generated successfully." << std::endl;
+	}
+	else {
+		std::cout << "SPIRV generation failed." << std::endl;
+	}
 	MainLoop::Args args
 	{
 		"Graphics Sandbox",

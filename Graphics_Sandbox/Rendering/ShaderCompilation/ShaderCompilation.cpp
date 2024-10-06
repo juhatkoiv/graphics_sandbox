@@ -11,6 +11,8 @@
 namespace fs = std::filesystem;
 
 namespace {
+	static const char* SHADER_INPUT_FOLDER = "data/shaders";
+	
 	enum class ShaderType {
 		Vertex = 0,
 		Fragment = 1,
@@ -69,13 +71,13 @@ namespace {
 
 bool shader_compilation::generate_spirv() {
 
-	fs::path shadersFolder = fs::current_path().append( "shaders" );
+	fs::path shadersFolder = fs::current_path().append( SHADER_INPUT_FOLDER ).append( "src" );
 	if (!fs::exists( shadersFolder )) throw;
 
-	fs::path outputFolder = fs::current_path().append( "shaders" ).append( "spv" );
+	fs::path outputFolder = fs::current_path().append( SHADER_INPUT_FOLDER ).append( "spv" );
 	if (!fs::exists( outputFolder )) throw;
 
-	fs::path tempFolder = fs::current_path().append( "shaders" ).append( "temp" );
+	fs::path tempFolder = fs::current_path().append( SHADER_INPUT_FOLDER ).append( "temp" );
 	if (!fs::exists( tempFolder )) {
 
 		if (!fs::create_directory( tempFolder )) {
