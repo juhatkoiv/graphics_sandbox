@@ -93,6 +93,9 @@
     <Filter Include="Source Files\Hash">
       <UniqueIdentifier>{bedc399c-6989-46e7-bcbb-6c4931f51f85}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Rendering\ShaderCompilation">
+      <UniqueIdentifier>{34a9f0c4-a17c-4ca3-ba01-8b070418a9f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -262,6 +265,9 @@
     </ClCompile>
     <ClCompile Include="Rendering\FeatureFilters.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\ShaderCompilation\ShaderCompilation.cpp">
+      <Filter>Source Files\Rendering\ShaderCompilation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -578,6 +584,9 @@
       <Filter>Source Files\Hash</Filter>
     </ClInclude>
     <ClInclude Include="Rendering\FeatureFilters.h" />
+    <ClInclude Include="Rendering\ShaderCompilation\ShaderCompilation.h">
+      <Filter>Source Files\Rendering\ShaderCompilation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

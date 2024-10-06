@@ -219,6 +219,7 @@ xcopy "$(ProjectDir)data\*.*" "$(SolutionDir)x64\Debug\data" /Y /I /E</Command>
     <ClCompile Include="Rendering\RenderQueue.cpp" />
     <ClCompile Include="Rendering\Serialization\RendererSerializationDefines.cpp" />
     <ClCompile Include="Rendering\ShaderBase.cpp" />
+    <ClCompile Include="Rendering\ShaderCompilation\ShaderCompilation.cpp" />
     <ClCompile Include="Rendering\ShaderProgram.cpp" />
     <ClCompile Include="Rendering\SpatialPartition.cpp" />
     <ClCompile Include="Rendering\VertexBuffer.cpp" />
@@ -314,6 +315,7 @@ xcopy "$(ProjectDir)data\*.*" "$(SolutionDir)x64\Debug\data" /Y /I /E</Command>
     <ClInclude Include="Rendering\RenderFeature.h" />
     <ClInclude Include="Rendering\Serialization\RendererJsons.h" />
     <ClInclude Include="Rendering\Serialization\RendererSerializationDefines.h" />
+    <ClInclude Include="Rendering\ShaderCompilation\ShaderCompilation.h" />
     <ClInclude Include="Rendering\SpatialPartition.h" />
     <ClInclude Include="Resources\Handle.h" />
     <ClInclude Include="Resources\ResourceContainer.h" />
