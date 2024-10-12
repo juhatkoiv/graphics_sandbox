@@ -24,40 +24,27 @@ namespace {
 	ShaderType getShaderType( const std::string& pathStr ) {
 
 		size_t max = pathStr.length() - 1;
-		if (pathStr.find( "vert" ) < max) {
+		if (pathStr.find( ".vert" ) < max) {
 			return ShaderType::Vertex;
 		}
 
-		if (pathStr.find( "frag" ) < max) {
+		if (pathStr.find( ".frag" ) < max) {
 			return ShaderType::Fragment;
 		}
 		throw;
 	}
 
-	std::array<std::string, ARR_SIZE> glslSrcSuffices = { "_vert.glsl", "_frag.glsl" };
-	std::array<std::string, ARR_SIZE> tempSrcSuffices = { ".vert", ".frag" };
+	std::array<std::string, ARR_SIZE> glslSrcSuffices = { ".vert", ".frag" };
 	std::array<std::string, ARR_SIZE> spvDstSuffices = { "_vert.spv", "_frag.spv" };
 	std::array<shaderc_shader_kind, ARR_SIZE> shaderKinds = { shaderc_shader_kind::shaderc_glsl_vertex_shader, shaderc_shader_kind::shaderc_glsl_fragment_shader };
-
-	std::string parseDstFileName( const std::string& pathStr, ShaderType shaderType ) {
-		
-		size_t lastFolderSeparatorIndex = pathStr.find_last_of( "\\" );
-		std::string fileName = pathStr.substr( lastFolderSeparatorIndex );
-
-		size_t index = static_cast<size_t>( shaderType );
-		size_t suffixIndex = fileName.find( glslSrcSuffices[index] );
-		std::string dstFileName = fileName;
-
-		return dstFileName.replace( suffixIndex, dstFileName.length(), tempSrcSuffices[index] );
-	}
 
 	std::string parseSpvFileName( const std::string& tempPathStr, ShaderType shaderType ) {
 		
 		size_t lastFolderSeparatorIndex = tempPathStr.find_last_of( "\\" );
-		std::string fileName = tempPathStr.substr( lastFolderSeparatorIndex );
+		std::string fileName = tempPathStr.substr( lastFolderSeparatorIndex + 1 );
 
 		size_t index = static_cast<size_t>( shaderType );
-		size_t suffixIndex = fileName.find( tempSrcSuffices[index]);
+		size_t suffixIndex = fileName.find( glslSrcSuffices[index]);
 
 		return fileName.replace( suffixIndex, fileName.length(), spvDstSuffices[index] );
 	}
@@ -71,51 +58,20 @@ namespace {
 
 bool shader_compilation::generate_spirv() {
 
-	fs::path shadersFolder = fs::current_path().append( SHADER_INPUT_FOLDER ).append( "src" );
+	fs::path shadersFolder = fs::current_path().append( SHADER_INPUT_FOLDER ).append( "glsl" );
 	if (!fs::exists( shadersFolder )) throw;
 
 	fs::path outputFolder = fs::current_path().append( SHADER_INPUT_FOLDER ).append( "spv" );
 	if (!fs::exists( outputFolder )) throw;
 
-	fs::path tempFolder = fs::current_path().append( SHADER_INPUT_FOLDER ).append( "temp" );
-	if (!fs::exists( tempFolder )) {
-
-		if (!fs::create_directory( tempFolder )) {
-			throw;
-		}
-	}
-
 	auto di = fs::directory_iterator( shadersFolder );
 	
-	for (const fs::directory_entry& d : di) {
-		if (d.is_directory())
-			continue;
-
-		fs::path path = d.path();
-
-		std::string pathStr = path.string();
-		ShaderType shaderType = getShaderType( pathStr );
-
-		std::string fileName = parseDstFileName( pathStr, shaderType );
-		std::string finalPathString = tempFolder.string() + fileName;
-
-		std::cout << finalPathString << std::endl;
-
-		fs::path finalPath{ finalPathString };
-
-		if (!fs::copy_file( path, finalPath, fs::copy_options::overwrite_existing )) {
-			throw;
-		}
-	}
-
 	shaderc::Compiler compiler{};
 	shaderc::CompileOptions compileOptions{};
 
 	compileOptions.SetOptimizationLevel( shaderc_optimization_level_performance );
 
-	auto si = fs::directory_iterator( tempFolder );
-
-	for (const fs::directory_entry& d : si) {
+	for (const fs::directory_entry& d : di) {
 		fs::path path = d.path();
 		std::string pathStr = path.string();
 
@@ -135,7 +91,7 @@ bool shader_compilation::generate_spirv() {
 		}
 
 		std::string fileName = parseSpvFileName( pathStr, shaderType );
-		std::string finalOutputPath = outputFolder.string() + fileName;
+		std::string finalOutputPath = outputFolder.string() + "//" + fileName;
 
 		std::vector<uint32_t> spirv( compilationResult.cbegin(), compilationResult.cend() );
 
@@ -148,9 +104,6 @@ bool shader_compilation::generate_spirv() {
 		output.write( reinterpret_cast<const char*>( spirv.data() ), spirv.size() * sizeof( uint32_t ) );
 		output.close();
 	}
-
-	uintmax_t removeResult = fs::remove_all( tempFolder );
-	(void)removeResult;
 
 	return true;
 }

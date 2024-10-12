@@ -593,61 +593,61 @@
     <None Include=".gitignore">
       <Filter>Solution Files</Filter>
     </None>
-    <None Include="data\shaders\debug_line.frag">
+    <None Include="data\shaders\glsl\debug_line.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="data\shaders\empty.vert">
+    <None Include="data\shaders\glsl\empty.vert">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="data\shaders\error.frag">
+    <None Include="data\shaders\glsl\error.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="data\shaders\full_screen.frag">
+    <None Include="data\shaders\glsl\full_screen.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="data\shaders\full_screen.vert">
+    <None Include="data\shaders\glsl\full_screen.vert">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="data\shaders\full_screen_blur_horizontal.frag">
+    <None Include="data\shaders\glsl\full_screen_blur_horizontal.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="data\shaders\full_screen_blur_vertical.frag">
+    <None Include="data\shaders\glsl\full_screen_blur_vertical.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="data\shaders\full_screen_chrome_aberrated.frag">
+    <None Include="data\shaders\glsl\full_screen_chrome_aberrated.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="data\shaders\full_screen_color_corrected.frag">
+    <None Include="data\shaders\glsl\full_screen_color_corrected.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="data\shaders\full_screen_inverted_color.frag">
+    <None Include="data\shaders\glsl\full_screen_inverted_color.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="data\shaders\full_screen_pixelated.frag">
+    <None Include="data\shaders\glsl\full_screen_pixelated.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="data\shaders\lambertian.frag">
+    <None Include="data\shaders\glsl\lambertian.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="data\shaders\model_view_projection.vert">
+    <None Include="data\shaders\glsl\model_view_projection.vert">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="data\shaders\model_view_projection_instanced.vert">
+    <None Include="data\shaders\glsl\model_view_projection_instanced.vert">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="data\shaders\model_view_projection_scaled.vert">
+    <None Include="data\shaders\glsl\model_view_projection_scaled.vert">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="data\shaders\single_color.frag">
+    <None Include="data\shaders\glsl\single_color.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="data\shaders\sprite_default.frag">
+    <None Include="data\shaders\glsl\skybox.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="data\shaders\skybox.vert">
+    <None Include="data\shaders\glsl\skybox.vert">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="data\shaders\skybox.frag">
+    <None Include="data\shaders\glsl\sprite_default.frag">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

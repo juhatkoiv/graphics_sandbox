@@ -344,25 +344,63 @@ xcopy "$(ProjectDir)data\*.*" "$(SolutionDir)x64\Debug\data" /Y /I /E</Command>
   <ItemGroup>
     <None Include=".gitignore" />
     <None Include="cpp.hint" />
-    <None Include="data\shaders\debug_line.frag" />
-    <None Include="data\shaders\empty.vert" />
-    <None Include="data\shaders\error.frag" />
-    <None Include="data\shaders\full_screen.frag" />
-    <None Include="data\shaders\full_screen.vert" />
-    <None Include="data\shaders\full_screen_blur_horizontal.frag" />
-    <None Include="data\shaders\full_screen_blur_vertical.frag" />
-    <None Include="data\shaders\full_screen_chrome_aberrated.frag" />
-    <None Include="data\shaders\full_screen_color_corrected.frag" />
-    <None Include="data\shaders\full_screen_inverted_color.frag" />
-    <None Include="data\shaders\full_screen_pixelated.frag" />
-    <None Include="data\shaders\lambertian.frag" />
-    <None Include="data\shaders\model_view_projection.vert" />
-    <None Include="data\shaders\model_view_projection_instanced.vert" />
-    <None Include="data\shaders\model_view_projection_scaled.vert" />
-    <None Include="data\shaders\skybox.vert" />
-    <None Include="data\shaders\single_color.frag" />
-    <None Include="data\shaders\skybox.frag" />
-    <None Include="data\shaders\sprite_default.frag" />
+    <None Include="data\shaders\glsl\debug_line.frag">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="data\shaders\glsl\empty.vert">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="data\shaders\glsl\error.frag">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="data\shaders\glsl\full_screen.frag">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="data\shaders\glsl\full_screen.vert">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="data\shaders\glsl\full_screen_blur_horizontal.frag">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="data\shaders\glsl\full_screen_blur_vertical.frag">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="data\shaders\glsl\full_screen_chrome_aberrated.frag">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="data\shaders\glsl\full_screen_color_corrected.frag">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="data\shaders\glsl\full_screen_inverted_color.frag">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="data\shaders\glsl\full_screen_pixelated.frag">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="data\shaders\glsl\lambertian.frag">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="data\shaders\glsl\model_view_projection.vert">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="data\shaders\glsl\model_view_projection_instanced.vert">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="data\shaders\glsl\model_view_projection_scaled.vert">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="data\shaders\glsl\single_color.frag">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="data\shaders\glsl\skybox.frag">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="data\shaders\glsl\skybox.vert">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="data\shaders\glsl\sprite_default.frag">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

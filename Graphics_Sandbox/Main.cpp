@@ -118,14 +118,54 @@
 *   TODO - Handle transparent ordering in Renderer.
 */
 
-int main( int argc, char** argv )
-{
-	if (shader_compilation::generate_spirv()) {
-		std::cout << "SPIRV generated successfully." << std::endl;
+enum class ExecutionType {
+	ShaderCompilation,
+	Editor,
+	ERROR
+};
+;
+
+ExecutionType parseArgs( int argc, char** argv ) {
+	if (argc > 1) {
+		std::string arg = argv[1];
+		if (arg == "-shader_compilation") {
+			return ExecutionType::ShaderCompilation;
+		}
+		else if (arg == "-editor") {
+			return ExecutionType::Editor;
+		}
 	}
-	else {
-		std::cout << "SPIRV generation failed." << std::endl;
+	return ExecutionType::ERROR;
+}
+
+int main( int argc, char** argv ) {
+	ExecutionType executionType = parseArgs( argc, argv );
+	if (executionType == ExecutionType::ERROR) {
+		std::cout << "Invalid arguments." << std::endl;
+		return -1;
 	}
+	
+	if (executionType == ExecutionType::ShaderCompilation) {
+		if (shader_compilation::generate_spirv()) {
+			std::cout << "SPIRV generated successfully." << std::endl;
+		}
+		else {
+			std::cout << "SPIRV generation failed." << std::endl;
+			return -2;
+		}
+	}
+	else if (executionType == ExecutionType::Editor) {
+		MainLoop::Args args
+		{
+			"Graphics Sandbox",
+			1600,
+			1000
+		};
+
+		MainLoop mainLoop( args );
+		mainLoop.run();
+	}
+
 	MainLoop::Args args
 	{
 		"Graphics Sandbox",
