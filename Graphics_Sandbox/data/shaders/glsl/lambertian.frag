@@ -1,6 +1,4 @@
-#version 460 core
-
-#define LIGHT_COUNT 20
+#version 450
 
 layout (location = 0) out vec4 outColor;
 
@@ -16,9 +14,8 @@ struct LightProperties
     float attenuation;
 };
 
-layout(std140, binding = 3) uniform Lighting
-{
-    LightProperties lights[LIGHT_COUNT];
+layout(std140, binding = 3) uniform Lighting {
+    LightProperties lights[20];
     vec3 viewPos;
     int lightCount;
 };

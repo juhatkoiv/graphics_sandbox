@@ -1,4 +1,4 @@
-#version 460 core
+#version 450
 
 #define TWO_PI_SQUARED 2.50662827463f
 

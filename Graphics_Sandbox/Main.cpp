@@ -121,6 +121,7 @@
 enum class ExecutionType {
 	ShaderCompilation,
 	Editor,
+	Both,
 	ERROR
 };
 ;
@@ -135,6 +136,9 @@ ExecutionType parseArgs( int argc, char** argv ) {
 			return ExecutionType::Editor;
 		}
 	}
+	else if (argc == 1) {
+		return ExecutionType::Both;
+	}
 	return ExecutionType::ERROR;
 }
 
@@ -146,11 +150,13 @@ int main( int argc, char** argv ) {
 	}
 	
 	if (executionType == ExecutionType::ShaderCompilation) {
-		if (shader_compilation::generate_spirv()) {
+		CompilationResult result = shader_compilation::generate_spirv();
+		if (result.success()) {
 			std::cout << "SPIRV generated successfully." << std::endl;
 		}
 		else {
-			std::cout << "SPIRV generation failed." << std::endl;
+			auto errorMsg = result.getErrors();
+			std::cout << "SPIRV generation failed." << "\n" << errorMsg << std::endl;
 			return -2;
 		}
 	}
@@ -165,15 +171,26 @@ int main( int argc, char** argv ) {
 		MainLoop mainLoop( args );
 		mainLoop.run();
 	}
+	else if (executionType == ExecutionType::Both) {
+		CompilationResult result = shader_compilation::generate_spirv();
+		if (result.success()) {
+			std::cout << "SPIRV generated successfully." << std::endl;
+		}
+		else {
+			auto errorMsg = result.getErrors();
+			std::cout << "SPIRV generation failed." << "\n" << errorMsg << std::endl;
+			return -2;
+		}
 
-	MainLoop::Args args
-	{
-		"Graphics Sandbox",
-		1600,
-		1000
-	};
+		MainLoop::Args args
+		{
+			"Graphics Sandbox",
+			1600,
+			1000
+		};
 
-	MainLoop mainLoop( args );
-	mainLoop.run();
+		MainLoop mainLoop( args );
+		mainLoop.run();
+	}
 	return 0;
 }

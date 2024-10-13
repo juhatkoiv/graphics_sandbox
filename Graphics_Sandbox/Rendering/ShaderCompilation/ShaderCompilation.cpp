@@ -1,11 +1,13 @@
 #include "Precompiled/Precompiled.h"
 #include "ShaderCompilation.h"
 
-#include <filesystem>
-#include <iostream>
-#include <fstream>
-#include <string>
 #include <array>
+#include <filesystem>
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <vector>
+
 #include "shaderc/shaderc.hpp"
 
 namespace fs = std::filesystem;
@@ -56,7 +58,38 @@ namespace {
 
 }
 
-bool shader_compilation::generate_spirv() {
+CompilationResult shader_compilation::load_as_spv( const std::string& path ) {
+	CompilationResult result{};
+
+	shaderc::Compiler compiler{};
+	shaderc::CompileOptions compileOptions{};
+
+	compileOptions.SetOptimizationLevel( shaderc_optimization_level_performance );
+	compileOptions.SetTargetEnvironment( shaderc_target_env_opengl, shaderc_env_version_opengl_4_5 );
+
+	ShaderType shaderType = getShaderType( path );
+
+	std::ifstream ifs( path );
+	std::string content( (std::istreambuf_iterator<char>( ifs )),
+		(std::istreambuf_iterator<char>()) );
+
+	shaderc_shader_kind shaderKind = getShadercShaderKind( shaderType );
+	shaderc::SpvCompilationResult compilationResult = compiler.CompileGlslToSpv(
+		content, shaderKind, path.c_str(), compileOptions );
+
+	if (compilationResult.GetCompilationStatus() != shaderc_compilation_status_success) {
+		result.errors.push_back( "Shader compilation failed:" + compilationResult.GetErrorMessage() );
+		return result;
+	}
+
+	std::vector<uint32_t> spirv( compilationResult.cbegin(), compilationResult.cend() );
+	result.spirv = spirv;
+	return result;
+}
+
+CompilationResult shader_compilation::generate_spirv() {
+
+	CompilationResult result{};
 
 	fs::path shadersFolder = fs::current_path().append( SHADER_INPUT_FOLDER ).append( "glsl" );
 	if (!fs::exists( shadersFolder )) throw;
@@ -70,6 +103,7 @@ bool shader_compilation::generate_spirv() {
 	shaderc::CompileOptions compileOptions{};
 
 	compileOptions.SetOptimizationLevel( shaderc_optimization_level_performance );
+	compileOptions.SetTargetEnvironment( shaderc_target_env_opengl, shaderc_env_version_opengl_4_5 );
 
 	for (const fs::directory_entry& d : di) {
 		fs::path path = d.path();
@@ -86,8 +120,8 @@ bool shader_compilation::generate_spirv() {
 			content, shaderKind, pathStr.c_str(), compileOptions);
 		
 		if (compilationResult.GetCompilationStatus() != shaderc_compilation_status_success) {
-			std::cerr << "Shader compilation failed: " << compilationResult.GetErrorMessage();
-			return false;
+			result.errors.push_back( "Shader compilation failed:" + compilationResult.GetErrorMessage() );
+			continue;
 		}
 
 		std::string fileName = parseSpvFileName( pathStr, shaderType );
@@ -98,12 +132,12 @@ bool shader_compilation::generate_spirv() {
 		std::ofstream output{ finalOutputPath, std::ios::binary };
 		if (!output.is_open()) {
 			std::cerr << "Failed to open output file." << std::endl;
-			return false;
+			throw;
 		}
 
 		output.write( reinterpret_cast<const char*>( spirv.data() ), spirv.size() * sizeof( uint32_t ) );
 		output.close();
 	}
 
-	return true;
+	return result;
 }

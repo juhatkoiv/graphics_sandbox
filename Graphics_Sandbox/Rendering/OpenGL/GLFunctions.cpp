@@ -1,28 +1,56 @@
 #include "Precompiled/Precompiled.h"
 #include "GLFunctions.h"
 
-namespace gl 
+namespace gl
 {
-	bool validateLink(unsigned handle)
-	{
-		return validate(handle, GL_LINK_STATUS);
+	static std::string getShaderErrorString( unsigned handle ) {
+		int length;
+		glGetShaderiv( handle, GL_INFO_LOG_LENGTH, &length );
+		std::vector<char> infoLog{};
+		glGetShaderInfoLog( handle, length, NULL, infoLog.data() );
+		return std::string{ infoLog.data() };
 	}
 
-	bool validateCompile(unsigned handle)
-	{
-		return validate(handle, GL_COMPILE_STATUS);
+	GLStatus checkStatus( unsigned handle ) {
+		GLStatus result{};
+
+		GLenum error = glGetError();
+		if (error != GL_NO_ERROR) {
+			
+			std::string errorString = getShaderErrorString( handle );
+
+			result.errorMsg = errorString;
+			result.error = error;
+		}
+		return result;
 	}
 
-	bool validate(unsigned handle, GLenum type)
-	{
+	bool validateLink( unsigned handle ) {
 		int success;
-		glGetProgramiv(handle, type, &success);
+		glGetProgramiv( handle, GL_LINK_STATUS, &success );
 		if (!success)
 		{
 			char infoLog[512];
-			glGetProgramInfoLog(handle, 512, NULL, infoLog);
-			Logger::LogError(infoLog);
+			glGetProgramInfoLog( handle, 512, NULL, infoLog );
+			Logger::LogError( infoLog );
 		}
 		return success;
 	}
+
+	bool validateCompile( unsigned handle ) {
+		int success;
+		glGetShaderiv( handle, GL_COMPILE_STATUS, &success );
+		if (!success)
+		{
+			std::string error = getShaderErrorString( handle );
+			Logger::LogError( std::string{ error } );
+		}
+		return success;
+	}
+
+	bool validate( unsigned handle, GLenum type ) {
+		auto status = checkStatus( handle );
+		return status.ok();
+	}
+
 }

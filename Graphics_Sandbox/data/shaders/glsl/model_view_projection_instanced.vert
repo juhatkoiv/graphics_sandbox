@@ -1,4 +1,4 @@
-#version 460 core
+#version 450
 
 layout (location = 0) in vec3 aPosition;
 layout (location = 1) in vec3 aNormal;
@@ -24,7 +24,7 @@ layout(std140, binding = 0) uniform CameraData {
 
 void main() 
 {    
-    mat4 model = perObjectBuffer[gl_InstanceIndex].model;
+    mat4 model = perObjectBuffer[gl_InstanceID].model;
     FragPos = vec3(model * vec4(aPosition, 1.0));
     Normal = transpose(inverse(mat3(model))) * aNormal;
     TexCoord = aTexCoord;

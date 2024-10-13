@@ -10,6 +10,7 @@ BEGIN_NAMESPACE1( rendering )
 
 static void setErrorCallback()
 {
+	glEnable( GL_DEBUG_OUTPUT );
 	glfwSetErrorCallback( []( int error_code, const char* description )
 		{
 			Logger::LogError( description );
@@ -69,7 +70,7 @@ GfxDeviceOpenGL::GfxDeviceOpenGL( const GfxDeviceArgs& args )
 {
 	if (!gladLoadGL())
 	{
-		std::cout << "Failed to initialize OpenGL context" << std::endl;
+		printf( "Failed to initialize OpenGL context" );
 		exit( -1 );
 	}
 
@@ -78,7 +79,31 @@ GfxDeviceOpenGL::GfxDeviceOpenGL( const GfxDeviceArgs& args )
 		printf( "OpenGL %d.%d\n", GLVersion.major, GLVersion.minor );
 	}
 
+	printf("OpenGL Version: %s\n",  glGetString( GL_VERSION ) );
+	printf("GPU Vendor: %s\n", glGetString( GL_VENDOR ) );
+	printf("Renderer: %s\n",  glGetString( GL_RENDERER ) );
+	printf("GLSL Version: %s\n", glGetString( GL_SHADING_LANGUAGE_VERSION ) );
+
 	setErrorCallback();
+	//printf( "Supported Extensions: " << glGetString( GL_EXTENSIONS ) );
+
+	GLint numFormats = 0;
+	glGetIntegerv( GL_NUM_SHADER_BINARY_FORMATS, &numFormats );
+	if (numFormats > 0) {
+		std::vector<GLint> formats( numFormats );
+		glGetIntegerv( GL_SHADER_BINARY_FORMATS, formats.data() );
+		bool supported = std::find( formats.begin(), formats.end(), GL_SHADER_BINARY_FORMAT_SPIR_V_ARB ) != formats.end();
+		if (!supported) {
+			std::cerr << "Error: GL_SHADER_BINARY_FORMAT_SPIR_V_ARB is not supported." << std::endl;
+		}
+	}
+	else {
+		std::cerr << "Error: No shader binary formats are supported." << std::endl;
+	}
+
+	if (!GLAD_GL_ARB_gl_spirv) {
+		std::cerr << "GL_ARB_gl_spirv not supported by your GPU/driver." << std::endl;
+	}
 
 	// create render targets
 	{

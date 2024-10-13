@@ -1,4 +1,4 @@
-#version 460 core
+#version 450
 
 layout (location = 0) in vec3 aPosition;
 layout (location = 1) in vec3 aNormal;
@@ -17,11 +17,9 @@ layout (binding = 20) uniform Model {
     mat4 model;
 };
 
-void main() 
-{    
+void main() {
     FragPos = vec3(model * vec4(aPosition, 1.0));
     Normal = transpose(inverse(mat3(model))) * aNormal;
     TexCoord = aTexCoord;
-
     gl_Position = projection * view * model * vec4(aPosition, 1.0);
 }
