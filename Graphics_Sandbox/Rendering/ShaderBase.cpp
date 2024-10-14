@@ -8,24 +8,7 @@
 
 BEGIN_NAMESPACE1( rendering )
 
-ShaderBase::ShaderBase( const std::string& source, unsigned int shaderType )
-{
-	/*std::ifstream file;
-	file.open( source, std::ios::ate | std::ios::binary );
-	
-	if (!file.is_open()) {
-		throw std::runtime_error( "failed to open file!" );
-	}
-
-	size_t fileSize = (size_t)file.tellg();
-	std::vector<char> buffer( fileSize );
-
-	file.seekg( 0 );
-	file.read( buffer.data(), fileSize );
-
-	file.close();
-	*/
-	
+ShaderBase::ShaderBase( const std::string& source, unsigned int shaderType ) {
 	auto result = shader_compilation::load_as_spv( source );
 	if (!result.success()) {
 		std::cerr << "Error: Failed to load shader binary." << std::endl;
@@ -37,7 +20,6 @@ ShaderBase::ShaderBase( const std::string& source, unsigned int shaderType )
 	_handle = glCreateShader( shaderType );
 
 	glShaderBinary( 1, &_handle, GL_SHADER_BINARY_FORMAT_SPIR_V_ARB, buffer.data(), buffer.size() * sizeof( uint32_t ));
-	
 	gl::GLStatus status = gl::checkStatus( _handle );
 	if (!status.ok()) {
 		std::cerr << "Error: Failed to load shader binary. Error code: " << status.error << std::endl;
@@ -55,8 +37,7 @@ ShaderBase::ShaderBase( const std::string& source, unsigned int shaderType )
 
 	if (gl::validateCompile( _handle )) {
 		Logger::LogInfo( "Shader compiled successfully." );
-	}
-	else {
+	} else {
 		Logger::LogError( "Shader compilation failed." );
 		throw;
 	}

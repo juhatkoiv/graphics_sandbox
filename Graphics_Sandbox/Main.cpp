@@ -3,7 +3,6 @@
 #include "Editor/Editor.h"
 #include "MainLoop.h"
 
-#include "Rendering/ShaderCompilation/ShaderCompilation.h"
 /*
 * ================
 * GOALS:
@@ -118,79 +117,16 @@
 *   TODO - Handle transparent ordering in Renderer.
 */
 
-enum class ExecutionType {
-	ShaderCompilation,
-	Editor,
-	Both,
-	ERROR
-};
-;
-
-ExecutionType parseArgs( int argc, char** argv ) {
-	if (argc > 1) {
-		std::string arg = argv[1];
-		if (arg == "-shader_compilation") {
-			return ExecutionType::ShaderCompilation;
-		}
-		else if (arg == "-editor") {
-			return ExecutionType::Editor;
-		}
-	}
-	else if (argc == 1) {
-		return ExecutionType::Both;
-	}
-	return ExecutionType::ERROR;
-}
-
 int main( int argc, char** argv ) {
-	ExecutionType executionType = parseArgs( argc, argv );
-	if (executionType == ExecutionType::ERROR) {
-		std::cout << "Invalid arguments." << std::endl;
-		return -1;
-	}
+	MainLoop::Args args
+	{
+		"Graphics Sandbox",
+		1600,
+		1000
+	};
+
+	MainLoop mainLoop( args );
+	mainLoop.run();
 	
-	if (executionType == ExecutionType::ShaderCompilation) {
-		CompilationResult result = shader_compilation::generate_spirv();
-		if (result.success()) {
-			std::cout << "SPIRV generated successfully." << std::endl;
-		}
-		else {
-			auto errorMsg = result.getErrors();
-			std::cout << "SPIRV generation failed." << "\n" << errorMsg << std::endl;
-			return -2;
-		}
-	}
-	else if (executionType == ExecutionType::Editor) {
-		MainLoop::Args args
-		{
-			"Graphics Sandbox",
-			1600,
-			1000
-		};
-
-		MainLoop mainLoop( args );
-		mainLoop.run();
-	}
-	else if (executionType == ExecutionType::Both) {
-		CompilationResult result = shader_compilation::generate_spirv();
-		if (result.success()) {
-			std::cout << "SPIRV generated successfully." << std::endl;
-		}
-		else {
-			auto errorMsg = result.getErrors();
-			std::cout << "SPIRV generation failed." << "\n" << errorMsg << std::endl;
-			return -2;
-		}
-
-		MainLoop::Args args
-		{
-			"Graphics Sandbox",
-			1600,
-			1000
-		};
-
-		MainLoop mainLoop( args );
-		mainLoop.run();
-	}
 	return 0;
 }
