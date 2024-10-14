@@ -12,6 +12,7 @@ namespace gl {
 		}
 	};
 
+	std::string getShaderErrorString(unsigned handle);
 	bool validateLink(unsigned handle);
 	bool validateCompile(unsigned handle);
 	bool validate(unsigned handle, GLenum type);

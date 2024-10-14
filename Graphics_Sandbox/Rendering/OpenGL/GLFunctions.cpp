@@ -3,11 +3,14 @@
 
 namespace gl
 {
-	static std::string getShaderErrorString( unsigned handle ) {
+	std::string getShaderErrorString( unsigned handle ) {
 		int length;
 		glGetShaderiv( handle, GL_INFO_LOG_LENGTH, &length );
 		std::vector<char> infoLog{};
 		glGetShaderInfoLog( handle, length, NULL, infoLog.data() );
+		if (infoLog.empty()) {
+			return "No error message";
+		}
 		return std::string{ infoLog.data() };
 	}
 

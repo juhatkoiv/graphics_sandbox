@@ -64,7 +64,7 @@ CompilationResult shader_compilation::load_as_spv( const std::string& path ) {
 	shaderc::Compiler compiler{};
 	shaderc::CompileOptions compileOptions{};
 
-	compileOptions.SetOptimizationLevel( shaderc_optimization_level_performance );
+	//compileOptions.SetOptimizationLevel( shaderc_optimization_level_performance );
 	compileOptions.SetTargetEnvironment( shaderc_target_env_opengl, shaderc_env_version_opengl_4_5 );
 
 	ShaderType shaderType = getShaderType( path );

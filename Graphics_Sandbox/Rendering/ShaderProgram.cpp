@@ -19,8 +19,9 @@ ShaderProgram::ShaderProgram( const std::string& vertexSource, const std::string
 	glAttachShader( _handle, fragmentShader.GetHandle() );
 
 	glLinkProgram( _handle );
-
-	gl::validateLink( _handle );
+	if (!gl::validateLink( _handle )) {
+		printf( "Shader program failed to link:\n Vertex source:%s\n Fragment source:%s\n", vertexSource.c_str(), fragmentSource.c_str() );
+	}
 }
 
 void ShaderProgram::bind()
