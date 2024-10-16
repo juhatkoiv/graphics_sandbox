@@ -153,12 +153,9 @@ void GfxWorker::render()
 		matrixBuffer = _device->allocateConstantBuffer( sizeof( glm::mat4 ), 0, 20 );
 	}
 
-	static std::map<unsigned, GfxHandle> materialBuffers{};
-	if (materialBuffers.empty()) {
-		for (int i = 0; i < objects.entities.size(); i++)
-		{
-			materialBuffers[objects.entities[i]] = _device->allocateConstantBuffer( sizeof( glm::vec4 ) + sizeof( float ) * 2, 0, 4 );
-		}
+	static GfxHandle materialBuffer{};
+	if (materialBuffer == 0) {
+		materialBuffer = _device->allocateConstantBuffer( sizeof( glm::vec4 ) + sizeof( float ) * 2, 0, 4 );
 	}
 
 	struct GfxMaterial {
@@ -174,13 +171,11 @@ void GfxWorker::render()
 		_device->bindShader( shaderId );
 
 		auto meshId = frame.meshIdLookup[id];
-
 		auto mat = frame.modelMatrices[id];
 
 		_device->updateConstantBuffer( matrixBuffer, (void*)glm::value_ptr( mat ), sizeof( glm::mat4 ), 0 );
 
 		auto meshColor = queue.meshColors[id];
-		auto materialBuffer = materialBuffers[id];
 		_device->updateConstantBuffer( materialBuffer, (void*)glm::value_ptr( meshColor ), sizeof( glm::vec4 ), 0 );
 
 		if (frame.diffuseMaterials.has( id ))
