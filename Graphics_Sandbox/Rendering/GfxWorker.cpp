@@ -130,6 +130,12 @@ void GfxWorker::setApi( int api )
 
 void GfxWorker::render()
 {
+	struct GfxMaterial {
+		glm::vec4 color;
+		float diffuseCoeff;
+		float specularCoeff;
+	};
+
 	RenderTarget renderTarget = _device->bindRenderTarget( RenderTargetType::Backbuffer );
 	(void)renderTarget;
 
@@ -150,39 +156,52 @@ void GfxWorker::render()
 
 	static GfxHandle matrixBuffer{};
 	if (matrixBuffer == 0) {
-		matrixBuffer = _device->allocateConstantBuffer( sizeof( glm::mat4 ), 0, 20 );
+		matrixBuffer = _device->allocateConstantBuffer( sizeof( glm::mat4 ) * 100, 0, 20 );
 	}
 
 	static GfxHandle materialBuffer{};
 	if (materialBuffer == 0) {
-		materialBuffer = _device->allocateConstantBuffer( sizeof( glm::vec4 ) + sizeof( float ) * 2, 0, 4 );
+		materialBuffer = _device->allocateConstantBuffer( sizeof( GfxMaterial ) * 100, 0, 4 );
 	}
 
-	struct GfxMaterial {
-		glm::vec4 hue;
-		float diffCoeff;
-		float specCoeff;
-	};
+	static GfxHandle pushConstantsBuffer{};
+	if (pushConstantsBuffer == 0) {
+		pushConstantsBuffer = _device->allocateConstantBuffer( sizeof( int ), 0, 50 );
+	}
 	
-	
-	for (const auto& id : objects.entities)
+	for (int i = 0; i < objects.entities.size(); i++) {
+		const auto& id = objects.entities[i];
+
+		// update model matrix
+
+		const auto& mat = frame.modelMatrices[id];
+		_device->updateConstantBuffer( matrixBuffer, (void*)glm::value_ptr( mat ), sizeof( glm::mat4 ), id * sizeof( glm::mat4 ) );
+		
+		// update material
+
+		GfxMaterial material{};
+		material.color = queue.meshColors[id];
+		material.diffuseCoeff = 1.0f;
+		material.specularCoeff = 1.0f;
+		
+		_device->updateConstantBuffer( materialBuffer, (void*)&material, sizeof( GfxMaterial ), id * sizeof( GfxMaterial ) );
+	}
+
+	for (int i = 0; i < objects.entities.size(); i++)
 	{
+		const auto& id = objects.entities[i];
+
 		id::ShaderId shaderId = shader::getShaderId( shader::LAMBERTIAN );
 		_device->bindShader( shaderId );
 
 		auto meshId = frame.meshIdLookup[id];
-		auto mat = frame.modelMatrices[id];
-
-		_device->updateConstantBuffer( matrixBuffer, (void*)glm::value_ptr( mat ), sizeof( glm::mat4 ), 0 );
-
-		auto meshColor = queue.meshColors[id];
-		_device->updateConstantBuffer( materialBuffer, (void*)glm::value_ptr( meshColor ), sizeof( glm::vec4 ), 0 );
+		
+		_device->updateConstantBuffer( pushConstantsBuffer, (void*)&id, sizeof( int ), 0 );
 
 		if (frame.diffuseMaterials.has( id ))
 		{
 			auto& diffuse = frame.diffuseMaterials[id];
 			auto& texture = frame.textures[id][texture::index<TextureType::Diffuse>()];
-			_device->updateConstantBuffer( materialBuffer, (void*)&diffuse.diffuseCoeff, sizeof( float ), sizeof( glm::vec4 ) );
 			_device->bindTexture( texture, diffuse.bindPosition );
 		}
 
@@ -190,7 +209,6 @@ void GfxWorker::render()
 		{
 			auto& specular = frame.specularMaterials[id];
 			auto& texture = frame.textures[id][texture::index<TextureType::Specular>()];
-			_device->updateConstantBuffer( materialBuffer, (void*)&specular.specularCoeff, sizeof( float ), sizeof( glm::vec4 ) + sizeof( float ) );
 			_device->bindTexture( texture, specular.bindPosition );
 		}
 		

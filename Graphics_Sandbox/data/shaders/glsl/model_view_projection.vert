@@ -29,12 +29,19 @@ layout(std140, binding = 0) uniform CameraData {
 } camera;
 
 layout(std140, binding = 20) uniform ModelData {
-    mat4 model;
-};
+    mat4 modelMatrixes[100];
+} modelData;
+
+layout(std140, binding = 50) uniform PushConstants {
+	int modelIndex;
+} pushConstants;
 
 void main() {
+	mat4 model = modelData.modelMatrixes[pushConstants.modelIndex];
+	
 	FragPos = vec3(model * vec4(aPosition, 1.0));
 	Normal = transpose(inverse(mat3(model))) * aNormal;
 	TexCoord = aTexCoord;
+	
 	gl_Position = camera.projection * camera.view * model * vec4(aPosition, 1.0);
 }
