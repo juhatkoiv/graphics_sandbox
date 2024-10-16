@@ -1,13 +1,5 @@
 #version 450
 
-layout (location = 0) in vec3 aPosition;
-layout (location = 1) in vec3 aNormal;
-layout (location = 2) in vec2 aTexCoord;
-
-layout (location = 0) out vec3 Normal;
-layout (location = 1) out vec2 TexCoord;
-layout (location = 2) out vec3 FragPos; 
-
 /*
 #ifdef VULKAN
 	// Vulkan-specific code
@@ -22,13 +14,23 @@ layout (location = 2) out vec3 FragPos;
 #endif
 */
 
+layout (location = 0) in vec3 aPosition;
+layout (location = 1) in vec3 aNormal;
+layout (location = 2) in vec2 aTexCoord;
+
+layout (location = 0) out vec3 Normal;
+layout (location = 1) out vec2 TexCoord;
+layout (location = 2) out vec3 FragPos; 
+
 layout(std140, binding = 0) uniform CameraData {
 	mat4 view;
 	mat4 viewNoTransform;
 	mat4 projection;
 } camera;
 
-layout(location = 20) uniform mat4 model;
+layout(std140, binding = 20) uniform ModelData {
+    mat4 model;
+};
 
 void main() {
 	FragPos = vec3(model * vec4(aPosition, 1.0));

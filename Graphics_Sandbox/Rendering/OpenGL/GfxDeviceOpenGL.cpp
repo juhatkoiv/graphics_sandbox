@@ -336,7 +336,7 @@ GfxHandle GfxDeviceOpenGL::allocateConstantBuffer( int size, int usage, int bind
 
 	glBindBufferRange( usageEnum, bindPosition, handle, 0, size );
 
-	_bufferUsage[handle] = usage;
+	_bufferUsage[handle] = usageEnum;
 	return handle;
 }
 

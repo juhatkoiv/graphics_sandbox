@@ -130,7 +130,6 @@ void GfxWorker::setApi( int api )
 
 void GfxWorker::render()
 {
-	/*
 	RenderTarget renderTarget = _device->bindRenderTarget( RenderTargetType::Backbuffer );
 	(void)renderTarget;
 
@@ -149,23 +148,66 @@ void GfxWorker::render()
 	queue.frame = &frame;
 	auto& objects = queue.batches.at( shader::getShaderId( shader::LAMBERTIAN ) );
 
+	static std::map<unsigned, GfxHandle> matrixBuffers{};
+	if (matrixBuffers.empty()) {
+		for (int i = 0; i < objects.entities.size(); i++)
+		{
+			matrixBuffers[objects.entities[i]] = _device->allocateConstantBuffer( sizeof( glm::mat4 ), 0, 20 );
+		}
+	}
+
+	static std::map<unsigned, GfxHandle> materialBuffers{};
+	if (materialBuffers.empty()) {
+		for (int i = 0; i < objects.entities.size(); i++)
+		{
+			materialBuffers[objects.entities[i]] = _device->allocateConstantBuffer( sizeof( glm::vec4 ) + sizeof( float ) * 2, 0, 4 );
+		}
+	}
+
+	struct GfxMaterial {
+		glm::vec4 hue;
+		float diffCoeff;
+		float specCoeff;
+	};
+	
+	
 	for (const auto& id : objects.entities)
 	{
 		id::ShaderId shaderId = shader::getShaderId( shader::LAMBERTIAN );
+		_device->bindShader( shaderId );
 
-		auto& shader = _device->bindShader( shaderId );
 		auto meshId = frame.meshIdLookup[id];
-		auto& mat = frame.modelMatrices[id];
-		auto& meshColor = queue.meshColors[id];
 
-		shader.setMatrix( 20, mat );
-		shader.setVec4( 14, meshColor );
+		auto mat = frame.modelMatrices[id];
 
-		fn::bindMaterialTextures( queue, _device.get(), shader, id );
+		auto matrixBuffer = matrixBuffers[id];
+		_device->updateConstantBuffer( matrixBuffer, (void*)glm::value_ptr( mat ), sizeof( glm::mat4 ), 0 );
+
+
+		auto meshColor = queue.meshColors[id];
+		auto materialBuffer = materialBuffers[id];
+		_device->updateConstantBuffer( materialBuffer, (void*)glm::value_ptr( meshColor ), sizeof( glm::vec4 ), 0 );
+
+		if (frame.diffuseMaterials.has( id ))
+		{
+			auto& diffuse = frame.diffuseMaterials[id];
+			auto& texture = frame.textures[id][texture::index<TextureType::Diffuse>()];
+			_device->updateConstantBuffer( materialBuffer, (void*)&diffuse.diffuseCoeff, sizeof( float ), sizeof( glm::vec4 ) );
+			_device->bindTexture( texture, diffuse.bindPosition );
+		}
+
+		if (frame.specularMaterials.has( id ))
+		{
+			auto& specular = frame.specularMaterials[id];
+			auto& texture = frame.textures[id][texture::index<TextureType::Specular>()];
+			_device->updateConstantBuffer( materialBuffer, (void*)&specular.specularCoeff, sizeof( float ), sizeof( glm::vec4 ) + sizeof( float ) );
+			_device->bindTexture( texture, specular.bindPosition );
+		}
+		
 		_device->dispatchIndexedDirect( meshId );
 	}
 
-	*/
+	/*
 	const auto& frameResources = FrameBuilder::buildFrameResources();
 	const auto& renderGraph = FrameBuilder::buildGraph();
 
@@ -176,6 +218,7 @@ void GfxWorker::render()
 		value.batches.clear();
 	}
 	frame.lighting.setDirty();
+	*/
 }
 
 void GfxWorker::clear() {}

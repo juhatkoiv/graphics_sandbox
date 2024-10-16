@@ -23,11 +23,11 @@ layout(std140, binding = 3) uniform Lighting {
 layout (binding = 0) uniform sampler2D diffuseTexture;
 layout (binding = 1) uniform sampler2D specularTexture;
 
-layout (location = 12) uniform float diffuseCoeff;
-
-layout (location = 13) uniform float specularCoeff;
-
-layout (location = 14) uniform vec4 hue;
+layout(std140, binding = 4) uniform Material {
+    vec4 hue;
+    float diffuseCoeff;
+    float specularCoeff;
+};
 
 float calculate_damping_factor(vec3 lightPos, vec3 fragPos, float attenuation)
 {
