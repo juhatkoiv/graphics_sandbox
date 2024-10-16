@@ -6,6 +6,7 @@ layout (location = 2) in vec2 aTexCoord;
 
 layout(std140, binding = 0) uniform CameraData {
     mat4 view;
+    mat4 viewNoTransform;
     mat4 projection;
 };
 
@@ -14,6 +15,6 @@ layout (location = 0) out vec3 TexCoords;
 void main() 
 {    
     TexCoords = aPosition;
-    vec4 pos = projection * view * vec4(aPosition, 1.0);
+    vec4 pos = projection * viewNoTransform * vec4(aPosition, 1.0);
     gl_Position = pos.xyww;
 }

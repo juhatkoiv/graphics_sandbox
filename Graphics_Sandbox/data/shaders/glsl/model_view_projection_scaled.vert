@@ -8,12 +8,11 @@ layout (location = 0) out vec3 Normal;
 layout (location = 1) out vec2 TexCoord;
 layout (location = 2) out vec3 FragPos; 
 
-layout (binding = 20) uniform Model {
-    mat4 model;
-};
+layout (location = 20) uniform mat4 model;
 
 layout(std140, binding = 0) uniform CameraData {
     mat4 view;
+    mat4 viewNoTransform;
     mat4 projection;
 };
 

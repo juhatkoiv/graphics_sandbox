@@ -306,13 +306,18 @@ RenderTarget GfxDeviceOpenGL::createRenderTarget( unsigned int width, unsigned i
 
 GfxHandle GfxDeviceOpenGL::allocateConstantBuffer( int size, int usage, int bindPosition )
 {
+	static int bufferEnumMap[2]{ GL_UNIFORM_BUFFER, GL_SHADER_STORAGE_BUFFER };
+	int usageEnum = bufferEnumMap[usage];
+
 	GLuint handle;
 	glGenBuffers( 1, &handle );
-	glBindBuffer( GL_UNIFORM_BUFFER, handle );
-	glBufferData( GL_UNIFORM_BUFFER, size, NULL, GL_DYNAMIC_DRAW );
-	glBindBuffer( GL_UNIFORM_BUFFER, 0 );
+	glBindBuffer( usageEnum, handle );
+	glBufferData( usageEnum, size, NULL, GL_DYNAMIC_DRAW );
+	glBindBuffer( usageEnum, 0 );
 
-	glBindBufferRange( GL_UNIFORM_BUFFER, bindPosition, handle, 0, size );
+	glBindBufferRange( usageEnum, bindPosition, handle, 0, size );
+
+	_bufferUsage[handle] = usage;
 	return handle;
 }
 
@@ -438,9 +443,10 @@ void GfxDeviceOpenGL::bindRenderTargetResource( RenderTargetType type, unsigned 
 
 void GfxDeviceOpenGL::updateConstantBuffer( GfxHandle buffer, void* data, int size, int offset )
 {
-	glBindBuffer( GL_UNIFORM_BUFFER, buffer );
-	glBufferSubData( GL_UNIFORM_BUFFER, offset, size, data );
-	glBindBuffer( GL_UNIFORM_BUFFER, 0 );
+	int usageEnum = _bufferUsage[buffer];
+	glBindBuffer( usageEnum, buffer );
+	glBufferSubData( usageEnum, offset, size, data );
+	glBindBuffer( usageEnum, 0 );
 }
 
 void GfxDeviceOpenGL::dispatchIndexedDirect( id::MeshId meshId )

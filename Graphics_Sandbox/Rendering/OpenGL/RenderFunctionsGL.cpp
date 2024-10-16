@@ -9,9 +9,22 @@
 
 #include <GLFW/glfw3.h>
 
+BEGIN_NAMESPACE2( rendering, binding )
+
+	static constexpr int MODEL_MATRIX = 20;
+	static constexpr int MESH_COLOR = 14;
+	static constexpr int FRAG_COLOR = 10;
+	static constexpr int CUBEMAP_TEXTURE = 0;
+	static constexpr int DIFFUSE_TEXTURE = 1;
+	static constexpr int SPECULAR_TEXTURE = 2;
+	static constexpr int DIFFUSE_COEFF = 12;
+	static constexpr int SPECULAR_COEFF = 13;
+
+END_NAMESPACE2;
+
 BEGIN_NAMESPACE2( rendering, fn )
 
-// clearing
+using namespace rendering;
 
 void clear( const GfxFlags& flags )
 {
@@ -200,8 +213,9 @@ void bindMaterialTextures( GfxQueue& gfx, GfxDevice* device, ShaderProgram& shad
 	if (gfx.frame->diffuseMaterials.has( id ))
 	{
 		auto& diffuse = gfx.frame->diffuseMaterials[id];
-		shader.setFloat( DIFFUSE_COEFF, diffuse.diffuseCoeff );
-		shader.setInt( DIFFUSE_TEXTURE, diffuse.bindPosition );
+		shader.setFloat( binding::DIFFUSE_COEFF, diffuse.diffuseCoeff );
+		shader.setInt( binding::DIFFUSE_TEXTURE, diffuse.bindPosition );
+
 		auto& texture = gfx.frame->textures[id][texture::index<TextureType::Diffuse>()];
 		device->bindTexture( texture, diffuse.bindPosition );
 	}
@@ -209,8 +223,9 @@ void bindMaterialTextures( GfxQueue& gfx, GfxDevice* device, ShaderProgram& shad
 	if (gfx.frame->specularMaterials.has( id ))
 	{
 		auto& specular = gfx.frame->specularMaterials[id];
-		shader.setFloat( SPECULAR_COEFF, specular.specularCoeff );
-		shader.setInt( SPECULAR_TEXTURE, specular.bindPosition );
+		shader.setFloat( binding::SPECULAR_COEFF, specular.specularCoeff );
+		shader.setInt( binding::SPECULAR_TEXTURE, specular.bindPosition );
+
 		auto& texture = gfx.frame->textures[id][texture::index<TextureType::Specular>()];
 		device->bindTexture( texture, specular.bindPosition );
 	}
@@ -219,6 +234,7 @@ void bindMaterialTextures( GfxQueue& gfx, GfxDevice* device, ShaderProgram& shad
 END_NAMESPACE2
 
 BEGIN_NAMESPACE2( rendering, draw )
+
 
 void drawLitInstancedImpl( GfxQueue& gfx, GfxDevice* device, const GfxShader& material )
 {
@@ -243,6 +259,8 @@ void drawLitInstancedImpl( GfxQueue& gfx, GfxDevice* device, const GfxShader& ma
 END_NAMESPACE2
 
 BEGIN_NAMESPACE2( rendering, pass )
+
+using namespace rendering;
 
 void executeBindFrameBuffer( GfxQueue& gfx, GfxDevice* device, const PassResources& resources )
 {
@@ -286,8 +304,8 @@ void executeLit( GfxQueue& gfx, GfxDevice* device, const PassResources& resource
 		auto& mat = gfx.frame->modelMatrices[id];
 		auto& meshColor = gfx.meshColors[id];
 
-		shader.setMatrix( MODEL_MATRIX, mat );
-		shader.setVec4( "hue", meshColor );
+		shader.setMatrix( binding::MODEL_MATRIX, mat );
+		shader.setVec4( binding::MESH_COLOR, meshColor );
 
 		fn::bindMaterialTextures( gfx, device, shader, id );
 		device->dispatchIndexedDirect( meshId );
@@ -309,8 +327,8 @@ void executeLights( GfxQueue& gfx, GfxDevice* device, const PassResources& resou
 		auto meshId = gfx.frame->meshIdLookup[id];
 		auto& mat = gfx.frame->modelMatrices[id];
 
-		shader.setMatrix( MODEL_MATRIX, mat );
-		shader.setVec4( FRAG_COLOR, gfx.meshColors[id] );
+		shader.setMatrix( binding::MODEL_MATRIX, mat );
+		shader.setVec4( binding::FRAG_COLOR, gfx.meshColors[id] );
 
 		device->dispatchIndexedDirect( meshId );
 	}
@@ -352,9 +370,7 @@ void executeDrawSkybox( GfxQueue& gfx, GfxDevice* device, const PassResources& r
 	id::ShaderId shaderId = resources.getShaderId();
 	auto& shader = device->bindShader( shaderId );
 
-	shader.setMatrix( VIEW_MATRIX, gfx.getViewMatrixStripTransform() );
-	shader.setMatrix( PROJECTION_MATRIX, gfx.getProjectionMatrix() );
-	shader.setInt( CUBEMAP_TEXTURE, 0 );
+	shader.setInt( binding::CUBEMAP_TEXTURE, 0 );
 
 	auto vbId = gfx.frame->skyboxMesh;
 	auto textureId = gfx.frame->skyboxTexture;
@@ -378,8 +394,8 @@ void executeDrawOutlineBorder( GfxQueue& gfx, GfxDevice* device, const PassResou
 		auto meshId = gfx.frame->meshIdLookup[id];
 		auto& mat = gfx.frame->modelMatrices[id];
 
-		shader.setMatrix( MODEL_MATRIX, mat );
-		shader.setVec4( FRAG_COLOR, glm::vec4{ 1, 0, 0, 1 } );
+		shader.setMatrix( binding::MODEL_MATRIX, mat );
+		shader.setVec4( binding::FRAG_COLOR, glm::vec4{ 1, 0, 0, 1 } );
 
 		device->dispatchIndexedDirect( meshId );
 	}

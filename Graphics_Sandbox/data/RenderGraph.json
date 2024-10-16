@@ -3,10 +3,6 @@
         {
             "features": [
                 {
-                    "featureName": "",
-                    "passes": []
-                },
-                {
                     "featureName": "opaque_lit",
                     "passes": [
                         {

@@ -49,6 +49,7 @@ private:
 	LinearMap<id::TextureId, GfxTexture, 10> _textureLookup{};
 	LinearMap<id::MeshId, VertexBuffer, 10> _vertexBufferLookup{};
 	LinearMap<int, GfxHandle, 10> _constBuffers;
+	LinearMap<GfxHandle, int> _bufferUsage;
 	
 	id::ShaderId _activeShader = id::InvalidShaderId;
 

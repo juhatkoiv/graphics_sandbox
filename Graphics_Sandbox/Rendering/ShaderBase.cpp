@@ -11,6 +11,9 @@ BEGIN_NAMESPACE1( rendering )
 ShaderBase::ShaderBase( const std::string& source, unsigned int shaderType ) {
 	auto result = shader_compilation::load_as_spv( source );
 	if (!result.success()) {
+		for( auto& error : result.errors )
+			std::cerr << error << std::endl;
+
 		std::cerr << "Error: Failed to load shader binary." << std::endl;
 		throw;
 	}

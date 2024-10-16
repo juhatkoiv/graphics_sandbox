@@ -19,6 +19,7 @@ layout(std140, binding = 4) uniform PerObjectBuffer {
 
 layout(std140, binding = 0) uniform CameraData {
     mat4 view;
+    mat4 viewNoTransform;
     mat4 projection;
 };
 

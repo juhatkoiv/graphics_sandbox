@@ -210,6 +210,7 @@ struct GfxLighing
 	}
 };
 
+
 struct GfxFrame
 {
 	id::MeshId fullScreenQuad{};

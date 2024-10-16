@@ -36,7 +36,7 @@ namespace
 
 	GfxFrame frame{};
 
-	struct GfxPostProcessing 
+	struct GfxPostProcessing
 	{
 		unsigned args1 = ~0u;
 		unsigned args2 = ~0u;
@@ -49,6 +49,7 @@ namespace
 	GfxHandle lightBuffer = ~0u;
 	GfxHandle postProcessingBuffer = ~0u;
 	GfxHandle globalLightingSettingsBuffer = ~0u;
+	//GfxHandle modelMatrixBuffer = ~0u;
 
 	//GLuint objectBuffer = ~0u;
 
@@ -92,11 +93,6 @@ namespace
 			args.args3 = *reinterpret_cast<unsigned int*>(&windowSizeInverted.x);
 			args.args4 = *reinterpret_cast<unsigned int*>(&windowSizeInverted.y);
 		}
-
-		if (settings.fullScreenEffect == PostProcessingEffects::Inverted)
-		{
-		}
-
 		return args;
 	}
 }
@@ -113,7 +109,7 @@ void GfxWorker::setApi( int api )
 
 	// allocate camera buffer
 	{
-		cameraBuffer = _device->allocateConstantBuffer( 2 * sizeof( glm::mat4 ), 0, 0 );
+		cameraBuffer = _device->allocateConstantBuffer( 3 * sizeof( glm::mat4 ), 0, 0 );
 	}
 
 	// allocate lights buffer
@@ -128,11 +124,48 @@ void GfxWorker::setApi( int api )
 
 	// allocate global lighting settings buffer
 	{
-		globalLightingSettingsBuffer = _device->allocateConstantBuffer( sizeof( LightingSettings ), 0, 5 );}
+		globalLightingSettingsBuffer = _device->allocateConstantBuffer( sizeof( LightingSettings ), 0, 5 );
+	}
 }
 
 void GfxWorker::render()
 {
+	/*
+	RenderTarget renderTarget = _device->bindRenderTarget( RenderTargetType::Backbuffer );
+	(void)renderTarget;
+
+	glBindFramebuffer( GL_FRAMEBUFFER, 0 );
+	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+	glClearColor( 0, 0, 0, 1 );
+
+	glEnable( GL_DEPTH_TEST );
+	glDepthFunc( GL_LESS );
+
+	glEnable( GL_CULL_FACE );
+	glCullFace( GL_BACK );
+	glFrontFace( GL_CCW );
+
+	auto& queue = frame.queues[Queue::Opaque];
+	queue.frame = &frame;
+	auto& objects = queue.batches.at( shader::getShaderId( shader::LAMBERTIAN ) );
+
+	for (const auto& id : objects.entities)
+	{
+		id::ShaderId shaderId = shader::getShaderId( shader::LAMBERTIAN );
+
+		auto& shader = _device->bindShader( shaderId );
+		auto meshId = frame.meshIdLookup[id];
+		auto& mat = frame.modelMatrices[id];
+		auto& meshColor = queue.meshColors[id];
+
+		shader.setMatrix( 20, mat );
+		shader.setVec4( 14, meshColor );
+
+		fn::bindMaterialTextures( queue, _device.get(), shader, id );
+		_device->dispatchIndexedDirect( meshId );
+	}
+
+	*/
 	const auto& frameResources = FrameBuilder::buildFrameResources();
 	const auto& renderGraph = FrameBuilder::buildGraph();
 
@@ -307,11 +340,21 @@ void GfxWorker::prepareDraw()
 	}
 
 	// NOTE - don't update everything every frame
-	// 
+	// update model matrices
+	/* {
+		for (int i = 0; i < frame.modelMatrices.size(); i++)
+		{
+			const auto& modelMatrix = frame.modelMatrices.at( i );
+			_device->updateConstantBuffer( modelMatrixBuffer, (void*)glm::value_ptr( modelMatrix ), sizeof( glm::mat4 ), i * sizeof( glm::mat4 ) );
+		}
+	}
+	*/
 	// update camera buffer
 	{
+		glm::mat4 viewMatrixTransformStripped = frame.getViewMatrixStripTransform();
 		_device->updateConstantBuffer( cameraBuffer, (void*)glm::value_ptr( frame.camera.viewMatrix ), sizeof( glm::mat4 ), 0 );
-		_device->updateConstantBuffer( cameraBuffer, (void*)glm::value_ptr( frame.camera.projectionMatrix ), sizeof( glm::mat4 ), sizeof( glm::mat4 ) );
+		_device->updateConstantBuffer( cameraBuffer, (void*)glm::value_ptr( viewMatrixTransformStripped ), sizeof( glm::mat4 ), sizeof( glm::mat4 ) );
+		_device->updateConstantBuffer( cameraBuffer, (void*)glm::value_ptr( frame.camera.projectionMatrix ), sizeof( glm::mat4 ), 2 * sizeof( glm::mat4 ) );
 	}
 
 	// update light buffer

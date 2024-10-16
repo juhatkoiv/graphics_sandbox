@@ -6,8 +6,7 @@ layout (location = 0) in vec3 Normal;
 layout (location = 1) in vec2 TexCoord;
 layout (location = 2) in vec3 FragPos;
 
-struct LightProperties
-{
+struct LightProperties {
     vec3 lightPos;
     float intensity;
     vec3 lightColor;
@@ -24,18 +23,11 @@ layout(std140, binding = 3) uniform Lighting {
 layout (binding = 0) uniform sampler2D diffuseTexture;
 layout (binding = 1) uniform sampler2D specularTexture;
 
+layout (location = 12) uniform float diffuseCoeff;
 
-layout (binding = 12) uniform Diffuse {
-    float diffuseCoeff;
-};
+layout (location = 13) uniform float specularCoeff;
 
-layout (binding = 13) uniform Specular {
-    float specularCoeff;
-};
-
-layout (binding = 14) uniform Hue{
-    vec4 hue;
-};
+layout (location = 14) uniform vec4 hue;
 
 float calculate_damping_factor(vec3 lightPos, vec3 fragPos, float attenuation)
 {

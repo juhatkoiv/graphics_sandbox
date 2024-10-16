@@ -212,6 +212,7 @@ namespace
 MainLoop::MainLoop( Args args )
 {
 	AppContext::initialize();
+
 	_appData.initialize();
 	_window.reset( new window::Window( args.title, window::WindowMode::Windowed ) );
 

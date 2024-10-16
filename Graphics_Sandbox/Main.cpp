@@ -68,7 +68,7 @@
 *   + spot lights
 *	+ decals
 *   + shadows
-*   + global illumination - AO,
+*   + global illumination - reflection probes,
 *   + Blur, SSAO, Bloom, Depth of field, Motion blur, Volumetric lighting, GI
 *   + Bump maps
 *	+ Debug rendering: Lines, points, normals, tangents, bitangents, bounding boxes, bounding spheres, frustums, cameras, lights, shadows, 
