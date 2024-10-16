@@ -148,12 +148,9 @@ void GfxWorker::render()
 	queue.frame = &frame;
 	auto& objects = queue.batches.at( shader::getShaderId( shader::LAMBERTIAN ) );
 
-	static std::map<unsigned, GfxHandle> matrixBuffers{};
-	if (matrixBuffers.empty()) {
-		for (int i = 0; i < objects.entities.size(); i++)
-		{
-			matrixBuffers[objects.entities[i]] = _device->allocateConstantBuffer( sizeof( glm::mat4 ), 0, 20 );
-		}
+	static GfxHandle matrixBuffer{};
+	if (matrixBuffer == 0) {
+		matrixBuffer = _device->allocateConstantBuffer( sizeof( glm::mat4 ), 0, 20 );
 	}
 
 	static std::map<unsigned, GfxHandle> materialBuffers{};
@@ -180,9 +177,7 @@ void GfxWorker::render()
 
 		auto mat = frame.modelMatrices[id];
 
-		auto matrixBuffer = matrixBuffers[id];
 		_device->updateConstantBuffer( matrixBuffer, (void*)glm::value_ptr( mat ), sizeof( glm::mat4 ), 0 );
-
 
 		auto meshColor = queue.meshColors[id];
 		auto materialBuffer = materialBuffers[id];
