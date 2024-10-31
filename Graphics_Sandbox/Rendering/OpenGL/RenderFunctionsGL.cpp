@@ -12,13 +12,13 @@
 BEGIN_NAMESPACE2( rendering, binding )
 
 	static constexpr int MODEL_MATRIX = 20;
-	static constexpr int MESH_COLOR = 14;
 	static constexpr int FRAG_COLOR = 10;
 	static constexpr int CUBEMAP_TEXTURE = 0;
 	static constexpr int DIFFUSE_TEXTURE = 1;
 	static constexpr int SPECULAR_TEXTURE = 2;
 	static constexpr int DIFFUSE_COEFF = 12;
 	static constexpr int SPECULAR_COEFF = 13;
+
 
 END_NAMESPACE2;
 
@@ -296,18 +296,28 @@ void executeLit( GfxQueue& gfx, GfxDevice* device, const PassResources& resource
 
 	const DrawCallBatch& batch = gfx.batches.at( shaderId );
 
-	auto& shader = device->bindShader( shaderId );
+	device->bindShader( shaderId );
 
-	for (auto id : batch.entities)
-	{
+	for (int i = 0; i < batch.entities.size(); i++) {
+		device->updateConstantBuffer( batch.pushConstantsBuffer, (void*)&i, sizeof( int ), 0 );
+
+		const auto& id = batch.entities[i];
+
+		if (gfx.frame->diffuseMaterials.has( id ))
+		{
+			auto& diffuse = gfx.frame->diffuseMaterials[id];
+			auto& texture = gfx.frame->textures[id][texture::index<TextureType::Diffuse>()];
+			device->bindTexture( texture, diffuse.bindPosition );
+		}
+
+		if (gfx.frame->specularMaterials.has( id ))
+		{
+			auto& specular = gfx.frame->specularMaterials[id];
+			auto& texture = gfx.frame->textures[id][texture::index<TextureType::Specular>()];
+			device->bindTexture( texture, specular.bindPosition );
+		}
+
 		auto meshId = gfx.frame->meshIdLookup[id];
-		auto& mat = gfx.frame->modelMatrices[id];
-		auto& meshColor = gfx.meshColors[id];
-
-		shader.setMatrix( binding::MODEL_MATRIX, mat );
-		shader.setVec4( binding::MESH_COLOR, meshColor );
-
-		fn::bindMaterialTextures( gfx, device, shader, id );
 		device->dispatchIndexedDirect( meshId );
 	}
 }
@@ -319,17 +329,14 @@ void executeLights( GfxQueue& gfx, GfxDevice* device, const PassResources& resou
 		return;
 
 	const DrawCallBatch& batch = gfx.batches.at( shaderId );
+	device->bindShader( shaderId );
 
-	auto& shader = device->bindShader( shaderId );
+	for (int i = 0; i < batch.entities.size(); i++) {
+		
+		device->updateConstantBuffer( batch.pushConstantsBuffer, (void*)&i, sizeof( int ), 0 );
+		auto id = batch.entities[i];
 
-	for (auto id : batch.entities)
-	{
 		auto meshId = gfx.frame->meshIdLookup[id];
-		auto& mat = gfx.frame->modelMatrices[id];
-
-		shader.setMatrix( binding::MODEL_MATRIX, mat );
-		shader.setVec4( binding::FRAG_COLOR, gfx.meshColors[id] );
-
 		device->dispatchIndexedDirect( meshId );
 	}
 }

@@ -128,89 +128,49 @@ void GfxWorker::setApi( int api )
 	}
 }
 
-void GfxWorker::render()
-{
+void GfxWorker::render() {
+
 	struct alignas(16) GfxMaterial {
 		glm::vec4 color;
 		float diffuseCoeff;
 		float specularCoeff;
 	};
 
-	RenderTarget renderTarget = _device->bindRenderTarget( RenderTargetType::Backbuffer );
-	(void)renderTarget;
+	for (auto& [queueId, queue] : frame.queues) {
+		for (auto& [shaderId, batch] : queue.batches) {
+			if (batch.pushConstantsBuffer == 0) {
+				batch.pushConstantsBuffer = _device->allocateConstantBuffer( sizeof( int ), 0, 50 );
+			}
+			if (batch.materialBuffer == 0) {
+				batch.materialBuffer = _device->allocateConstantBuffer( sizeof( GfxMaterial ) * 100, 0, 4 );
+			}
+			if (batch.modelMatrixBuffer == 0) {
+				batch.modelMatrixBuffer = _device->allocateConstantBuffer( sizeof( glm::mat4 ) * 100, 0, 20 );
+			}
 
-	glBindFramebuffer( GL_FRAMEBUFFER, 0 );
-	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-	glClearColor( 0, 0, 0, 1 );
+			for (int i = 0; i < batch.entities.size(); i++) {
 
-	glEnable( GL_DEPTH_TEST );
-	glDepthFunc( GL_LESS );
+				const auto& id = batch.entities[i];
 
-	glEnable( GL_CULL_FACE );
-	glCullFace( GL_BACK );
-	glFrontFace( GL_CCW );
+				// update model matrix
+				if (frame.modelMatrices.has( id )) {
+					const auto& mat = frame.modelMatrices.at( id );
+					_device->updateConstantBuffer( batch.modelMatrixBuffer, (void*)glm::value_ptr( mat ), sizeof( glm::mat4 ), i * sizeof( glm::mat4 ) );
+				}
 
-	auto& queue = frame.queues[Queue::Opaque];
-	queue.frame = &frame;
-	auto& objects = queue.batches.at( shader::getShaderId( shader::LAMBERTIAN ) );
+				// update material
+				if (queue.meshColors.has( id )) {
+					GfxMaterial material{};
+					material.color = queue.meshColors[id];
+					material.diffuseCoeff = 1.0f;
+					material.specularCoeff = 1.0f;
 
-	static GfxHandle matrixBuffer{};
-	if (matrixBuffer == 0) {
-		matrixBuffer = _device->allocateConstantBuffer( sizeof( glm::mat4 ) * 100, 0, 20 );
-	}
-
-	static GfxHandle materialBuffer{};
-	if (materialBuffer == 0) {
-		materialBuffer = _device->allocateConstantBuffer( sizeof( GfxMaterial ) * 100, 0, 4 );
-	}
-
-	static GfxHandle pushConstantsBuffer{};
-	if (pushConstantsBuffer == 0) {
-		pushConstantsBuffer = _device->allocateConstantBuffer( sizeof( int ), 0, 50 );
-	}
-
-	for (int i = 0; i < objects.entities.size(); i++) {
-		const auto& id = objects.entities[i];
-
-		// update model matrix
-		const auto& mat = frame.modelMatrices[id];
-		_device->updateConstantBuffer( matrixBuffer, (void*)glm::value_ptr( mat ), sizeof( glm::mat4 ), i * sizeof( glm::mat4 ) );
-
-		// update material
-		GfxMaterial material{};
-		material.color = queue.meshColors[id];
-		material.diffuseCoeff = 1.0f;
-		material.specularCoeff = 1.0f;
-
-		_device->updateConstantBuffer( materialBuffer, (void*)&material, sizeof( GfxMaterial ), i * sizeof( GfxMaterial ) );
-	}
-
-	for (int i = 0; i < objects.entities.size(); i++) {
-		id::ShaderId shaderId = shader::getShaderId( shader::LAMBERTIAN );
-		_device->bindShader( shaderId );
-		_device->updateConstantBuffer( pushConstantsBuffer, (void*)&i, sizeof( int ), 0 );
-
-		const auto& id = objects.entities[i];
-
-		if (frame.diffuseMaterials.has( id ))
-		{
-			auto& diffuse = frame.diffuseMaterials[id];
-			auto& texture = frame.textures[id][texture::index<TextureType::Diffuse>()];
-			_device->bindTexture( texture, diffuse.bindPosition );
+					_device->updateConstantBuffer( batch.materialBuffer, (void*)&material, sizeof( GfxMaterial ), i * sizeof( GfxMaterial ) );
+				}
+			}
 		}
-
-		if (frame.specularMaterials.has( id ))
-		{
-			auto& specular = frame.specularMaterials[id];
-			auto& texture = frame.textures[id][texture::index<TextureType::Specular>()];
-			_device->bindTexture( texture, specular.bindPosition );
-		}
-
-		auto meshId = frame.meshIdLookup[id];
-		_device->dispatchIndexedDirect( meshId );
 	}
 
-	/*
 	const auto& frameResources = FrameBuilder::buildFrameResources();
 	const auto& renderGraph = FrameBuilder::buildGraph();
 
@@ -221,7 +181,6 @@ void GfxWorker::render()
 		value.batches.clear();
 	}
 	frame.lighting.setDirty();
-	*/
 }
 
 void GfxWorker::clear() {}

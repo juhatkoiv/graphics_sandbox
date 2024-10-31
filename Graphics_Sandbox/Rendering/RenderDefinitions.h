@@ -168,6 +168,9 @@ struct PerBatchData
 struct DrawCallBatch
 {
 	std::vector<unsigned> entities{};
+	GfxHandle pushConstantsBuffer{};
+	GfxHandle materialBuffer{};
+	GfxHandle modelMatrixBuffer{};
 };
 
 
