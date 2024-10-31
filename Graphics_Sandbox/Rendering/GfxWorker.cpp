@@ -130,7 +130,7 @@ void GfxWorker::setApi( int api )
 
 void GfxWorker::render()
 {
-	struct GfxMaterial {
+	struct alignas(16) GfxMaterial {
 		glm::vec4 color;
 		float diffuseCoeff;
 		float specularCoeff;
@@ -168,35 +168,29 @@ void GfxWorker::render()
 	if (pushConstantsBuffer == 0) {
 		pushConstantsBuffer = _device->allocateConstantBuffer( sizeof( int ), 0, 50 );
 	}
-	
+
 	for (int i = 0; i < objects.entities.size(); i++) {
 		const auto& id = objects.entities[i];
 
 		// update model matrix
-
 		const auto& mat = frame.modelMatrices[id];
-		_device->updateConstantBuffer( matrixBuffer, (void*)glm::value_ptr( mat ), sizeof( glm::mat4 ), id * sizeof( glm::mat4 ) );
-		
-		// update material
+		_device->updateConstantBuffer( matrixBuffer, (void*)glm::value_ptr( mat ), sizeof( glm::mat4 ), i * sizeof( glm::mat4 ) );
 
+		// update material
 		GfxMaterial material{};
 		material.color = queue.meshColors[id];
 		material.diffuseCoeff = 1.0f;
 		material.specularCoeff = 1.0f;
-		
-		_device->updateConstantBuffer( materialBuffer, (void*)&material, sizeof( GfxMaterial ), id * sizeof( GfxMaterial ) );
+
+		_device->updateConstantBuffer( materialBuffer, (void*)&material, sizeof( GfxMaterial ), i * sizeof( GfxMaterial ) );
 	}
 
-	for (int i = 0; i < objects.entities.size(); i++)
-	{
-		const auto& id = objects.entities[i];
-
+	for (int i = 0; i < objects.entities.size(); i++) {
 		id::ShaderId shaderId = shader::getShaderId( shader::LAMBERTIAN );
 		_device->bindShader( shaderId );
+		_device->updateConstantBuffer( pushConstantsBuffer, (void*)&i, sizeof( int ), 0 );
 
-		auto meshId = frame.meshIdLookup[id];
-		
-		_device->updateConstantBuffer( pushConstantsBuffer, (void*)&id, sizeof( int ), 0 );
+		const auto& id = objects.entities[i];
 
 		if (frame.diffuseMaterials.has( id ))
 		{
@@ -211,7 +205,8 @@ void GfxWorker::render()
 			auto& texture = frame.textures[id][texture::index<TextureType::Specular>()];
 			_device->bindTexture( texture, specular.bindPosition );
 		}
-		
+
+		auto meshId = frame.meshIdLookup[id];
 		_device->dispatchIndexedDirect( meshId );
 	}
 

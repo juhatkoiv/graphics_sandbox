@@ -37,15 +37,14 @@ layout(std140, binding = 50) uniform PushConstants {
 	int modelIndex;
 } pushConstants;
 
-float calculate_damping_factor(vec3 lightPos, vec3 fragPos, float attenuation)
-{
+float calculate_damping_factor(vec3 lightPos, vec3 fragPos, float attenuation) {
 	float d = distance(lightPos, fragPos);
 	return pow((1.0 / max(0.1, d)), attenuation);
 }
 
-void main() 
-{
+void main() {
 	Material material = material[pushConstants.modelIndex];
+
 	vec4 ambientColor = vec4(0.0, 0.0, 0.0, material.hue.a);
 	vec4 diffuseColor = texture(diffuseTexture, TexCoord);
 	vec4 specularColor = texture(specularTexture, TexCoord);
@@ -58,17 +57,18 @@ void main()
 
 	for (int i = 0; i < lightCount; i++)
 	{
-		float damping = calculate_damping_factor(lights[i].lightPos, FragPos, lights[i].attenuation);
+		LightProperties light = lights[i];
+		float damping = calculate_damping_factor(light.lightPos, FragPos, light.attenuation);
 		vec3 lightDir = normalize(lights[i].lightPos - FragPos);  
 	
 		float diff = max(dot(norm, lightDir), 0.0);
-		vec3 diffuse = material.diffuseCoeff * diff * lights[i].lightColor * damping * lights[i].intensity;
+		vec3 diffuse = material.diffuseCoeff * diff * light.lightColor * damping * light.intensity;
 
 		totalDiff += diffuse;
 
 		vec3 reflectDir = reflect(-lightDir, norm);
 		float spec = pow(max(dot(viewDir, reflectDir), 0.0), 64);
-		vec3 specular = material.specularCoeff * spec * lights[i].lightColor * damping * lights[i].intensity;
+		vec3 specular = material.specularCoeff * spec * light.lightColor * damping * light.intensity;
 
 		totalSpec += specular;
 	}
