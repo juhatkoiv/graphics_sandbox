@@ -299,9 +299,8 @@ void executeLit( GfxQueue& gfx, GfxDevice* device, const PassResources& resource
 	device->bindShader( shaderId );
 
 	for (int i = 0; i < batch.entities.size(); i++) {
-		device->updateConstantBuffer( batch.pushConstantsBuffer, (void*)&i, sizeof( int ), 0 );
-
 		const auto& id = batch.entities[i];
+		device->updateConstantBuffer( gfx.frame->pushConstantsBuffer, (void*)&id, sizeof( int ), 0 );
 
 		if (gfx.frame->diffuseMaterials.has( id ))
 		{
@@ -332,10 +331,9 @@ void executeLights( GfxQueue& gfx, GfxDevice* device, const PassResources& resou
 	device->bindShader( shaderId );
 
 	for (int i = 0; i < batch.entities.size(); i++) {
-		
-		device->updateConstantBuffer( batch.pushConstantsBuffer, (void*)&i, sizeof( int ), 0 );
 		auto id = batch.entities[i];
-
+		device->updateConstantBuffer( gfx.frame->pushConstantsBuffer, (void*)&id, sizeof( int ), 0 );
+		
 		auto meshId = gfx.frame->meshIdLookup[id];
 		device->dispatchIndexedDirect( meshId );
 	}

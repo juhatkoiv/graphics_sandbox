@@ -49,10 +49,7 @@ namespace
 	GfxHandle lightBuffer = ~0u;
 	GfxHandle postProcessingBuffer = ~0u;
 	GfxHandle globalLightingSettingsBuffer = ~0u;
-	//GfxHandle modelMatrixBuffer = ~0u;
-
-	//GLuint objectBuffer = ~0u;
-
+	
 	GfxPostProcessing resolvePostProcessingArgs( GfxFrame& frame )
 	{
 		GfxPostProcessing args;
@@ -135,27 +132,26 @@ void GfxWorker::render() {
 		float diffuseCoeff;
 		float specularCoeff;
 	};
+	if (frame.pushConstantsBuffer == 0) {
+		frame.pushConstantsBuffer = _device->allocateConstantBuffer( sizeof( int ), 0, 50 );
+	}
+	if (frame.materialBuffer == 0) {
+		frame.materialBuffer = _device->allocateConstantBuffer( sizeof( GfxMaterial ) * 100, 0, 4 );
+	}
+	if (frame.modelMatrixBuffer == 0) {
+		frame.modelMatrixBuffer = _device->allocateConstantBuffer( sizeof( glm::mat4 ) * 100, 0, 20 );
+	}
 
 	for (auto& [queueId, queue] : frame.queues) {
 		for (auto& [shaderId, batch] : queue.batches) {
-			if (batch.pushConstantsBuffer == 0) {
-				batch.pushConstantsBuffer = _device->allocateConstantBuffer( sizeof( int ), 0, 50 );
-			}
-			if (batch.materialBuffer == 0) {
-				batch.materialBuffer = _device->allocateConstantBuffer( sizeof( GfxMaterial ) * 100, 0, 4 );
-			}
-			if (batch.modelMatrixBuffer == 0) {
-				batch.modelMatrixBuffer = _device->allocateConstantBuffer( sizeof( glm::mat4 ) * 100, 0, 20 );
-			}
-
+			
 			for (int i = 0; i < batch.entities.size(); i++) {
-
 				const auto& id = batch.entities[i];
 
 				// update model matrix
 				if (frame.modelMatrices.has( id )) {
 					const auto& mat = frame.modelMatrices.at( id );
-					_device->updateConstantBuffer( batch.modelMatrixBuffer, (void*)glm::value_ptr( mat ), sizeof( glm::mat4 ), i * sizeof( glm::mat4 ) );
+					_device->updateConstantBuffer( frame.modelMatrixBuffer, (void*)glm::value_ptr( mat ), sizeof( glm::mat4 ), id * sizeof( glm::mat4 ) );
 				}
 
 				// update material
@@ -165,7 +161,7 @@ void GfxWorker::render() {
 					material.diffuseCoeff = 1.0f;
 					material.specularCoeff = 1.0f;
 
-					_device->updateConstantBuffer( batch.materialBuffer, (void*)&material, sizeof( GfxMaterial ), i * sizeof( GfxMaterial ) );
+					_device->updateConstantBuffer( frame.materialBuffer, (void*)&material, sizeof( GfxMaterial ), id * sizeof( GfxMaterial ) );
 				}
 			}
 		}

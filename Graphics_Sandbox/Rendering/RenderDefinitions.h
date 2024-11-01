@@ -168,9 +168,6 @@ struct PerBatchData
 struct DrawCallBatch
 {
 	std::vector<unsigned> entities{};
-	GfxHandle pushConstantsBuffer{};
-	GfxHandle materialBuffer{};
-	GfxHandle modelMatrixBuffer{};
 };
 
 
@@ -219,6 +216,10 @@ struct GfxFrame
 	id::MeshId fullScreenQuad{};
 	id::MeshId skyboxMesh{};
 	id::TextureId skyboxTexture{};
+
+	GfxHandle pushConstantsBuffer{};
+	GfxHandle materialBuffer{};
+	GfxHandle modelMatrixBuffer{};
 
 	GfxCamera camera{};
 	RenderingSettings settings{};
