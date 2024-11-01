@@ -5,10 +5,11 @@
 #include "Rendering/RenderDefinitions.h"
 #include "Rendering/Vertex.h"
 #include "Rendering/Texture.h"
+#include "GLFunctions.h"
 
 BEGIN_NAMESPACE1( rendering )
 
-void APIENTRY messageCallback( GLenum source,
+static void APIENTRY messageCallback( GLenum source,
 							   GLenum type,
 							   GLuint id,
 							   GLenum severity,
@@ -36,6 +37,37 @@ static void setErrorCallback()
 		} );
 }
 
+static GLuint compileShaderImpl( const std::vector<uint32_t>& buffer, unsigned int shaderType )
+{
+	GLuint handle = glCreateShader( shaderType );
+
+	glShaderBinary( 1, &handle, GL_SHADER_BINARY_FORMAT_SPIR_V_ARB, buffer.data(), buffer.size() * sizeof( uint32_t ) );
+	gl::GLStatus status = gl::checkStatus( handle );
+	if (!status.ok()) {
+		std::cerr << "Error: Failed to load shader binary. Error code: " << status.error << std::endl;
+		Logger::LogError( status.errorMsg );
+		throw;
+	}
+
+	glSpecializeShaderARB( handle, "main", 0, nullptr, nullptr );
+	status = gl::checkStatus( handle );
+	if (!status.ok()) {
+		std::cerr << "Error: Failure in glSpecializeShaderARB. Error code: " << status.error << std::endl;
+		Logger::LogError( status.errorMsg );
+		throw;
+	}
+
+	if (gl::validateCompile( handle )) {
+		Logger::LogInfo( "Shader compiled successfully." );
+	}
+	else {
+		Logger::LogError( "Shader compilation failed." );
+		throw;
+	}
+
+	return handle;
+}
+
 void GfxDeviceOpenGL::bindShaderArgsImpl( id::ShaderId shaderId, ShaderProgram& shader, const GLShaderArgs& args )
 {
 	assert( shaderBound() );
@@ -43,8 +75,7 @@ void GfxDeviceOpenGL::bindShaderArgsImpl( id::ShaderId shaderId, ShaderProgram& 
 	const auto& types = args.argTypes;
 	const auto& values = args.argValues;
 	const auto& metaData = args.metaData;
-	const auto& bindingNames = _shaderStorage.getBindingNames( shaderId );
-
+	
 	size_t argsCount = args.count();
 
 	for (size_t i = 0; i < argsCount; i++)
@@ -52,28 +83,27 @@ void GfxDeviceOpenGL::bindShaderArgsImpl( id::ShaderId shaderId, ShaderProgram& 
 		const auto& type = types[i];
 		const auto& value = values[i];
 		const auto& meta = metaData[i];
-		const auto& bindingName = bindingNames[i];
 
 		switch (type)
 		{
 		case ArgType::Int32:
-			shader.setInt( bindingName, value.intValue );
+			shader.setInt( 0, value.intValue );
 			break;
 		case ArgType::Float:
-			shader.setFloat( bindingName, value.floatValue );
+			shader.setFloat( 1, value.floatValue );
 			break;
 		case ArgType::Vec2:
-			shader.setVec2( bindingName, value.vec2Value );
+			shader.setVec2( 2, value.vec2Value );
 			break;
 		case ArgType::Vec3:
-			shader.setVec3( bindingName, value.vec3Value );
+			shader.setVec3( 3, value.vec3Value );
 			break;
 		case ArgType::Mat4:
-			shader.setMatrix( bindingName, value.mat4Value );
+			shader.setMatrix( 4, value.mat4Value );
 			break;
 		case ArgType::Texture2D:
 			bindTexture( value.textureId, meta.bindPosition );
-			shader.setInt( bindingName, value.textureId );
+			shader.setInt( 5, value.textureId );
 			break;
 		case ArgType::ConstBuffer:
 			shader.setConstBuffer( meta.bindPosition, value.constBuffer, meta.size, meta.bufferUsage );
@@ -145,15 +175,6 @@ GfxDeviceOpenGL::GfxDeviceOpenGL( const GfxDeviceArgs& args )
 			.rbo = 0
 		};
 	}
-	
-	// create shaders
-	{
-		for (int i = 0; i < args.shaderIds.size(); i++)
-		{
-			_shadersLookup[args.shaderIds[i]]
-				= ShaderProgram( args.vertexShaderFiles[i], args.fragmentShaderFiles[i] );
-		}
-	}
 		
 	// create textures
 	{
@@ -178,6 +199,38 @@ GfxDeviceOpenGL::GfxDeviceOpenGL( const GfxDeviceArgs& args )
 			_vertexBufferLookup[args.meshIds[i]] = createVertexBuffer( args.meshIds[i], *args.vertexData[i] );
 		}
 	}
+
+}
+
+void GfxDeviceOpenGL::compileShaders( const GfxShaderArgs& args )
+{
+	LinearMap<id::ShaderId, ShaderProgram, 15> shadersLookup{};
+
+	for (int i = 0; i < args.vertexShaderData.size(); i++)
+	{
+		const std::vector<uint32_t>& vsBuffer = args.vertexShaderData[i];
+		GLuint vsHandle = compileShaderImpl( vsBuffer, GL_VERTEX_SHADER );
+
+		const std::vector<uint32_t>& fsBuffer = args.fragmentShaderData[i];
+		GLuint fsHandle = compileShaderImpl( fsBuffer, GL_FRAGMENT_SHADER );
+
+		GLuint programHandle = glCreateProgram();
+
+		glAttachShader( programHandle, vsHandle );
+		glAttachShader( programHandle, fsHandle );
+
+		glLinkProgram( programHandle );
+		if (!gl::validateLink( programHandle )) {
+			printf( "Shader program failed to link: %s", args.shaderNames[i].c_str() );
+		}
+
+		glDeleteShader( vsHandle );
+		glDeleteShader( fsHandle );
+
+		_shadersLookup[args.shaderIds[i]] = ShaderProgram( programHandle );
+	}
+
+	_shadersLookup = shadersLookup;
 
 }
 

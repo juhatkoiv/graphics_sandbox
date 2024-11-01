@@ -62,6 +62,7 @@ public:
 	GfxDeviceOpenGL( const GfxDeviceArgs& args );
 	~GfxDeviceOpenGL() = default;
 
+	void compileShaders( const GfxShaderArgs& args ) override;
 	GfxTexture createTexture( id::TextureId id, unsigned bindPosition, Dimensions dimensions, const TextureData& textureData ) override;
 	GfxTexture createTexture( id::TextureId textureId, unsigned bindPosition, const TextureDescriptor& descriptor ) override;
 	VertexBuffer createVertexBuffer( id::MeshId meshId, const rendering::VertexData& vertexData ) override;

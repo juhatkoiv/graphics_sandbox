@@ -117,7 +117,22 @@
 *   TODO - Handle transparent ordering in Renderer.
 */
 
+#include "Rendering/ShaderCompilation/ShaderCompilation.h"
+
 int main( int argc, char** argv ) {
+
+	auto result = shader_compilation::generate_spirv();
+	if (result.success()) {
+		std::cout << "Spirv generated successfully." << std::endl;
+	}
+	else {
+		std::cerr << "Error: Failed to generate spirv." << std::endl;
+		for (const auto& error : result.errors) {
+			std::cerr << error << std::endl;
+		}
+		return -1;
+	}
+
 	MainLoop::Args args
 	{
 		"Graphics Sandbox",

@@ -135,55 +135,6 @@ namespace
 		return !_window->shouldClose();
 	}
 
-	static rendering::GfxDeviceArgs getDeviceArgs( appdata::AppData& appData )
-	{
-		rendering::GfxDeviceArgs deviceArgs{};
-		deviceArgs.windowSize = _window->getSize();
-
-		auto shaderSources = appData.getShaderSources();
-		if (shaderSources.empty())
-		{
-			LOG_ERROR( "No shader sources found!" );
-			exit( EXIT_FAILURE );
-		}
-
-		for (const auto& shaderSource : shaderSources)
-		{
-			deviceArgs.shaderIds.push_back( shader::getShaderId( shaderSource.name.c_str() ) );
-			deviceArgs.vertexShaderFiles.push_back( shaderSource.vertexSourceFile.c_str() );
-			deviceArgs.fragmentShaderFiles.push_back( shaderSource.fragmentSourceFile.c_str() );
-		}
-
-		const resources::ResourceContainer& container = _resouceSystem->getResourceContainer();
-		
-		const auto& textureData = container.getTextureMap();
-		
-		for (const auto& [handle, param] : textureData)
-		{
-			deviceArgs.textureData.push_back( &param );
-			deviceArgs.textureIds.push_back( handle.id );
-		}
-
-		const auto& vertexData = container.getVertexDataMap();
-		
-		for (const auto& [handle, param] : vertexData)
-		{
-			deviceArgs.vertexData.push_back( &param );
-			deviceArgs.meshIds.push_back( handle.id );
-		}
-
-		const auto& textureDescs = container.getTextureDescriptorMap();
-		
-		for (const auto& [handle, param] : textureDescs)
-		{
-			deviceArgs.textureDescriptorIds.push_back( handle.id );
-			deviceArgs.textureDescriptors.push_back( param );
-		}
-
-		return deviceArgs;
-	}
-
-
 	static void handleProfilerConnectedChanged()
 	{
 		const bool changed = _profilerConnected != PROFILER_ENABLED;
@@ -217,7 +168,7 @@ MainLoop::MainLoop( Args args )
 	_window.reset( new window::Window( args.title, window::WindowMode::Windowed ) );
 
 	_resouceSystem.reset( new resources::ResourceSystem( _appData ) );
-	rendering::GfxDeviceArgs deviceArgs = getDeviceArgs( _appData );
+	rendering::GfxDeviceArgs deviceArgs = _resouceSystem->getGfxDeviceArgs( _window->getSize() );
 	rendering::GfxDeviceFactory deviceFactory{ deviceArgs };
 
 	_gfxWorker.reset( new rendering::GfxWorker{ deviceFactory } );

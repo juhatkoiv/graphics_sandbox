@@ -10,6 +10,7 @@ DECLARE1( struct, appdata, TextureManifest );
 DECLARE( struct, RenderGraphJson );
 DECLARE( struct, RenderResourcesJson );
 
+
 BEGIN_NAMESPACE1( appdata )
 
 class AppData
@@ -39,6 +40,7 @@ public:
 
 	const RenderGraphJson& getRenderGraph() const;
 	const std::vector<RenderResourcesJson>& getRenderResources() const;
+
 
 private:
 	std::unique_ptr<Settings> _settings;

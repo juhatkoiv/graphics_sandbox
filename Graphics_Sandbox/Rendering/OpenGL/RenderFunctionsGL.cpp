@@ -238,6 +238,7 @@ BEGIN_NAMESPACE2( rendering, draw )
 
 void drawLitInstancedImpl( GfxQueue& gfx, GfxDevice* device, const GfxShader& material )
 {
+	/*
 	auto& shader = device->bindShader( material.shaderId );
 
 	id::MeshId meshId = gfx.frame->instancedData.meshId;
@@ -253,7 +254,7 @@ void drawLitInstancedImpl( GfxQueue& gfx, GfxDevice* device, const GfxShader& ma
 	}
 	fn::bindMaterialTextures( gfx, device, shader, id );
 	
-	device->dispatchIndexedInstancedDirect( meshId, (unsigned)gfx.frame->instancedData.groupEntities.size() );
+	device->dispatchIndexedInstancedDirect( meshId, (unsigned)gfx.frame->instancedData.groupEntities.size() );*/
 }
 
 END_NAMESPACE2

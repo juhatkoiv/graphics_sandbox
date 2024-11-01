@@ -26,4 +26,5 @@ struct CompilationResult {
 namespace shader_compilation {
 	CompilationResult load_as_spv( const std::string& path );
 	CompilationResult generate_spirv();
+	CompilationResult load_spirv( const std::string& pathStr );
 }

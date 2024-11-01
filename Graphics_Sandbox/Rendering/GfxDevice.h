@@ -112,6 +112,14 @@ struct GfxDeviceArgs
 	std::vector<id::TextureId> textureDescriptorIds{};
 };
 
+struct GfxShaderArgs
+{
+	std::vector<id::ShaderId> shaderIds{};
+	std::vector<std::string> shaderNames{};
+	std::vector<std::vector<uint32_t>> vertexShaderData{};
+	std::vector<std::vector<uint32_t>> fragmentShaderData{};
+};
+
 struct GfxBuffer 
 {
 	void* data = nullptr;
@@ -141,12 +149,13 @@ public:
 	GfxDevice() = default;
 	virtual ~GfxDevice() = default;
 	
+	virtual void compileShaders( const GfxShaderArgs& args ) = 0;
 	virtual GfxTexture createTexture( id::TextureId textureId, unsigned bindPosition, Dimensions dimensions, const TextureData& textureData ) = 0;
 	virtual GfxTexture createTexture( id::TextureId textureId, unsigned bindPosition, const TextureDescriptor& descriptor ) = 0;
 	virtual VertexBuffer createVertexBuffer( id::MeshId meshId, const rendering::VertexData& vertexData ) = 0;
 	virtual RenderTarget createRenderTarget( unsigned int width, unsigned int height ) = 0;
 	virtual GfxHandle allocateConstantBuffer( int size, int usage, int bindPosition ) = 0;
-
+	
 	virtual ShaderProgram& bindShader( id::ShaderId id ) = 0;
 	virtual ShaderProgram& bindShader( id::ShaderId id, const ShaderArgs& args ) = 0;
 	virtual GfxTexture& bindTexture( id::TextureId textureId, unsigned bindPosition = ~0u ) = 0;

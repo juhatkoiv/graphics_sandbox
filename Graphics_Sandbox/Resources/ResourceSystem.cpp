@@ -8,6 +8,9 @@
 #include "AssetLoading/TextureLoader.h"
 #include "Rendering/Vertex.h"
 #include "Rendering/Texture.h"
+#include "Rendering/GfxDevice.h"
+
+#include<fstream>
 
 BEGIN_NAMESPACE1( resources )
 
@@ -61,6 +64,7 @@ namespace
 }
 
 ResourceSystem::ResourceSystem( const appdata::AppData& config ) noexcept
+	: _config( config )
 {
 	_textureLoader = assets::TextureLoader();
 	_meshLoader = assets::MeshLoader();
@@ -240,9 +244,81 @@ Result<const std::string&> ResourceSystem::getTextureName( id::TextureId texture
 	return getResourceName( textureHandle, _nameHandleMap );
 }
 
-const ResourceContainer& ResourceSystem::getResourceContainer() const
+rendering::GfxDeviceArgs ResourceSystem::getGfxDeviceArgs( glm::vec2 windowSize ) const
 {
-	return _container;
+	rendering::GfxDeviceArgs deviceArgs{};
+	deviceArgs.windowSize = windowSize;
+
+	auto shaderSources = _config.getShaderSources();
+	if (shaderSources.empty()) {
+		LOG_ERROR( "No shader sources found!" );
+		exit( EXIT_FAILURE );
+	}
+
+	for (const auto& shaderSource : shaderSources) {
+		deviceArgs.shaderIds.push_back( shader::getShaderId( shaderSource.name.c_str() ) );
+		deviceArgs.vertexShaderFiles.push_back( shaderSource.vertexSourceFile.c_str() );
+		deviceArgs.fragmentShaderFiles.push_back( shaderSource.fragmentSourceFile.c_str() );
+	}
+
+	const auto& textureData = _container.getTextureMap();
+
+	for (const auto& [handle, param] : textureData) {
+		deviceArgs.textureData.push_back( &param );
+		deviceArgs.textureIds.push_back( handle.id );
+	}
+
+	const auto& vertexData = _container.getVertexDataMap();
+
+	for (const auto& [handle, param] : vertexData) {
+		deviceArgs.vertexData.push_back( &param );
+		deviceArgs.meshIds.push_back( handle.id );
+	}
+
+	const auto& textureDescs = _container.getTextureDescriptorMap();
+
+	for (const auto& [handle, param] : textureDescs) {
+		deviceArgs.textureDescriptorIds.push_back( handle.id );
+		deviceArgs.textureDescriptors.push_back( param );
+	}
+
+	return deviceArgs;
+}
+
+static std::vector<uint32_t> loadSpirvBinary( const std::string& path )
+{
+	std::ifstream ifs( path, std::ios::binary );
+	std::vector<char> content( (std::istreambuf_iterator<char>( ifs )), (std::istreambuf_iterator<char>()) );
+	
+	if (content.size() % sizeof( uint32_t ) != 0) {
+		assert( content.size() % sizeof( uint32_t ) == 0 && "Invalid SPIR-V file." );
+		throw;
+	}
+
+	uint32_t* spirv = reinterpret_cast<uint32_t*>(content.data());
+	std::vector<uint32_t> result{ spirv, spirv + content.size() / sizeof( uint32_t ) };
+
+	return result;
+}
+
+rendering::GfxShaderArgs ResourceSystem::getGfxShaderArgs() const
+{
+	rendering::GfxShaderArgs shaderArgs{};
+
+	auto shader_sources = _config.getShaderSources();
+	if (shader_sources.empty()) {
+		LOG_ERROR( "No shader sources found!" );
+		exit( EXIT_FAILURE );
+	}
+
+	for (const auto& shader_source : shader_sources) {
+		shaderArgs.shaderIds.push_back( shader::getShaderId( shader_source.name.c_str() ) );
+		shaderArgs.shaderNames.push_back( shader_source.name );
+		shaderArgs.vertexShaderData.push_back( loadSpirvBinary( shader_source.vertexSourceFile ) );
+		shaderArgs.fragmentShaderData.push_back( loadSpirvBinary( shader_source.fragmentSourceFile ) );
+	}
+
+	return shaderArgs;
 }
 
 END_NAMESPACE1
