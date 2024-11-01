@@ -169,10 +169,12 @@ MainLoop::MainLoop( Args args )
 
 	_resouceSystem.reset( new resources::ResourceSystem( _appData ) );
 	rendering::GfxDeviceArgs deviceArgs = _resouceSystem->getGfxDeviceArgs( _window->getSize() );
-	rendering::GfxDeviceFactory deviceFactory{ deviceArgs };
+	rendering::GfxShaderArgs shaderArgs = _resouceSystem->getGfxShaderArgs();
 
+	rendering::GfxDeviceFactory deviceFactory{ deviceArgs };
 	_gfxWorker.reset( new rendering::GfxWorker{ deviceFactory } );
 	_gfxWorker->setApi( api::OPENGL );
+	_gfxWorker->compileShaders( shaderArgs );
 
 	_systemContainer
 		.withSystem( std::make_unique<ecs::InputSystem>( *_window ) )

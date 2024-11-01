@@ -98,6 +98,11 @@ GfxWorker::GfxWorker( rendering::GfxDeviceFactory& deviceFactory )
 	: _deviceFactory( deviceFactory )
 {}
 
+void GfxWorker::compileShaders( const rendering::GfxShaderArgs& args ) {
+	_device->compileShaders( args );
+
+}
+
 void GfxWorker::setApi( int api )
 {
 	// prepare -> create full screen quads needed for post processing. should not be client's responsibility

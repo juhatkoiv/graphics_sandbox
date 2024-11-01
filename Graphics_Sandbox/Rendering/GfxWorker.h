@@ -5,6 +5,7 @@
 #include <glm/ext.hpp>
 
 DECLARE1( class, rendering, RenderCommandQueue );
+DECLARE1( struct, rendering, GfxShaderArgs );
 DECLARE1( class, rendering, GfxDeviceFactory );
 DECLARE1( class, resources, ResourceContainer );
 
@@ -29,6 +30,7 @@ public:
 	GfxWorker( rendering::GfxDeviceFactory& deviceFactory );
 	~GfxWorker() = default;
 
+	void compileShaders( const rendering::GfxShaderArgs& args );
 	void setApi( int api );
 	void render();
 	void update( RenderCommandQueue& queue );

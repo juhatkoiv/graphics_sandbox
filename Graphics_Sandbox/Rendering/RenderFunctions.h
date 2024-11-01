@@ -24,15 +24,10 @@ void setCullFace( const GfxFlags& flags );
 void clearFunc( const GfxFlags& flags );
 
 // Shader binding
-void bindMaterialTextures( GfxQueue& gfx, GfxDevice* device, ShaderProgram& shader, id::EntityId id );
+void bindMaterialTextures( GfxQueue& gfx, GfxDevice* device, id::EntityId id );
 
 END_NAMESPACE2
 
-BEGIN_NAMESPACE2( rendering, draw )
-
-void drawLitInstancedImpl( GfxQueue& gfx, GfxDevice* device, const GfxShader& material );
-
-END_NAMESPACE2
 
 BEGIN_NAMESPACE2( rendering, pass )
 

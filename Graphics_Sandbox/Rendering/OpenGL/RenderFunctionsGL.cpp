@@ -11,15 +11,8 @@
 
 BEGIN_NAMESPACE2( rendering, binding )
 
-	static constexpr int MODEL_MATRIX = 20;
-	static constexpr int FRAG_COLOR = 10;
 	static constexpr int CUBEMAP_TEXTURE = 0;
-	static constexpr int DIFFUSE_TEXTURE = 1;
-	static constexpr int SPECULAR_TEXTURE = 2;
-	static constexpr int DIFFUSE_COEFF = 12;
-	static constexpr int SPECULAR_COEFF = 13;
-
-
+	
 END_NAMESPACE2;
 
 BEGIN_NAMESPACE2( rendering, fn )
@@ -208,14 +201,11 @@ void clearFunc( const GfxFlags& flags )
 	setBlend( flags );
 }
 
-void bindMaterialTextures( GfxQueue& gfx, GfxDevice* device, ShaderProgram& shader, id::EntityId id )
+void bindMaterialTextures( GfxQueue& gfx, GfxDevice* device, id::EntityId id )
 {
 	if (gfx.frame->diffuseMaterials.has( id ))
 	{
 		auto& diffuse = gfx.frame->diffuseMaterials[id];
-		shader.setFloat( binding::DIFFUSE_COEFF, diffuse.diffuseCoeff );
-		shader.setInt( binding::DIFFUSE_TEXTURE, diffuse.bindPosition );
-
 		auto& texture = gfx.frame->textures[id][texture::index<TextureType::Diffuse>()];
 		device->bindTexture( texture, diffuse.bindPosition );
 	}
@@ -223,38 +213,9 @@ void bindMaterialTextures( GfxQueue& gfx, GfxDevice* device, ShaderProgram& shad
 	if (gfx.frame->specularMaterials.has( id ))
 	{
 		auto& specular = gfx.frame->specularMaterials[id];
-		shader.setFloat( binding::SPECULAR_COEFF, specular.specularCoeff );
-		shader.setInt( binding::SPECULAR_TEXTURE, specular.bindPosition );
-
 		auto& texture = gfx.frame->textures[id][texture::index<TextureType::Specular>()];
 		device->bindTexture( texture, specular.bindPosition );
 	}
-}
-
-END_NAMESPACE2
-
-BEGIN_NAMESPACE2( rendering, draw )
-
-
-void drawLitInstancedImpl( GfxQueue& gfx, GfxDevice* device, const GfxShader& material )
-{
-	/*
-	auto& shader = device->bindShader( material.shaderId );
-
-	id::MeshId meshId = gfx.frame->instancedData.meshId;
-
-	auto id = *gfx.frame->instancedData.groupEntities.begin();
-	auto& entities = gfx.frame->instancedData.groupEntities;
-
-	int instanceId = 0;
-	for (auto entity : entities)
-	{
-		auto& mat = gfx.frame->modelMatrices[entity];
-		shader.setMatrix( "perObjectBuffer[" + std::to_string( instanceId++ ) + "].model", mat );
-	}
-	fn::bindMaterialTextures( gfx, device, shader, id );
-	
-	device->dispatchIndexedInstancedDirect( meshId, (unsigned)gfx.frame->instancedData.groupEntities.size() );*/
 }
 
 END_NAMESPACE2
@@ -374,20 +335,18 @@ void executeWriteBorderStencil( GfxQueue& gfx, GfxDevice* device, const PassReso
 void executeDrawSkybox( GfxQueue& gfx, GfxDevice* device, const PassResources& resources )
 {
 	id::ShaderId shaderId = resources.getShaderId();
-	auto& shader = device->bindShader( shaderId );
-
-	shader.setInt( binding::CUBEMAP_TEXTURE, 0 );
+	device->bindShader( shaderId );
 
 	auto vbId = gfx.frame->skyboxMesh;
 	auto textureId = gfx.frame->skyboxTexture;
 
-	device->bindTexture( textureId, 0 );
+	device->bindTexture( textureId, binding::CUBEMAP_TEXTURE );
 	device->dispatchIndexedDirect( vbId );
 }
 
 void executeDrawOutlineBorder( GfxQueue& gfx, GfxDevice* device, const PassResources& resources )
 {
-	id::ShaderId shaderId = resources.getShaderId();
+	/*id::ShaderId shaderId = resources.getShaderId();
 	if (!gfx.batches.has( shaderId ))
 		return;
 
@@ -404,7 +363,7 @@ void executeDrawOutlineBorder( GfxQueue& gfx, GfxDevice* device, const PassResou
 		shader.setVec4( binding::FRAG_COLOR, glm::vec4{ 1, 0, 0, 1 } );
 
 		device->dispatchIndexedDirect( meshId );
-	}
+	}*/
 }
 
 void executeError( GfxQueue& gfx, GfxDevice* device, const PassResources& resources )

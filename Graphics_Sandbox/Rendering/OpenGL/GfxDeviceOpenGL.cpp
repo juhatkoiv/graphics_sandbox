@@ -227,7 +227,7 @@ void GfxDeviceOpenGL::compileShaders( const GfxShaderArgs& args )
 		glDeleteShader( vsHandle );
 		glDeleteShader( fsHandle );
 
-		_shadersLookup[args.shaderIds[i]] = ShaderProgram( programHandle );
+		shadersLookup[args.shaderIds[i]] = ShaderProgram( programHandle );
 	}
 
 	_shadersLookup = shadersLookup;
