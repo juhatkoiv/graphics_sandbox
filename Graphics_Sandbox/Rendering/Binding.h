@@ -7,6 +7,7 @@ BEGIN_NAMESPACE2( rendering, binding )
 static constexpr int CUBEMAP_TEXTURE = 0;
 static constexpr int DIFFUSE_TEXTURE = 0;
 static constexpr int SPECULAR_TEXTURE = 1;
+static constexpr int SPRITE_TEXTURE = 0;
 static constexpr int CAMERA_BUFFER = 0;
 static constexpr int LIGHT_BUFFER = 3;
 static constexpr int POST_PROCESSING_ARGS = 4;

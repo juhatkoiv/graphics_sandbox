@@ -31,12 +31,4 @@ namespace global
 	const glm::vec3 Z_AXIS = { 0, 0, 1 };
 }
 
-namespace rendering
-{
-	static constexpr int DIFFUSE_UNIT = 0;
-	static constexpr int SPECULAR_UNIT = 1;
-	static constexpr int SPRITE_UINT = 0;
-}
-
-
 #define NO_DISCARD [[nodiscard]]

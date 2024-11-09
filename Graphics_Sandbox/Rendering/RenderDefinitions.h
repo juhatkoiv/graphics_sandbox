@@ -181,9 +181,13 @@ struct GfxFrame
 	id::MeshId skyboxMesh{};
 	id::TextureId skyboxTexture{};
 
-	GfxHandle pushConstantsBuffer{};
-	GfxHandle materialBuffer{};
-	GfxHandle modelMatrixBuffer{};
+	GfxHandle pushConstantsBuffer = ~0u;
+	GfxHandle materialBuffer = ~0u;
+	GfxHandle modelMatrixBuffer = ~0u;
+	GfxHandle cameraBuffer = ~0u;
+	GfxHandle lightBuffer = ~0u;
+	GfxHandle postProcessingBuffer = ~0u;
+	GfxHandle globalLightingSettingsBuffer = ~0u;
 
 	GfxCamera camera{};
 	RenderingSettings settings{};

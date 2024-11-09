@@ -32,16 +32,14 @@ BEGIN_NAMESPACE1( rendering )
 
 namespace
 {
+	using namespace assets;
+	using namespace ecs;
+
 	struct CBUFFER GfxMaterial {
 		glm::vec4 color;
 		float diffuseCoeff;
 		float specularCoeff;
 	};
-
-	using namespace assets;
-	using namespace ecs;
-
-	GfxFrame frame{};
 
 	struct CBUFFER GfxCameraBuffer 
 	{
@@ -68,11 +66,7 @@ namespace
 		glm::mat4 impl[100];
 	};
 
-
-	GfxHandle cameraBuffer = ~0u;
-	GfxHandle lightBuffer = ~0u;
-	GfxHandle postProcessingBuffer = ~0u;
-	GfxHandle globalLightingSettingsBuffer = ~0u;
+	GfxFrame frame{};
 
 	GfxPostProcessing resolvePostProcessingArgs( GfxFrame& frame )
 	{
@@ -128,60 +122,31 @@ void GfxWorker::compileShaders( const rendering::GfxShaderArgs& args ) {
 
 void GfxWorker::setApi( int api )
 {
-	// prepare -> create full screen quads needed for post processing. should not be client's responsibility
-
 	_device = _deviceFactory.createDevice( api );
 
 	// allocate camera buffer
-	cameraBuffer = _device->allocateConstantBuffer<GfxCameraBuffer>( buffer_usage::UBO, binding::CAMERA_BUFFER );
+	frame.cameraBuffer = _device->allocateConstantBuffer<GfxCameraBuffer>( buffer_usage::UBO, binding::CAMERA_BUFFER );
 	
 	// allocate lights buffer
-	lightBuffer = _device->allocateConstantBuffer<GfxLighing>( buffer_usage::UBO, binding::LIGHT_BUFFER );
+	frame.lightBuffer = _device->allocateConstantBuffer<GfxLighing>( buffer_usage::UBO, binding::LIGHT_BUFFER );
 	
 	// allocate object buffer
-	postProcessingBuffer = _device->allocateConstantBuffer<GfxPostProcessing>( buffer_usage::UBO, binding::POST_PROCESSING_ARGS );
+	frame.postProcessingBuffer = _device->allocateConstantBuffer<GfxPostProcessing>( buffer_usage::UBO, binding::POST_PROCESSING_ARGS );
 
 	// allocate global lighting settings buffer
-	globalLightingSettingsBuffer = _device->allocateConstantBuffer<LightingSettings>( buffer_usage::UBO, binding::LIGHTNING_SETTINGS );
+	frame.globalLightingSettingsBuffer = _device->allocateConstantBuffer<LightingSettings>( buffer_usage::UBO, binding::LIGHTNING_SETTINGS );
+
+	// allocate buffer for materials
+	frame.materialBuffer = _device->allocateConstantBuffer<GfxMaterialBuffer>( buffer_usage::UBO, binding::MATERIAL_BUFFER );
+	
+	// allocate buffer for model matrices
+	frame.modelMatrixBuffer = _device->allocateConstantBuffer<GfxModelMatrixBuffer>( buffer_usage::UBO, binding::MODEL_MATRIX_BUFFER );
+
+	// allocate buffer for push constants
+	frame.pushConstantsBuffer = _device->allocateConstantBuffer<int>( buffer_usage::UBO, binding::PUSH_CONSTANT );
 }
 
 void GfxWorker::render() {
-
-	if (frame.pushConstantsBuffer == 0) {
-		frame.pushConstantsBuffer = _device->allocateConstantBuffer<int>( buffer_usage::UBO, binding::PUSH_CONSTANT );
-	}
-	if (frame.materialBuffer == 0) {
-		frame.materialBuffer = _device->allocateConstantBuffer<GfxMaterialBuffer>( buffer_usage::UBO, binding::MATERIAL_BUFFER );
-	}
-	if (frame.modelMatrixBuffer == 0) {
-		frame.modelMatrixBuffer = _device->allocateConstantBuffer<GfxModelMatrixBuffer>( buffer_usage::UBO, binding::MODEL_MATRIX_BUFFER );
-	}
-
-	for (auto& [queueId, queue] : frame.queues) {
-		for (auto& [shaderId, batch] : queue.batches) {
-
-			for (int i = 0; i < batch.entities.size(); i++) {
-				const auto& id = batch.entities[i];
-
-				// update model matrix
-				if (frame.modelMatrices.has( id )) {
-					const auto& matrix = frame.modelMatrices.at( id );
-
-					_device->updateConstantBuffer( frame.modelMatrixBuffer, matrix, id );
-				}
-
-				// update material
-				if (queue.meshColors.has( id )) {
-					GfxMaterial material{};
-					material.color = queue.meshColors[id];
-					material.diffuseCoeff = 1.0f;
-					material.specularCoeff = 1.0f;
-
-					_device->updateConstantBuffer<GfxMaterial>( frame.materialBuffer, material, id );
-				}
-			}
-		}
-	}
 
 	const auto& frameResources = FrameBuilder::buildFrameResources();
 	const auto& renderGraph = FrameBuilder::buildGraph();
@@ -357,6 +322,7 @@ void GfxWorker::setSkybox( const SetSkyBoxCmd& param )
 
 void GfxWorker::prepareDraw()
 {
+	// prepare -> create full screen quads needed for post processing. should not be client's responsibility
 	GfxQueue& queue = frame.queues[Queue::Transparent];
 	for (auto& [shader, batch] : queue.batches)
 	{
@@ -367,9 +333,9 @@ void GfxWorker::prepareDraw()
 	// update camera buffer
 	{
 		glm::mat4 viewMatrixTransformStripped = frame.getViewMatrixStripTransform();
-		_device->updateConstantBuffer( cameraBuffer, frame.camera.viewMatrix, 0 );
-		_device->updateConstantBuffer( cameraBuffer, viewMatrixTransformStripped, 1 );
-		_device->updateConstantBuffer( cameraBuffer, frame.camera.projectionMatrix, 2 );
+		_device->updateConstantBuffer( frame.cameraBuffer, frame.camera.viewMatrix, 0 );
+		_device->updateConstantBuffer( frame.cameraBuffer, viewMatrixTransformStripped, 1 );
+		_device->updateConstantBuffer( frame.cameraBuffer, frame.camera.projectionMatrix, 2 );
 	}
 
 	// update light buffer
@@ -381,18 +347,46 @@ void GfxWorker::prepareDraw()
 		}
 		frame.lighting.viewPosition = frame.camera.viewPosition;
 
-		_device->updateConstantBuffer<GfxLighing>( lightBuffer, frame.lighting, 0 );
+		_device->updateConstantBuffer<GfxLighing>( frame.lightBuffer, frame.lighting, 0 );
 	}
 
 	// update post processing data
 	{
 		GfxPostProcessing args = resolvePostProcessingArgs( frame );
-		_device->updateConstantBuffer<GfxPostProcessing>( postProcessingBuffer, args, 0 );
+		_device->updateConstantBuffer<GfxPostProcessing>( frame.postProcessingBuffer, args, 0 );
 	}
 
 	// update global lighting settings
 	{
-		_device->updateConstantBuffer<LightingSettings>( globalLightingSettingsBuffer, frame.settings.lightingSettings, 0 );
+		_device->updateConstantBuffer<LightingSettings>( frame.globalLightingSettingsBuffer, frame.settings.lightingSettings, 0 );
+	}
+
+	for (auto& [queueId, queue] : frame.queues) {
+		for (auto& [shaderId, batch] : queue.batches) {
+
+			for (int i = 0; i < batch.entities.size(); i++) {
+				const auto& id = batch.entities[i];
+
+	// update model matrix
+				
+				if (frame.modelMatrices.has( id )) {
+					const auto& matrix = frame.modelMatrices.at( id );
+
+					_device->updateConstantBuffer( frame.modelMatrixBuffer, matrix, id );
+				}
+
+	// update material
+				
+				if (queue.meshColors.has( id )) {
+					GfxMaterial material{};
+					material.color = queue.meshColors[id];
+					material.diffuseCoeff = 1.0f;
+					material.specularCoeff = 1.0f;
+
+					_device->updateConstantBuffer<GfxMaterial>( frame.materialBuffer, material, id );
+				}
+			}
+		}
 	}
 }
 
@@ -405,7 +399,7 @@ void GfxWorker::setTexture( unsigned id, const SetTextureCmd& cmd )
 	if (has( textureType, TextureType::Diffuse ))
 	{
 		GfxDiffuseMaterial& diffuse = frame.diffuseMaterials[id];
-		diffuse.bindPosition = rendering::DIFFUSE_UNIT;
+		diffuse.bindPosition = binding::DIFFUSE_TEXTURE;
 		diffuse.textureId = textureId;
 
 		frame.textures[id][texture::index<TextureType::Diffuse>()] = textureId;
@@ -414,7 +408,7 @@ void GfxWorker::setTexture( unsigned id, const SetTextureCmd& cmd )
 	if (has( textureType, TextureType::Specular ))
 	{
 		GfxSpecularMaterial& specular = frame.specularMaterials[id];
-		specular.bindPosition = rendering::SPECULAR_UNIT;
+		specular.bindPosition = binding::SPECULAR_TEXTURE;
 		specular.textureId = textureId;
 
 		frame.textures[id][texture::index<TextureType::Specular>()] = textureId;
@@ -423,7 +417,7 @@ void GfxWorker::setTexture( unsigned id, const SetTextureCmd& cmd )
 	if (has( textureType, TextureType::Sprite ))
 	{
 		GfxSprite& sprite = frame.sprites[id];
-		sprite.bindPosition = rendering::SPRITE_UINT;
+		sprite.bindPosition = binding::SPRITE_TEXTURE;
 		sprite.textureId = textureId;
 
 		frame.textures[id][texture::index<TextureType::Sprite>()] = textureId;
