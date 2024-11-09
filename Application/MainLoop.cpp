@@ -3,6 +3,7 @@
 
 #include <chrono>
 
+#include "AppContext.h"
 #include "AppData/AppData.h"
 #include "AppData/RepositoryItemTypes.h"
 #include "ECS/World.h"
@@ -18,73 +19,7 @@
 #include "Resources/ResourceSystem.h"
 #include "Rendering/ShaderCompilation/ShaderCompilation.h"
 #include "Window/Window.h"
-
-template<typename T>
-concept SystemFactory = requires(T t)
-{
-	{ t() } -> std::convertible_to<std::unique_ptr<ecs::System>>;
-};
-
-class SystemContainer
-{
-public:
-	void update( ecs::World& world, float deltaTime )
-	{
-		for (const auto& system : _systems)
-		{
-			system->update( world, deltaTime );
-		}
-	}
-
-	SystemContainer& withSystem( std::unique_ptr<ecs::System>&& system )
-	{
-		_systems.emplace_back( std::move( system ) );
-		return *this;
-	}
-
-	// Lazy init overload
-	template<SystemFactory Func>
-	SystemContainer& withSystem( Func func )
-	{
-		_systems.push_back( func() );
-		return *this;
-	}
-
-	template<typename T>
-	Result<T*> getSystem()
-	{
-		for (auto& system : _systems)
-		{
-			if (typeid(system.get()) != typeid(T*))
-				continue;
-
-			return Result<T*>::ok( system.get() );
-		}
-
-		return Result<T*>::failed();
-	}
-
-
-private:
-	std::vector<std::unique_ptr<ecs::System>> _systems;
-};
-class AppContext
-{
-public:
-	static void initialize()
-	{
-		if (!glfwInit())
-		{
-			LOG_ERROR( "Glfw init failed! Aborting..." );
-			exit( EXIT_FAILURE );
-		}
-	}
-
-	static void cleanup()
-	{
-		glfwTerminate();
-	}
-};
+#include "SystemContainer.h"
 
 namespace
 {
@@ -105,73 +40,6 @@ namespace
 	ecs::World _world;
 	bool _profilerConnected;
 
-	void update( float deltaTime );
-	void render( float deltaTime );
-	void postUpdate( float deltaTime );
-	void cleanup();
-	bool running();
-
-	static void update( float deltaTime )
-	{
-		_systemContainer.update( _world, deltaTime );
-		_editor->update( deltaTime );
-	}
-
-	static void render( float deltaTime )
-	{
-		_editor->render( deltaTime );
-		_window->present();
-	}
-
-	static void postUpdate( float deltaTime )
-	{
-		if (!app::hasState( app::AppState::Quits ))
-			return;
-
-		glfwSetWindowShouldClose( _window->getWindowImpl(), true );
-	}
-
-	static bool running()
-	{
-		return !_window->shouldClose();
-	}
-
-	static void handleProfilerConnectedChanged()
-	{
-		const bool changed = _profilerConnected != PROFILER_ENABLED;
-		if (!changed)
-			return;
-
-		if (changed && PROFILER_ENABLED)
-		{
-			LOG_INFO( "Profiler Connected" );
-		}
-
-		if (changed && !PROFILER_ENABLED)
-		{
-			LOG_INFO( "Profiler Disconnected" );
-		}
-		_profilerConnected = PROFILER_ENABLED;
-	}
-
-	static void cleanup()
-	{
-		_window->close();
-		AppContext::cleanup();
-	}
-
-	static void generateSpirv() { 
-		auto result = shader_compilation::generate_spirv();
-		if (result.success()) {
-			std::cout << "SpirV generated successfully." << std::endl;
-		}
-		else {
-			std::cerr << "Error: Failed to generate spirv." << std::endl;
-			for (const auto& error : result.errors) {
-				std::cerr << error << std::endl;
-			}
-		}
-	}
 }
 
 MainLoop::MainLoop( Args args ) {
@@ -229,8 +97,7 @@ void MainLoop::run()
 		}
 
 		render( global::FRAME_TIME_SECONDS );
-		postUpdate( global::FRAME_TIME_SECONDS );
-
+		
 		FRAME_MARK;
 
 	} while (running());
@@ -238,3 +105,64 @@ void MainLoop::run()
 	cleanup();
 }
 
+void MainLoop::generateSpirv()
+{
+	auto result = shader_compilation::generate_spirv();
+	if (result.success()) {
+		std::cout << "SpirV generated successfully." << std::endl;
+	}
+	else {
+		std::cerr << "Error: Failed to generate spirv." << std::endl;
+		for (const auto& error : result.errors) {
+			std::cerr << error << std::endl;
+		}
+	}
+}
+
+void MainLoop::handleProfilerConnectedChanged()
+{
+	const bool changed = _profilerConnected != PROFILER_ENABLED;
+	if (!changed)
+		return;
+
+	if (changed && PROFILER_ENABLED)
+	{
+		LOG_INFO( "Profiler Connected" );
+	}
+
+	if (changed && !PROFILER_ENABLED)
+	{
+		LOG_INFO( "Profiler Disconnected" );
+	}
+	_profilerConnected = PROFILER_ENABLED;
+}
+
+void MainLoop::update( float deltaTime )
+{
+	_systemContainer.update( _world, deltaTime );
+	_editor->update( deltaTime );
+
+	if (!app::hasState( app::AppState::Quits ))
+		return;
+
+	AppContext::closeApplication( *_window );
+}
+
+void MainLoop::render( float deltaTime )
+{
+	_editor->render( deltaTime );
+	_window->present();
+}
+
+void MainLoop::cleanup()
+{
+	assert( _window != nullptr );
+	_window->close();
+	AppContext::cleanup();
+}
+
+bool MainLoop::running()
+{
+	assert( _window != nullptr );
+	return !_window->shouldClose();
+}

@@ -169,6 +169,7 @@ xcopy "$(ProjectDir)data\*.*" "$(SolutionDir)x64\Debug\data" /Y /I /E</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AppContext.cpp" />
     <ClCompile Include="AppData\AppData.cpp" />
     <ClCompile Include="AssetLoading\AssimpMeshLoader.cpp" />
     <ClCompile Include="AssetLoading\AssimpVertexParser.cpp" />
@@ -235,6 +236,7 @@ xcopy "$(ProjectDir)data\*.*" "$(SolutionDir)x64\Debug\data" /Y /I /E</Command>
     <ClCompile Include="World\Ray.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AppContext.h" />
     <ClInclude Include="AppData\AppData.h" />
     <ClInclude Include="AppData\RepositoryItem.h" />
     <ClInclude Include="AppData\RepositoryItemTypes.h" />
@@ -340,6 +342,7 @@ xcopy "$(ProjectDir)data\*.*" "$(SolutionDir)x64\Debug\data" /Y /I /E</Command>
     <ClInclude Include="Rendering\Vertex.h" />
     <ClInclude Include="Rendering\VertexBuffer.h" />
     <ClInclude Include="Scene\SceneData.h" />
+    <ClInclude Include="SystemContainer.h" />
     <ClInclude Include="Tests\Tests.h" />
     <ClInclude Include="tracy\public\tracy\Tracy.hpp" />
     <ClInclude Include="Window\Window.h" />

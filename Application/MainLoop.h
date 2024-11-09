@@ -17,4 +17,14 @@ public:
 	~MainLoop();
 
 	void run();
+
+private:
+	void generateSpirv(); 
+	void handleProfilerConnectedChanged();
+	void update( float deltaTime );
+	void render( float deltaTime );
+	void cleanup();
+	
+
+	bool running();
 };
