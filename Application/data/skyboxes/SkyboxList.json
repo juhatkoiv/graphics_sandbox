@@ -1,0 +1,16 @@
+{
+	"skyboxes" : 
+	[
+		{
+			"skyBoxName" : "bay",
+			"skyBoxTexturePaths" : [
+				"data//skyboxes//bay//bay_up.jpg",
+				"data//skyboxes//bay//bay_bk.jpg",
+				"data//skyboxes//bay//bay_dn.jpg",
+				"data//skyboxes//bay//bay_ft.jpg",
+				"data//skyboxes//bay//bay_lf.jpg",
+				"data//skyboxes//bay//bay_rt.jpg"			
+			]
+		}
+	]
+}

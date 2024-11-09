@@ -1,0 +1,30 @@
+{
+	"name" : "test_cube_tiled",
+	"components" : {
+		"mesh" : {
+			"name" : "cube",
+			"path" : "data//meshes//cube.obj"
+		},
+		"material" : {
+			"name" : "lit_transparent_cracks",
+			"shaderName" : "LAMBERTIAN_TRANSPARENT",
+			"texturePaths" : ["data//textures//transparent_cracks.png", "data//textures//transparent_cracks.png"],
+			"textureTypes" : ["Diffuse", "Specular"],
+			"meshColor" : {
+				"values" : [1, 1, 1, 0.5]
+			},
+			"renderQueue" : "Transparent"
+		},
+		"transform" : {
+			"position" : {
+				"values" : [0, 0, 0, 0]
+			},
+			"scale" : {
+				"values" : [1, 1, 1]
+			},
+			"rotation" : { 	
+				"values" : [0, 0, 0, 1]
+			}
+		}
+	}
+}

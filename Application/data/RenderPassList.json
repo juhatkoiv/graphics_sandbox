@@ -1,0 +1,15 @@
+[
+    "clear_backbuffer",
+    "bind_and_clear_framebuffer_postprocessing",
+    "render_lit",
+    "render_lights",
+    "clear_enable_write_stencil",
+    "write_stencil_mask_entity",
+    "clear_enable_read_stencil",
+    "draw_outline",
+    "clear_disable_stencil",
+    "clear_skybox",
+    "render_skybox",
+    "enable_blend",
+    "render_lit_transparent"
+]

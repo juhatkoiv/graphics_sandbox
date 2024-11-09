@@ -1,0 +1,72 @@
+[
+    {
+        "fragmentSourceFile": "data//shaders//spv//lambertian_frag.spv",
+        "name": "LAMBERTIAN",
+        "vertexSourceFile": "data//shaders//spv//model_view_projection_vert.spv"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//spv//lambertian_frag.spv",
+        "name": "LAMBERTIAN_TRANSPARENT",
+        "vertexSourceFile": "data//shaders//spv//model_view_projection_vert.spv"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//spv//single_color_frag.spv",
+        "name": "LIGHTS",
+        "vertexSourceFile": "data//shaders//spv//model_view_projection_vert.spv"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//spv//single_color_frag.spv",
+        "name": "SINGLE_COLOR_BORDER",
+        "vertexSourceFile": "data//shaders//spv//model_view_projection_scaled_vert.spv"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//spv//lambertian_frag.spv",
+        "name": "LAMBERTIAN_INSTANCED",
+        "vertexSourceFile": "data//shaders//spv//model_view_projection_instanced_vert.spv"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//spv//full_screen_frag.spv",
+        "name": "FULL_SCREEN_QUAD",
+        "vertexSourceFile": "data//shaders//spv//full_screen_vert.spv"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//spv//full_screen_inverted_color_frag.spv",
+        "name": "FULL_SCREEN_COLOR_INVERTED",
+        "vertexSourceFile": "data//shaders//spv//full_screen_vert.spv"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//spv//full_screen_blur_vertical_frag.spv",
+        "name": "FULL_SCREEN_BLUR_VERTICAL",
+        "vertexSourceFile": "data//shaders//spv//full_screen_vert.spv"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//spv//full_screen_blur_horizontal_frag.spv",
+        "name": "FULL_SCREEN_BLUR_HORIZONTAL",
+        "vertexSourceFile": "data//shaders//spv//full_screen_vert.spv"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//spv//full_screen_pixelated_frag.spv",
+        "name": "FULL_SCREEN_PIXELATED",
+        "vertexSourceFile": "data//shaders//spv//full_screen_vert.spv"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//spv//full_screen_chrome_aberrated_frag.spv",
+        "name": "FULL_SCREEN_CHROME_ABERRATION",
+        "vertexSourceFile": "data//shaders//spv//full_screen_vert.spv"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//spv//full_screen_color_corrected_frag.spv",
+        "name": "FULL_SCREEN_COLOR_CORRECTION",
+        "vertexSourceFile": "data//shaders//spv//full_screen_vert.spv"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//spv//skybox_frag.spv",
+        "name": "SKYBOX",
+        "vertexSourceFile": "data//shaders//spv//skybox_vert.spv"
+    },
+    {
+        "fragmentSourceFile": "data//shaders//spv//error_frag.spv",
+        "name": "NULL_SHADER",
+        "vertexSourceFile": "data//shaders//spv//model_view_projection_vert.spv"
+    }
+]

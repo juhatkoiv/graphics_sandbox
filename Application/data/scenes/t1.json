@@ -1,0 +1,1619 @@
+{
+    "entities": [
+        {
+            "components": {
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LAMBERTIAN",
+                    "texturePaths": [
+                        "data//textures//tileable_marble_blocks_texture_DIFFUSE.jpg",
+                        "data//textures//tileable_marble_blocks_texture_SPECULAR.jpg"
+                    ],
+                    "textureTypes": [
+                        "Diffuse",
+                        "Specular"
+                    ]
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            -5.0,
+                            5.0,
+                            -10.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            },
+            "name": "model0"
+        },
+        {
+            "components": {
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LAMBERTIAN",
+                    "texturePaths": [
+                        "data//meshes//sphere.obj",
+                        "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"
+                    ],
+                    "textureTypes": [
+                        "Diffuse",
+                        "Specular"
+                    ]
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            -2.5,
+                            5.0,
+                            -10.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            },
+            "name": "model1"
+        },
+        {
+            "components": {
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LAMBERTIAN",
+                    "texturePaths": [
+                        "data//meshes//sphere.obj",
+                        "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"
+                    ],
+                    "textureTypes": [
+                        "Diffuse",
+                        "Specular"
+                    ]
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            0.0,
+                            5.0,
+                            -10.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            },
+            "name": "model2"
+        },
+        {
+            "components": {
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LAMBERTIAN",
+                    "texturePaths": [
+                        "data//meshes//sphere.obj",
+                        "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"
+                    ],
+                    "textureTypes": [
+                        "Diffuse",
+                        "Specular"
+                    ]
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            2.5,
+                            5.0,
+                            -10.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            },
+            "name": "model3"
+        },
+        {
+            "components": {
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LAMBERTIAN",
+                    "texturePaths": [
+                        "data//meshes//sphere.obj",
+                        "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"
+                    ],
+                    "textureTypes": [
+                        "Diffuse",
+                        "Specular"
+                    ]
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            5.0,
+                            5.0,
+                            -10.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            },
+            "name": "model4"
+        },
+        {
+            "components": {
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LAMBERTIAN",
+                    "texturePaths": [
+                        "data//meshes//sphere.obj",
+                        "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"
+                    ],
+                    "textureTypes": [
+                        "Diffuse",
+                        "Specular"
+                    ]
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            -5.0,
+                            2.5,
+                            -10.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            },
+            "name": "model5"
+        },
+        {
+            "components": {
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LAMBERTIAN",
+                    "texturePaths": [
+                        "data//meshes//sphere.obj",
+                        "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"
+                    ],
+                    "textureTypes": [
+                        "Diffuse",
+                        "Specular"
+                    ]
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            -2.5,
+                            2.5,
+                            -10.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            },
+            "name": "model6"
+        },
+        {
+            "components": {
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LAMBERTIAN",
+                    "texturePaths": [
+                        "data//meshes//sphere.obj",
+                        "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"
+                    ],
+                    "textureTypes": [
+                        "Diffuse",
+                        "Specular"
+                    ]
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            0.0,
+                            2.5,
+                            -10.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            },
+            "name": "model7"
+        },
+        {
+            "components": {
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LAMBERTIAN",
+                    "texturePaths": [
+                        "data//meshes//sphere.obj",
+                        "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"
+                    ],
+                    "textureTypes": [
+                        "Diffuse",
+                        "Specular"
+                    ]
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            2.5,
+                            2.5,
+                            -10.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            },
+            "name": "model8"
+        },
+        {
+            "components": {
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LAMBERTIAN",
+                    "texturePaths": [
+                        "data//meshes//sphere.obj",
+                        "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"
+                    ],
+                    "textureTypes": [
+                        "Diffuse",
+                        "Specular"
+                    ]
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            5.0,
+                            2.5,
+                            -10.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            },
+            "name": "model9"
+        },
+        {
+            "components": {
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LAMBERTIAN",
+                    "texturePaths": [
+                        "data//meshes//sphere.obj",
+                        "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"
+                    ],
+                    "textureTypes": [
+                        "Diffuse",
+                        "Specular"
+                    ]
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            -5.0,
+                            0.0,
+                            -10.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            },
+            "name": "model10"
+        },
+        {
+            "components": {
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LAMBERTIAN",
+                    "texturePaths": [
+                        "data//meshes//sphere.obj",
+                        "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"
+                    ],
+                    "textureTypes": [
+                        "Diffuse",
+                        "Specular"
+                    ]
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            -2.5,
+                            0.0,
+                            -10.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            },
+            "name": "model11"
+        },
+        {
+            "components": {
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LAMBERTIAN",
+                    "texturePaths": [
+                        "data//meshes//sphere.obj",
+                        "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"
+                    ],
+                    "textureTypes": [
+                        "Diffuse",
+                        "Specular"
+                    ]
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            -10.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            },
+            "name": "model12"
+        },
+        {
+            "components": {
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LAMBERTIAN",
+                    "texturePaths": [
+                        "data//meshes//sphere.obj",
+                        "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"
+                    ],
+                    "textureTypes": [
+                        "Diffuse",
+                        "Specular"
+                    ]
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            2.5,
+                            0.0,
+                            -10.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            },
+            "name": "model13"
+        },
+        {
+            "components": {
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LAMBERTIAN",
+                    "texturePaths": [
+                        "data//meshes//sphere.obj",
+                        "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"
+                    ],
+                    "textureTypes": [
+                        "Diffuse",
+                        "Specular"
+                    ]
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            5.0,
+                            0.0,
+                            -10.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            },
+            "name": "model14"
+        },
+        {
+            "components": {
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LAMBERTIAN",
+                    "texturePaths": [
+                        "data//meshes//sphere.obj",
+                        "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"
+                    ],
+                    "textureTypes": [
+                        "Diffuse",
+                        "Specular"
+                    ]
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            -5.0,
+                            -2.5,
+                            -10.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            },
+            "name": "model15"
+        },
+        {
+            "components": {
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LAMBERTIAN",
+                    "texturePaths": [
+                        "data//meshes//sphere.obj",
+                        "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"
+                    ],
+                    "textureTypes": [
+                        "Diffuse",
+                        "Specular"
+                    ]
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            -2.5,
+                            -2.5,
+                            -10.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            },
+            "name": "model16"
+        },
+        {
+            "components": {
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LAMBERTIAN",
+                    "texturePaths": [
+                        "data//meshes//sphere.obj",
+                        "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"
+                    ],
+                    "textureTypes": [
+                        "Diffuse",
+                        "Specular"
+                    ]
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            0.0,
+                            -2.5,
+                            -10.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            },
+            "name": "model17"
+        },
+        {
+            "components": {
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LAMBERTIAN",
+                    "texturePaths": [
+                        "data//meshes//sphere.obj",
+                        "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"
+                    ],
+                    "textureTypes": [
+                        "Diffuse",
+                        "Specular"
+                    ]
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            2.5,
+                            -2.5,
+                            -10.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            },
+            "name": "model18"
+        },
+        {
+            "components": {
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LAMBERTIAN",
+                    "texturePaths": [
+                        "data//meshes//sphere.obj",
+                        "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"
+                    ],
+                    "textureTypes": [
+                        "Diffuse",
+                        "Specular"
+                    ]
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            5.0,
+                            -2.5,
+                            -10.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            },
+            "name": "model19"
+        },
+        {
+            "components": {
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LAMBERTIAN",
+                    "texturePaths": [
+                        "data//meshes//sphere.obj",
+                        "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"
+                    ],
+                    "textureTypes": [
+                        "Diffuse",
+                        "Specular"
+                    ]
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            -5.0,
+                            -5.0,
+                            -10.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            },
+            "name": "model20"
+        },
+        {
+            "components": {
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LAMBERTIAN",
+                    "texturePaths": [
+                        "data//meshes//sphere.obj",
+                        "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"
+                    ],
+                    "textureTypes": [
+                        "Diffuse",
+                        "Specular"
+                    ]
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            -2.5,
+                            -5.0,
+                            -10.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            },
+            "name": "model21"
+        },
+        {
+            "components": {
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LAMBERTIAN",
+                    "texturePaths": [
+                        "data//meshes//sphere.obj",
+                        "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"
+                    ],
+                    "textureTypes": [
+                        "Diffuse",
+                        "Specular"
+                    ]
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            0.0,
+                            -5.0,
+                            -10.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            },
+            "name": "model22"
+        },
+        {
+            "components": {
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LAMBERTIAN",
+                    "texturePaths": [
+                        "data//meshes//sphere.obj",
+                        "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"
+                    ],
+                    "textureTypes": [
+                        "Diffuse",
+                        "Specular"
+                    ]
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            2.5,
+                            -5.0,
+                            -10.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            },
+            "name": "model23"
+        },
+        {
+            "components": {
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LAMBERTIAN",
+                    "texturePaths": [
+                        "data//meshes//sphere.obj",
+                        "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"
+                    ],
+                    "textureTypes": [
+                        "Diffuse",
+                        "Specular"
+                    ]
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            5.0,
+                            -5.0,
+                            -10.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            },
+            "name": "model24"
+        },
+        {
+            "components": {
+                "light": {
+                    "attenuation": 1.0,
+                    "intensity": 1.0,
+                    "lightColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                },
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LIGHTS",
+                    "texturePaths": [],
+                    "textureTypes": []
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            -2.5,
+                            -2.5,
+                            -8.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            0.10000000149011612,
+                            0.10000000149011612,
+                            0.10000000149011612
+                        ]
+                    }
+                }
+            },
+            "name": "model25"
+        },
+        {
+            "components": {
+                "light": {
+                    "attenuation": 1.0,
+                    "intensity": 1.0,
+                    "lightColor": {
+                        "values": [
+                            0.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                },
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LIGHTS",
+                    "texturePaths": [],
+                    "textureTypes": []
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            2.5,
+                            -2.5,
+                            -8.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            0.10000000149011612,
+                            0.10000000149011612,
+                            0.10000000149011612
+                        ]
+                    }
+                }
+            },
+            "name": "model26"
+        },
+        {
+            "components": {
+                "light": {
+                    "attenuation": 1.0,
+                    "intensity": 1.0,
+                    "lightColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            0.0
+                        ]
+                    }
+                },
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LIGHTS",
+                    "texturePaths": [],
+                    "textureTypes": []
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            -2.5,
+                            2.5,
+                            -8.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            0.10000000149011612,
+                            0.10000000149011612,
+                            0.10000000149011612
+                        ]
+                    }
+                }
+            },
+            "name": "model27"
+        },
+        {
+            "components": {
+                "light": {
+                    "attenuation": 1.0,
+                    "intensity": 1.0,
+                    "lightColor": {
+                        "values": [
+                            1.0,
+                            0.0,
+                            1.0
+                        ]
+                    }
+                },
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "renderQueue": "Opaque",
+                    "shaderName": "LIGHTS",
+                    "texturePaths": [],
+                    "textureTypes": []
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            2.5,
+                            2.5,
+                            -8.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            0.10000000149011612,
+                            0.10000000149011612,
+                            0.10000000149011612
+                        ]
+                    }
+                }
+            },
+            "name": "model28"
+        },
+        {
+            "components": {
+                "material": {
+                    "meshColor": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            0.5
+                        ]
+                    },
+                    "renderQueue": "Transparent",
+                    "shaderName": "LAMBERTIAN_TRANSPARENT",
+                    "texturePaths": [
+                        "data//textures//transparent_cracks.png",
+                        "data//textures//transparent_cracks.png"
+                    ],
+                    "textureTypes": [
+                        "Diffuse",
+                        "Specular"
+                    ]
+                },
+                "mesh": {
+                    "name": "cube.obj",
+                    "path": "data//meshes//cube.obj"
+                },
+                "render_effects": {
+                    "renderEffects": [
+                        "HighlightOutline3D"
+                    ]
+                },
+                "transform": {
+                    "position": {
+                        "values": [
+                            0.0,
+                            0.0,
+                            -4.0
+                        ]
+                    },
+                    "rotation": {
+                        "values": [
+                            1.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    },
+                    "scale": {
+                        "values": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            },
+            "name": "model29"
+        }
+    ]
+}

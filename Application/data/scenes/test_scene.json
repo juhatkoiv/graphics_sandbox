@@ -1,0 +1,893 @@
+{
+	"entities" : [
+	{
+		"name" : "test_cube_tiled0",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lit_tiled",
+				"shaderName" : "LAMBERTIAN",
+				"texturePaths" : ["data//textures//tileable_marble_blocks_texture_DIFFUSE.jpg", "data//textures//tileable_marble_blocks_texture_SPECULAR.jpg"],
+				"textureTypes" : ["Diffuse", "Specular"],
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [-5, 5, -10, 1]
+				},
+				"scale" : {
+					"values" : [1, 1, 1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			}
+		}
+	},
+	{
+		"name" : "test_cube_tiled1",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lit_tiled",
+				"shaderName" : "LAMBERTIAN",
+				"texturePaths" : ["data//textures//Seamless_black_white_marble_tile_texture_DIFFUSE.jpg", "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"],
+				"textureTypes" : ["Diffuse", "Specular"],
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [-2.5, 5, -10, 1]
+				},
+				"scale" : {
+					"values" : [1, 1, 1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			}
+		}
+	},
+	{
+		"name" : "test_cube_tiled2",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lit_tiled",
+				"shaderName" : "LAMBERTIAN",
+				"texturePaths" : ["data//textures//Seamless_black_white_marble_tile_texture_DIFFUSE.jpg", "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"],
+				"textureTypes" : ["Diffuse", "Specular"],
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [0, 5, -10, 1]
+				},
+				"scale" : {
+					"values" : [1, 1, 1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			}
+		}
+	},
+	{
+		"name" : "test_cube_tiled3",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lit_tiled",
+				"shaderName" : "LAMBERTIAN",
+				"texturePaths" : ["data//textures//Seamless_black_white_marble_tile_texture_DIFFUSE.jpg", "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"],
+				"textureTypes" : ["Diffuse", "Specular"],
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [2.5, 5, -10, 1]
+				},
+				"scale" : {
+					"values" : [1, 1, 1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			}
+		}
+	},
+	{
+		"name" : "test_cube_tiled4",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lit_tiled",
+				"shaderName" : "LAMBERTIAN",
+				"texturePaths" : ["data//textures//Seamless_black_white_marble_tile_texture_DIFFUSE.jpg", "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"],
+				"textureTypes" : ["Diffuse", "Specular"],
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [5, 5, -10, 1]
+				},
+				"scale" : {
+					"values" : [1, 1, 1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			}
+		}
+	},
+	{
+		"name" : "test_cube_tiled5",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lit_tiled",
+				"shaderName" : "LAMBERTIAN",
+				"texturePaths" : ["data//textures//Seamless_black_white_marble_tile_texture_DIFFUSE.jpg", "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"],
+				"textureTypes" : ["Diffuse", "Specular"],
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [-5, 2.5, -10, 1]
+				},
+				"scale" : {
+					"values" : [1, 1, 1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			}
+		}
+	},
+	{
+		"name" : "test_cube_tiled6",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lit_tiled",
+				"shaderName" : "LAMBERTIAN",
+				"texturePaths" : ["data//textures//Seamless_black_white_marble_tile_texture_DIFFUSE.jpg", "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"],
+				"textureTypes" : ["Diffuse", "Specular"],
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [-2.5, 2.5, -10, 1]
+				},
+				"scale" : {
+					"values" : [1, 1, 1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			}
+		}
+	},
+	{
+		"name" : "test_cube_tiled7",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lit_tiled",
+				"shaderName" : "LAMBERTIAN",
+				"texturePaths" : ["data//textures//Seamless_black_white_marble_tile_texture_DIFFUSE.jpg", "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"],
+				"textureTypes" : ["Diffuse", "Specular"],
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [0, 2.5, -10, 1]
+				},
+				"scale" : {
+					"values" : [1, 1, 1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			}
+		}
+	},
+	{
+		"name" : "test_cube_tiled8",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lit_tiled",
+				"shaderName" : "LAMBERTIAN",
+				"texturePaths" : ["data//textures//Seamless_black_white_marble_tile_texture_DIFFUSE.jpg", "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"],
+				"textureTypes" : ["Diffuse", "Specular"],
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [2.5, 2.5, -10, 1]
+				},
+				"scale" : {
+					"values" : [1, 1, 1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			}
+		}
+	},
+	{
+		"name" : "test_cube_tiled9",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lit_tiled",
+				"shaderName" : "LAMBERTIAN",
+				"texturePaths" : ["data//textures//Seamless_black_white_marble_tile_texture_DIFFUSE.jpg", "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"],
+				"textureTypes" : ["Diffuse", "Specular"],
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [5, 2.5, -10, 1]
+				},
+				"scale" : {
+					"values" : [1, 1, 1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			}
+		}
+	},
+	{
+		"name" : "test_cube_tiled10",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lit_tiled",
+				"shaderName" : "LAMBERTIAN",
+				"texturePaths" : ["data//textures//Seamless_black_white_marble_tile_texture_DIFFUSE.jpg", "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"],
+				"textureTypes" : ["Diffuse", "Specular"],
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [-5, 0, -10, 1]
+				},
+				"scale" : {
+					"values" : [1, 1, 1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			}
+		}
+	},
+	{
+		"name" : "test_cube_tiled11",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lit_tiled",
+				"shaderName" : "LAMBERTIAN",
+				"texturePaths" : ["data//textures//Seamless_black_white_marble_tile_texture_DIFFUSE.jpg", "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"],
+				"textureTypes" : ["Diffuse", "Specular"],
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [-2.5, 0, -10, 1]
+				},
+				"scale" : {
+					"values" : [1, 1, 1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			}
+		}
+	},
+	{
+		"name" : "test_cube_tiled12",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lit_tiled",
+				"shaderName" : "LAMBERTIAN",
+				"texturePaths" : ["data//textures//Seamless_black_white_marble_tile_texture_DIFFUSE.jpg", "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"],
+				"textureTypes" : ["Diffuse", "Specular"],
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [0, 0, -10, 1]
+				},
+				"scale" : {
+					"values" : [1, 1, 1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			}
+		}
+	},
+	{
+		"name" : "test_cube_tiled13",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lit_tiled",
+				"shaderName" : "LAMBERTIAN",
+				"texturePaths" : ["data//textures//Seamless_black_white_marble_tile_texture_DIFFUSE.jpg", "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"],
+				"textureTypes" : ["Diffuse", "Specular"],
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [2.5, 0, -10, 1]
+				},
+				"scale" : {
+					"values" : [1, 1, 1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			}
+		}
+	},
+	{
+		"name" : "test_cube_tiled14",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lit_tiled",
+				"shaderName" : "LAMBERTIAN",
+				"texturePaths" : ["data//textures//Seamless_black_white_marble_tile_texture_DIFFUSE.jpg", "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"],
+				"textureTypes" : ["Diffuse", "Specular"],
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [5, 0, -10, 1]
+				},
+				"scale" : {
+					"values" : [1, 1, 1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			}
+		}
+	},
+	{
+		"name" : "test_cube_tiled15",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lit_tiled",
+				"shaderName" : "LAMBERTIAN",
+				"texturePaths" : ["data//textures//Seamless_black_white_marble_tile_texture_DIFFUSE.jpg", "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"],
+				"textureTypes" : ["Diffuse", "Specular"],
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [-5, -2.5, -10, 1]
+				},
+				"scale" : {
+					"values" : [1, 1, 1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			}
+		}
+	},
+	{
+		"name" : "test_cube_tiled16",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lit_tiled",
+				"shaderName" : "LAMBERTIAN",
+				"texturePaths" : ["data//textures//Seamless_black_white_marble_tile_texture_DIFFUSE.jpg", "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"],
+				"textureTypes" : ["Diffuse", "Specular"],
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [-2.5, -2.5, -10, 1]
+				},
+				"scale" : {
+					"values" : [1, 1, 1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			}
+		}
+	},
+	{
+		"name" : "test_cube_tiled17",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lit_tiled",
+				"shaderName" : "LAMBERTIAN",
+				"texturePaths" : ["data//textures//Seamless_black_white_marble_tile_texture_DIFFUSE.jpg", "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"],
+				"textureTypes" : ["Diffuse", "Specular"],
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [0, -2.5, -10, 1]
+				},
+				"scale" : {
+					"values" : [1, 1, 1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			}
+		}
+	},
+	{
+		"name" : "test_cube_tiled18",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lit_tiled",
+				"shaderName" : "LAMBERTIAN",
+				"texturePaths" : ["data//textures//Seamless_black_white_marble_tile_texture_DIFFUSE.jpg", "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"],
+				"textureTypes" : ["Diffuse", "Specular"],
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [2.5, -2.5, -10, 1]
+				},
+				"scale" : {
+					"values" : [1, 1, 1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			}
+		}
+	},
+	{
+		"name" : "test_cube_tiled19",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lit_tiled",
+				"shaderName" : "LAMBERTIAN",
+				"texturePaths" : ["data//textures//Seamless_black_white_marble_tile_texture_DIFFUSE.jpg", "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"],
+				"textureTypes" : ["Diffuse", "Specular"],
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [5, -2.5, -10, 1]
+				},
+				"scale" : {
+					"values" : [1, 1, 1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			}
+		}
+	},
+	{
+		"name" : "test_cube_tiled20",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lit_tiled",
+				"shaderName" : "LAMBERTIAN",
+				"texturePaths" : ["data//textures//Seamless_black_white_marble_tile_texture_DIFFUSE.jpg", "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"],
+				"textureTypes" : ["Diffuse", "Specular"],
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [-5, -5, -10, 1]
+				},
+				"scale" : {
+					"values" : [1, 1, 1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			}
+		}
+	},
+	{
+		"name" : "test_cube_tiled21",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lit_tiled",
+				"shaderName" : "LAMBERTIAN",
+				"texturePaths" : ["data//textures//Seamless_black_white_marble_tile_texture_DIFFUSE.jpg", "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"],
+				"textureTypes" : ["Diffuse", "Specular"],
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [-2.5, -5, -10, 1]
+				},
+				"scale" : {
+					"values" : [1, 1, 1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			}
+		}
+	},
+	{
+		"name" : "test_cube_tiled22",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lit_tiled",
+				"shaderName" : "LAMBERTIAN",
+				"texturePaths" : ["data//textures//Seamless_black_white_marble_tile_texture_DIFFUSE.jpg", "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"],
+				"textureTypes" : ["Diffuse", "Specular"],
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [0, -5, -10, 1]
+				},
+				"scale" : {
+					"values" : [1, 1, 1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			}
+		}
+	},
+	{
+		"name" : "test_cube_tiled23",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lit_tiled",
+				"shaderName" : "LAMBERTIAN",
+				"texturePaths" : ["data//textures//Seamless_black_white_marble_tile_texture_DIFFUSE.jpg", "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"],
+				"textureTypes" : ["Diffuse", "Specular"],
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [2.5, -5, -10, 1]
+				},
+				"scale" : {
+					"values" : [1, 1, 1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			}
+		}
+	},
+	{
+		"name" : "test_cube_tiled24",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lit_tiled",
+				"shaderName" : "LAMBERTIAN",
+				"texturePaths" : ["data//textures//Seamless_black_white_marble_tile_texture_DIFFUSE.jpg", "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"],
+				"textureTypes" : ["Diffuse", "Specular"],
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [5, -5, -10, 1]
+				},
+				"scale" : {
+					"values" : [1, 1, 1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			}
+		}
+	},
+	{
+		"name" : "test_cube_light0",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lights",
+				"shaderName" : "LIGHTS",
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [-2.5, -2.5, -8, 1]
+				},
+				"scale" : {
+					"values" : [0.1, 0.1, 0.1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			},
+			"light" : {
+				"lightColor" : { 
+					"values" : [1, 1, 1] 
+				},
+				"intensity" : 1.0,
+				"attenuation" : 1.0
+			}
+		}
+	},
+	{
+		"name" : "test_cube_light1",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lights",
+				"shaderName" : "LIGHTS",
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [2.5, -2.5, -8, 1]
+				},
+				"scale" : {
+					"values" : [0.1, 0.1, 0.1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			},
+			"light" : {
+				"lightColor" : { 
+					"values" : [0, 1, 1] 
+				},
+				"intensity" : 1.0,
+				"attenuation" : 1.0
+			}
+		}
+	},
+	{
+		"name" : "test_cube_light2",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lights",
+				"shaderName" : "LIGHTS",
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [-2.5, 2.5, -8, 1]
+				},
+				"scale" : {
+					"values" : [0.1, 0.1, 0.1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			},
+			"light" : {
+				"lightColor" : { 
+					"values" : [1, 1, 0] 
+				},
+				"intensity" : 1.0,
+				"attenuation" : 1.0
+			}
+		}
+	},
+	{
+		"name" : "test_cube_light3",
+		"components" : {
+			"mesh" : {
+				"name" : "cube",
+				"path" : "data//meshes//cube.obj"
+			},
+			"material" : {
+				"name" : "lights",
+				"shaderName" : "LIGHTS",
+				"meshColor" : {
+					"values" : [1, 1, 1, 1]
+				},
+				"renderQueue" : "Opaque"
+			},
+			"transform" : {
+				"position" : {
+					"values" : [2.5, 2.5, -8, 1]
+				},
+				"scale" : {
+					"values" : [0.1, 0.1, 0.1]
+				},
+				"rotation" : { 	
+					"values" : [0, 0, 0, 1]
+				}
+			},
+			"light" : {
+				"lightColor" : { 
+					"values" : [1, 0, 1] 
+				},
+				"intensity" : 1.0,
+				"attenuation" : 1.0
+			}
+		}
+	}]
+}

@@ -1,0 +1,238 @@
+{
+    "queues": [
+        {
+            "features": [
+                {
+                    "featureName": "opaque_lit",
+                    "passes": [
+                        {
+                            "passIndex": 0,
+                            "passName": "clear_backbuffer",
+                            "passType": "clear"
+                        },
+                        {
+                            "passIndex": 1,
+                            "passName": "bind_and_clear_framebuffer_postprocessing",
+                            "passType": "bindAndClearFrameBuffer"
+                        },
+                        {
+                            "passIndex": 2,
+                            "passName": "render_lit",
+                            "passType": "lit"
+                        },
+                        {
+                            "passIndex": 3,
+                            "passName": "render_lights",
+                            "passType": "lights"
+                        }
+                    ]
+                },
+                {
+                    "featureName": "highlight_border",
+                    "passes": [
+                        {
+                            "passIndex": 4,
+                            "passName": "clear_enable_write_stencil",
+                            "passType": "clear"
+                        },
+                        {
+                            "passIndex": 5,
+                            "passName": "write_stencil_mask_entity",
+                            "passType": "writeBorderStencil"
+                        },
+                        {
+                            "passIndex": 6,
+                            "passName": "clear_enable_read_stencil",
+                            "passType": "clear"
+                        },
+                        {
+                            "passIndex": 7,
+                            "passName": "draw_outline",
+                            "passType": "drawOutlineBorder"
+                        },
+                        {
+                            "passIndex": 8,
+                            "passName": "clear_disable_stencil",
+                            "passType": "clear"
+                        }
+                    ]
+                }
+            ],
+            "order": 0,
+            "queueName": "opaque"
+        },
+        {
+            "features": [
+                {
+                    "featureName": "skybox",
+                    "passes": [
+                        {
+                            "passIndex": 9,
+                            "passName": "clear_skybox",
+                            "passType": "clear"
+                        },
+                        {
+                            "passIndex": 10,
+                            "passName": "render_skybox",
+                            "passType": "skybox"
+                        },
+                        {
+                            "passIndex": 11,
+                            "passName": "reset_skybox",
+                            "passType": "clear"
+                        }
+                    ]
+                }
+            ],
+            "order": 1,
+            "queueName": "skybox"
+        },
+        {
+            "features": [
+                {
+                    "featureName": "transparent_lit",
+                    "passes": [
+                        {
+                            "passIndex": 12,
+                            "passName": "enable_blend",
+                            "passType": "clear"
+                        },
+                        {
+                            "passIndex": 13,
+                            "passName": "render_lit_transparent",
+                            "passType": "lit"
+                        },
+                        {
+                            "passIndex": 14,
+                            "passName": "render_lights_transparent",
+                            "passType": "lights"
+                        },
+                        {
+                            "passIndex": 15,
+                            "passName": "clear_and_disable_blend",
+                            "passType": "clear"
+                        }
+                    ]
+                }
+            ],
+            "order": 2,
+            "queueName": "transparent"
+        },
+        {
+            "features": [
+                {
+                    "featureName": "full_screen_none",
+                    "passes": [
+                        {
+                            "passIndex": 16,
+                            "passName": "bind_and_clear_framebuffer_backbuffer",
+                            "passType": "bindAndClearFrameBuffer"
+                        },
+                        {
+                            "passIndex": 17,
+                            "passName": "render_processing_to_backbuffer",
+                            "passType": "colorBuffersToFullScreen"
+                        }
+                    ]
+                },
+                {
+                    "featureName": "full_screen_inverted",
+                    "passes": [
+                        {
+                            "passIndex": 18,
+                            "passName": "bind_and_clear_framebuffer_backbuffer",
+                            "passType": "bindAndClearFrameBuffer"
+                        },
+                        {
+                            "passIndex": 19,
+                            "passName": "render_inverted_to_backbuffer",
+                            "passType": "colorBuffersToFullScreen"
+                        }
+                    ]
+                },
+                {
+                    "featureName": "full_screen_blur",
+                    "passes": [
+                        {
+                            "passIndex": 20,
+                            "passName": "bind_and_clear_framebuffer_blur1",
+                            "passType": "bindAndClearFrameBuffer"
+                        },
+                        {
+                            "passIndex": 21,
+                            "passName": "render_postprocessing_to_blur1",
+                            "passType": "colorBuffersToFullScreen"
+                        },
+                        {
+                            "passIndex": 22,
+                            "passName": "bind_and_clear_framebuffer_blur2",
+                            "passType": "bindAndClearFrameBuffer"
+                        },
+                        {
+                            "passIndex": 23,
+                            "passName": "render_horizontal_blur_to_blur2",
+                            "passType": "blur"
+                        },
+                        {
+                            "passIndex": 24,
+                            "passName": "bind_and_clear_framebuffer_backbuffer",
+                            "passType": "bindAndClearFrameBuffer"
+                        },
+                        {
+                            "passIndex": 25,
+                            "passName": "render_vertical_blur_to_backbuffer",
+                            "passType": "blur"
+                        }
+                    ]
+                },
+                {
+                    "featureName": "full_screen_pixelated",
+                    "passes": [
+                        {
+                            "passIndex": 26,
+                            "passName": "bind_and_clear_framebuffer_backbuffer",
+                            "passType": "bindAndClearFrameBuffer"
+                        },
+                        {
+                            "passIndex": 27,
+                            "passName": "render_pixelated_to_backbuffer",
+                            "passType": "pixelatedToFullScreen"
+                        }
+                    ]
+                },
+                {
+                    "featureName": "full_screen_chrome_aberrated",
+                    "passes": [
+                        {
+                            "passIndex": 28,
+                            "passName": "bind_and_clear_framebuffer_backbuffer",
+                            "passType": "bindAndClearFrameBuffer"
+                        },
+                        {
+                            "passIndex": 29,
+                            "passName": "render_chrome_aberrated_to_backbuffer",
+                            "passType": "chromaticAberrationToFullScreen"
+                        }
+                    ]
+                },
+                {
+                    "featureName": "full_screen_color_corrected",
+                    "passes": [
+                        {
+                            "passIndex": 30,
+                            "passName": "bind_and_clear_framebuffer_backbuffer",
+                            "passType": "bindAndClearFrameBuffer"
+                        },
+                        {
+                            "passIndex": 31,
+                            "passName": "render_color_corrected_to_backbuffer",
+                            "passType": "colorCorrectedToFullScreen"
+                        }
+                    ]
+                }
+            ],
+            "order": 3,
+            "queueName": "post_processing"
+        }
+    ]
+}

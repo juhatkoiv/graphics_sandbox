@@ -1,0 +1,30 @@
+{
+	"name" : "test_cube_tiled",
+	"components" : {
+		"mesh" : {
+			"name" : "cube",
+			"path" : "data//meshes//cube.obj"
+		},
+		"material" : {
+			"name" : "lit_tiled",
+			"shaderName" : "LAMBERTIAN",
+			"texturePaths" : ["data//textures//Seamless_black_white_marble_tile_texture_DIFFUSE.jpg", "data//textures//Seamless_black_white_marble_tile_texture_SPECULAR.jpg"],
+			"textureTypes" : ["Diffuse", "Specular"],
+			"meshColor" : {
+				"values" : [1, 1, 1, 1]
+			},
+			"renderQueue" : "Opaque"
+		},
+		"transform" : {
+			"position" : {
+				"values" : [0, 0, 0, 0]
+			},
+			"scale" : {
+				"values" : [1, 1, 1]
+			},
+			"rotation" : { 	
+				"values" : [0, 0, 0, 1]
+			}
+		}
+	}
+}
