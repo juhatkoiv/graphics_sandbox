@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ApplicationMode.h"
+
 class MainLoop
 {
 public:
@@ -8,6 +10,7 @@ public:
 		const char* title = nullptr;
 		int windowWidth = 0;
 		int windowHeight = 0;
+		ApplicationMode appMode = ApplicationMode::NONE;
 	};
 
 	MainLoop( Args args );

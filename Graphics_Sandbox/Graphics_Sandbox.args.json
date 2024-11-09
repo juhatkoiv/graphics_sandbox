@@ -1,0 +1,14 @@
+{
+  "FileVersion": 2,
+  "Id": "0719156f-03d6-4aa0-b581-7aab1a07bd1d",
+  "Items": [
+    {
+      "Id": "79c293e8-1664-41e7-850e-ae63f108cd2f",
+      "Command": "generate_spirv"
+    },
+    {
+      "Id": "e5e4b1b5-e9ef-45e7-bc40-df0d00137161",
+      "Command": "run_application"
+    }
+  ]
+}

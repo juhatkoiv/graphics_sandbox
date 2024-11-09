@@ -16,6 +16,7 @@
 #include "Rendering/GfxDevice.h"
 #include "Rendering/GfxDeviceFactory.h"
 #include "Resources/ResourceSystem.h"
+#include "Rendering/ShaderCompilation/ShaderCompilation.h"
 #include "Window/Window.h"
 
 template<typename T>
@@ -158,10 +159,28 @@ namespace
 		_window->close();
 		AppContext::cleanup();
 	}
+
+	static void generateSpirv() { 
+		auto result = shader_compilation::generate_spirv();
+		if (result.success()) {
+			std::cout << "SpirV generated successfully." << std::endl;
+		}
+		else {
+			std::cerr << "Error: Failed to generate spirv." << std::endl;
+			for (const auto& error : result.errors) {
+				std::cerr << error << std::endl;
+			}
+		}
+	}
 }
 
-MainLoop::MainLoop( Args args )
-{
+MainLoop::MainLoop( Args args ) {
+	ApplicationMode appMode = args.appMode;
+	
+	if (has( appMode, ApplicationMode::GENERATE_SPIRV )) {
+		generateSpirv();
+	}
+	
 	AppContext::initialize();
 
 	_appData.initialize();

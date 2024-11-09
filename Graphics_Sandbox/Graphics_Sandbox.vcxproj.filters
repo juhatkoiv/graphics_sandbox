@@ -269,6 +269,9 @@
     <ClCompile Include="Rendering\ShaderCompilation\ShaderCompilation.cpp">
       <Filter>Source Files\Rendering\ShaderCompilation</Filter>
     </ClCompile>
+    <ClCompile Include="CommanLineArgsParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor\EditorManager.h">
@@ -589,6 +592,12 @@
     </ClInclude>
     <ClInclude Include="Rendering\Binding.h">
       <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="CommanLineArgsParser.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ApplicationMode.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
