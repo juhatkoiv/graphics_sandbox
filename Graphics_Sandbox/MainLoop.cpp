@@ -169,7 +169,7 @@ MainLoop::MainLoop( Args args )
 
 	_resouceSystem.reset( new resources::ResourceSystem( _appData ) );
 	rendering::GfxDeviceArgs deviceArgs = _resouceSystem->getGfxDeviceArgs( _window->getSize() );
-	rendering::GfxShaderArgs shaderArgs = _resouceSystem->getGfxShaderArgs();
+	rendering::GfxShaderArgs shaderArgs = _resouceSystem->getShaderArgs();
 
 	rendering::GfxDeviceFactory deviceFactory{ deviceArgs };
 	_gfxWorker.reset( new rendering::GfxWorker{ deviceFactory } );

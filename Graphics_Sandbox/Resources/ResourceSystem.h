@@ -49,7 +49,7 @@ public:
 	Result<const std::string&> getMeshName( id::MeshId mesh ) const;
 	Result<const std::string&> getTextureName( id::TextureId texture ) const;
 	rendering::GfxDeviceArgs getGfxDeviceArgs( glm::vec2 windowSize ) const;
-	rendering::GfxShaderArgs getGfxShaderArgs() const;
+	rendering::GfxShaderArgs getShaderArgs() const;
 };
 
 END_NAMESPACE1

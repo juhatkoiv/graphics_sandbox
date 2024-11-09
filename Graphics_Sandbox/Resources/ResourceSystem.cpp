@@ -301,7 +301,7 @@ static std::vector<uint32_t> loadSpirvBinary( const std::string& path )
 	return result;
 }
 
-rendering::GfxShaderArgs ResourceSystem::getGfxShaderArgs() const
+rendering::GfxShaderArgs ResourceSystem::getShaderArgs() const
 {
 	rendering::GfxShaderArgs shaderArgs{};
 

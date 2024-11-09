@@ -521,6 +521,12 @@ void GfxDeviceOpenGL::updateConstantBuffer( GfxHandle buffer, void* data, int si
 	glBindBuffer( usageEnum, 0 );
 }
 
+void GfxDeviceOpenGL::updatePushConstant( GfxHandle buffer, int data )
+{
+	assert( buffer != 0 );
+	updateConstantBuffer( buffer, (void*)&data, sizeof( unsigned int ), 0 );
+}
+
 void GfxDeviceOpenGL::dispatchIndexedDirect( id::MeshId meshId )
 {
 	assert( _vertexBufferLookup.has( meshId ) );

@@ -9,38 +9,6 @@ DECLARE1( struct, window, WindowSize );
 
 BEGIN_NAMESPACE1( rendering )
 
-
-class OpenGLShaderStorage
-{
-private:
-	struct ShaderMetaData 
-	{
-		std::vector<std::string> bindingNames{};
-		std::string shaderName{};
-	};
-	LinearMap<id::ShaderId, ShaderProgram, 10> _shadersLookup{};
-	LinearMap<id::ShaderId, ShaderMetaData> _shaderMetaData;
-	std::string loadShaderSource( const std::string& path ) { return {}; }
-
-public:
-	OpenGLShaderStorage() 
-	{
-		
-	}
-
-	ShaderProgram& getShader( id::ShaderId shaderId ) 
-	{
-		assert( _shadersLookup.has( shaderId ) );
-		return _shadersLookup[shaderId];
-	}
-
-	const std::vector<std::string>& getBindingNames( id::ShaderId shaderId ) const 
-	{
-		assert( _shaderMetaData.has( shaderId ) );
-		return _shaderMetaData.at(shaderId).bindingNames;
-	}
-};
-
 class GfxDeviceOpenGL : public GfxDevice
 {
 private:
@@ -52,9 +20,6 @@ private:
 	LinearMap<GfxHandle, int> _bufferUsage;
 	
 	id::ShaderId _activeShader = id::InvalidShaderId;
-
-	// TODO -
-	OpenGLShaderStorage _shaderStorage;
 
 	void bindShaderArgsImpl( id::ShaderId shaderId, ShaderProgram& shader, const GLShaderArgs& args );
 	bool shaderBound() const { return _activeShader != id::InvalidShaderId; }
@@ -75,6 +40,7 @@ public:
 	RenderTarget& bindRenderTarget( RenderTargetType type ) override;
 	void bindRenderTargetResource( RenderTargetType type, unsigned bindPosition ) override;
 	void updateConstantBuffer( GfxHandle buffer, void* data, int size, int offset ) override;
+	void updatePushConstant( GfxHandle buffer, int data ) override;
 
 	void clear() override;
 

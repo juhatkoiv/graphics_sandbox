@@ -262,7 +262,7 @@ void executeLit( GfxQueue& gfx, GfxDevice* device, const PassResources& resource
 
 	for (int i = 0; i < batch.entities.size(); i++) {
 		const auto& id = batch.entities[i];
-		device->updateConstantBuffer( gfx.frame->pushConstantsBuffer, (void*)&id, sizeof( int ), 0 );
+		device->updatePushConstant( gfx.frame->pushConstantsBuffer, id );
 
 		if (gfx.frame->diffuseMaterials.has( id ))
 		{
@@ -294,7 +294,7 @@ void executeLights( GfxQueue& gfx, GfxDevice* device, const PassResources& resou
 
 	for (int i = 0; i < batch.entities.size(); i++) {
 		auto id = batch.entities[i];
-		device->updateConstantBuffer( gfx.frame->pushConstantsBuffer, (void*)&id, sizeof( int ), 0 );
+		device->updatePushConstant( gfx.frame->pushConstantsBuffer, id );
 		
 		auto meshId = gfx.frame->meshIdLookup[id];
 		device->dispatchIndexedDirect( meshId );

@@ -100,7 +100,6 @@ GfxWorker::GfxWorker( rendering::GfxDeviceFactory& deviceFactory )
 
 void GfxWorker::compileShaders( const rendering::GfxShaderArgs& args ) {
 	_device->compileShaders( args );
-
 }
 
 void GfxWorker::setApi( int api )

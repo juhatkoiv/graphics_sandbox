@@ -142,7 +142,6 @@ if (handle.dirty())
 
 */
 
-
 class GfxDevice
 {
 public:
@@ -162,7 +161,8 @@ public:
 	virtual RenderTarget& bindRenderTarget( RenderTargetType type ) = 0;
 	virtual void bindRenderTargetResource( RenderTargetType type, unsigned bindPosition ) = 0;
 	virtual void updateConstantBuffer( GfxHandle buffer, void* data, int size, int offset ) = 0;
-	
+	virtual void updatePushConstant( GfxHandle buffer, int data ) = 0;
+
 
 	// drawing 
 	virtual void dispatchIndexedDirect( id::MeshId meshId ) = 0;
