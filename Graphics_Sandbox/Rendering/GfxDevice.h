@@ -155,6 +155,18 @@ public:
 	virtual RenderTarget createRenderTarget( unsigned int width, unsigned int height ) = 0;
 	virtual GfxHandle allocateConstantBuffer( int size, int usage, int bindPosition ) = 0;
 	
+	template<size_t SIZE>
+	GfxHandle allocateConstantBuffer( int usage, int bindPosition )
+	{
+		return allocateConstantBuffer( SIZE, usage, bindPosition );
+	}
+
+	template<typename T>
+	GfxHandle allocateConstantBuffer( int usage, int bindPosition )
+	{
+		return allocateConstantBuffer<sizeof( T )>( usage, bindPosition );
+	}
+
 	virtual ShaderProgram& bindShader( id::ShaderId id ) = 0;
 	virtual ShaderProgram& bindShader( id::ShaderId id, const ShaderArgs& args ) = 0;
 	virtual GfxTexture& bindTexture( id::TextureId textureId, unsigned bindPosition = ~0u ) = 0;
@@ -162,6 +174,18 @@ public:
 	virtual void bindRenderTargetResource( RenderTargetType type, unsigned bindPosition ) = 0;
 	virtual void updateConstantBuffer( GfxHandle buffer, void* data, int size, int offset ) = 0;
 	virtual void updatePushConstant( GfxHandle buffer, int data ) = 0;
+	
+	template<typename T>
+	void updateConstantBuffer( GfxHandle buffer, const T& data, int offset )
+	{
+		updateConstantBuffer( buffer, (void*)&data, sizeof( T ), sizeof( T ) * offset );
+	}
+
+	void updateConstantBuffer( GfxHandle buffer, const glm::mat4& data, int offset )
+	{	
+		updateConstantBuffer( buffer, (void*)glm::value_ptr( data ), sizeof( glm::mat4 ), sizeof( glm::mat4 ) * offset );
+	}
+
 
 
 	// drawing 

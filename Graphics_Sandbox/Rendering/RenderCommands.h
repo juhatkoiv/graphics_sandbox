@@ -40,6 +40,7 @@ struct CreateTextureCmd
 {
 	const rendering::TextureData* textureData = nullptr;
 	id::TextureId textureId = id::InvalidTextureId;
+	rendering::TextureType type = rendering::TextureType::None;
 };
 
 struct CreateMeshCmd 

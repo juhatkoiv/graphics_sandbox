@@ -286,6 +286,7 @@ xcopy "$(ProjectDir)data\*.*" "$(SolutionDir)x64\Debug\data" /Y /I /E</Command>
     <ClInclude Include="Precompiled\PrecompilationMacros.h" />
     <ClInclude Include="Precompiled\Precompiled.h" />
     <ClInclude Include="Profiling\ProfilingDefinitions.h" />
+    <ClInclude Include="Rendering\Binding.h" />
     <ClInclude Include="Rendering\Defaults.h" />
     <ClInclude Include="Rendering\FeatureFilters.h" />
     <ClInclude Include="Rendering\FrameBuilder.h" />

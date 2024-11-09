@@ -587,6 +587,9 @@
     <ClInclude Include="Rendering\ShaderCompilation\ShaderCompilation.h">
       <Filter>Source Files\Rendering\ShaderCompilation</Filter>
     </ClInclude>
+    <ClInclude Include="Rendering\Binding.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

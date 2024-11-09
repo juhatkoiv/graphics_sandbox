@@ -1,6 +1,6 @@
 #pragma once
 
-#define CBUFFER alignas(8)
+#define CBUFFER alignas(16)
 
 #define OPEN_GL
 

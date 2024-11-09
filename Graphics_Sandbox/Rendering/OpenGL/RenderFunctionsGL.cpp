@@ -6,14 +6,9 @@
 #include "Rendering/GfxDevice.h"
 #include "Rendering/RenderDefinitions.h"
 #include "Rendering/PassResources.h"
+#include "Rendering/Binding.h"
 
 #include <GLFW/glfw3.h>
-
-BEGIN_NAMESPACE2( rendering, binding )
-
-	static constexpr int CUBEMAP_TEXTURE = 0;
-	
-END_NAMESPACE2;
 
 BEGIN_NAMESPACE2( rendering, fn )
 

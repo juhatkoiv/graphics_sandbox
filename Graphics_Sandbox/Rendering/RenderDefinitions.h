@@ -129,42 +129,6 @@ struct GfxCamera
 	WindowSize windowSize = {};
 };
 
-struct PerSceneData
-{
-	GfxCamera camera;
-
-	GfxBufferImpl toBufferData()
-	{
-		return GfxBufferImpl
-		{
-			.size = sizeof( GfxCamera ),
-			.stride = sizeof( GfxCamera ),
-			.data = memory::create<uint8_t*, GfxCamera>( camera )
-		};
-	}
-};
-
-struct PerBatchData
-{
-	struct Impl
-	{
-		glm::mat4 modelMatrix{};
-	};
-
-	std::vector<Impl> impl{};
-
-	GfxBufferImpl toBufferData()
-	{
-		size_t allocSize = impl.size() * sizeof( Impl );
-		return GfxBufferImpl
-		{
-			.size = allocSize,
-			.stride = sizeof( Impl ),
-			.data = memory::create<uint8_t*>( impl, allocSize )
-		};
-	}
-};
-
 struct DrawCallBatch
 {
 	std::vector<unsigned> entities{};
@@ -190,7 +154,7 @@ FLAG_ENUM( BatchProperty );
 
 struct GfxQueue;
 
-struct GfxLighing 
+struct CBUFFER GfxLighing
 {
 	std::array<LightProperties, 20> lightData{};
 	glm::vec3 viewPosition{};
