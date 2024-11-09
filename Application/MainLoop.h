@@ -1,6 +1,18 @@
 #pragma once
 
+#include <memory>
+
 #include "ApplicationMode.h"
+#include "Precompiled/PrecompilationMacros.h"
+
+DECLARE1( class, window, Window );
+DECLARE1( class, rendering, GfxDevice );
+DECLARE1( class, rendering, GfxWorker );
+DECLARE1( class, resources, ResourceSystem );
+DECLARE1( class, appdata, AppData );
+DECLARE1( class, ecs, World );
+DECLARE( class, SystemContainer );
+DECLARE( class, Application );
 
 class MainLoop
 {
@@ -25,6 +37,16 @@ private:
 	void render( float deltaTime );
 	void cleanup();
 	
-
 	bool running();
+
+	std::unique_ptr<window::Window> _window;
+	std::unique_ptr<rendering::GfxDevice> _gfxDevice;
+	std::unique_ptr<rendering::GfxWorker> _gfxWorker;
+	std::unique_ptr<resources::ResourceSystem> _resouceSystem;
+	std::unique_ptr<Application> _editor;
+	std::unique_ptr<appdata::AppData> _appData;
+	std::unique_ptr<ecs::World> _world;
+	std::unique_ptr<SystemContainer> _systemContainer;
+	bool _profilerConnected = false;
+
 };

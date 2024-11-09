@@ -27,17 +27,6 @@ namespace
 	using Clock = high_resolution_clock;
 	using Time = high_resolution_clock::time_point;
 	using Duration = duration<float, std::chrono::seconds::period>;
-
-	std::unique_ptr<window::Window> _window;
-	std::unique_ptr<rendering::GfxDevice> _gfxDevice;
-	std::unique_ptr<rendering::GfxWorker> _gfxWorker;
-	std::unique_ptr<resources::ResourceSystem> _resouceSystem;
-	std::unique_ptr<Application> _editor;
-	std::unique_ptr<appdata::AppData> _appData;
-	std::unique_ptr<ecs::World> _world;
-	std::unique_ptr<SystemContainer> _systemContainer;
-	bool _profilerConnected = false;
-
 }
 
 MainLoop::MainLoop( Args args ) {
