@@ -260,17 +260,17 @@
     <ClCompile Include="Rendering\RenderQueue.cpp">
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="Hash\Hash.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Rendering\FeatureFilters.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Rendering\ShaderCompilation\ShaderCompilation.cpp">
       <Filter>Source Files\Rendering\ShaderCompilation</Filter>
     </ClCompile>
     <ClCompile Include="CommanLineArgsParser.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Hash\Hash.cpp">
+      <Filter>Source Files\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\FeatureFilters.cpp">
+      <Filter>Source Files\Rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -586,7 +586,6 @@
     <ClInclude Include="Hash\Hash.h">
       <Filter>Source Files\Hash</Filter>
     </ClInclude>
-    <ClInclude Include="Rendering\FeatureFilters.h" />
     <ClInclude Include="Rendering\ShaderCompilation\ShaderCompilation.h">
       <Filter>Source Files\Rendering\ShaderCompilation</Filter>
     </ClInclude>
@@ -598,6 +597,9 @@
     </ClInclude>
     <ClInclude Include="ApplicationMode.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\FeatureFilters.h">
+      <Filter>Source Files\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
