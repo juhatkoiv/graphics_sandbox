@@ -32,13 +32,11 @@ namespace
 	std::unique_ptr<rendering::GfxDevice> _gfxDevice;
 	std::unique_ptr<rendering::GfxWorker> _gfxWorker;
 	std::unique_ptr<resources::ResourceSystem> _resouceSystem;
-	appdata::AppData _appData;
-	SystemContainer _systemContainer;
-
-	std::vector<std::unique_ptr<ecs::System>> _systems;
 	std::unique_ptr<Application> _editor;
-	ecs::World _world;
-	bool _profilerConnected;
+	std::unique_ptr<appdata::AppData> _appData;
+	std::unique_ptr<ecs::World> _world;
+	std::unique_ptr<SystemContainer> _systemContainer;
+	bool _profilerConnected = false;
 
 }
 
@@ -51,10 +49,13 @@ MainLoop::MainLoop( Args args ) {
 	
 	AppContext::initialize();
 
-	_appData.initialize();
+	_appData.reset(new appdata::AppData());
+	_appData->initialize();
+	
+	_world.reset( new ecs::World() );
 	_window.reset( new window::Window( args.title, window::WindowMode::Windowed ) );
 
-	_resouceSystem.reset( new resources::ResourceSystem( _appData ) );
+	_resouceSystem.reset( new resources::ResourceSystem( *_appData ) );
 	rendering::GfxDeviceArgs deviceArgs = _resouceSystem->getGfxDeviceArgs( _window->getSize() );
 	rendering::GfxShaderArgs shaderArgs = _resouceSystem->getShaderArgs();
 
@@ -63,12 +64,13 @@ MainLoop::MainLoop( Args args ) {
 	_gfxWorker->setApi( api::OPENGL );
 	_gfxWorker->compileShaders( shaderArgs );
 
-	_systemContainer
+	_systemContainer = SystemContainer::Builder::create()
 		.withSystem( std::make_unique<ecs::InputSystem>( *_window ) )
 		.withSystem( std::make_unique<ecs::CameraSystem>( *_window ) )
-		.withSystem( std::make_unique<ecs::Renderer>( _gfxWorker.get(), _resouceSystem.get() ) );
+		.withSystem( std::make_unique<ecs::Renderer>( _gfxWorker.get(), _resouceSystem.get() ) )
+		.build();
 
-	_editor.reset( new editor::Editor( *_window, _world, *_resouceSystem.get(), _appData ) );
+	_editor.reset( new editor::Editor( *_window, *_world, *_resouceSystem.get(), *_appData ) );
 }
 
 MainLoop::~MainLoop() {}
@@ -139,7 +141,7 @@ void MainLoop::handleProfilerConnectedChanged()
 
 void MainLoop::update( float deltaTime )
 {
-	_systemContainer.update( _world, deltaTime );
+	_systemContainer->update( *_world, deltaTime );
 	_editor->update( deltaTime );
 
 	if (!app::hasState( app::AppState::Quits ))
