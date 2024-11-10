@@ -275,6 +275,9 @@
     <ClCompile Include="AppContext.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Editor\EditorMenus\ApplicationStatusMenu.cpp">
+      <Filter>Source Files\Editor\EditorMenus</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor\EditorManager.h">
@@ -609,6 +612,9 @@
     </ClInclude>
     <ClInclude Include="AppContext.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\EditorMenus\ApplicationStatusMenu.h">
+      <Filter>Source Files\Editor\EditorMenus</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

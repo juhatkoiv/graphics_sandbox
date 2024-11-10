@@ -262,8 +262,6 @@ void Renderer::update( ecs::World& world, float dt )
 	QueueRendererCommand( std::move( cmd ) );
 
 	_worker->update( _renderCommandQueue );
-
-	_worker->render();
 }
 
 void Renderer::setMesh( id::EntityId id, const Mesh& mesh )

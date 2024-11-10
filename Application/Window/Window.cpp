@@ -77,6 +77,29 @@ Window::Window( const char* title, WindowMode windowMode )
 	screen::setScreenPosition( 0, 0 );
 }
 
+Window::Window( const char* title, Window& shared ) 
+{
+	if (title == nullptr)
+		throw;
+
+	glfwWindowHint( GLFW_VISIBLE, GLFW_FALSE );
+	glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, 4 );
+	glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 5 );
+	glfwWindowHint( GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE );
+	glfwWindowHint( GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE );
+	glfwWindowHint( GLFW_FLOATING, GLFW_FALSE );
+
+	_window = glfwCreateWindow( 1, 1, title, NULL, shared.getWindowImpl() );
+
+	if (!isValid()) {
+		LOG_ERROR( "Glfw window initalization failed! Aborting..." );
+		glfwTerminate();
+		exit( EXIT_FAILURE );
+	}
+
+	glfwSwapInterval( 1 );
+}
+
 Window::Window( int width, int height, const char* title, bool setContextCurrent )
 {
 	_window = glfwCreateWindow( width, height, title, NULL, NULL );
@@ -137,6 +160,11 @@ void Window::present()
 void Window::use()
 {
 	glfwMakeContextCurrent( _window );
+}
+
+void Window::stopUsing() 
+{
+	glfwMakeContextCurrent( nullptr );
 }
 
 glm::vec2 Window::getSize() const

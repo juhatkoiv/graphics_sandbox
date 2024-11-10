@@ -12,6 +12,8 @@ enum class AppState : unsigned
     Quits = (1 << 3),
     ToggleSceneCamera = (1 << 4),
     ToggleEditorGui = (1 << 5),
+    GeneratingSpirv = (1 << 6),
+    CompilingShaders = (1 << 7)
 };
 
 inline AppState operator|(AppState one, AppState other)

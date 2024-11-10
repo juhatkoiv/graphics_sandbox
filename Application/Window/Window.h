@@ -14,6 +14,7 @@ class Window
 {
 public:
 	Window( const char* title, WindowMode windowMode );
+	Window( const char* title, Window& shared );
 	Window( int width, int height, const char* title, bool setContextCurrent = true );
 
 	bool shouldClose() const;
@@ -22,6 +23,7 @@ public:
 	void close();
 	void present();
 	void use();
+	void stopUsing();
 
 	glm::vec2 getSize() const;
 	GLFWwindow* getWindowImpl();

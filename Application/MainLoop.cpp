@@ -21,37 +21,77 @@
 #include "Window/Window.h"
 #include "SystemContainer.h"
 
+#include <thread>
+#include <mutex>
+
+template<typename T>
+class AsyncResult
+{
+public:
+	AsyncResult( std::function<T()> function ) : 
+		_impl( function ), 
+		_thread( &AsyncResult::run, this ),
+		_result( Result<T>::failed() )
+	{}
+
+	void run() 
+	{
+		_result = Result<T>::ok( _impl() );
+	}
+
+	void wait() const
+	{
+		_thread.join();
+	}
+
+	Result<T> get() const
+	{
+		std::lock_guard<std::mutex> lock( _mutex );
+		return _result;
+	}
+private:
+	std::function<T()> _impl;
+	mutable std::thread _thread;
+	mutable std::mutex _mutex;
+	Result<T> _result;
+};
+
 namespace
 {
 	using namespace std::chrono;
 	using Clock = high_resolution_clock;
 	using Time = high_resolution_clock::time_point;
 	using Duration = duration<float, std::chrono::seconds::period>;
+
+	
 }
 
-MainLoop::MainLoop( Args args ) {
+MainLoop::MainLoop() {}
+
+MainLoop::~MainLoop() {}
+
+void MainLoop::initialize( Args args )
+{
 	ApplicationMode appMode = args.appMode;
-	
+
 	if (has( appMode, ApplicationMode::GENERATE_SPIRV )) {
 		generateSpirv();
 	}
-	
+
 	AppContext::initialize();
 
-	_appData.reset(new appdata::AppData());
+	_appData.reset( new appdata::AppData() );
 	_appData->initialize();
-	
+
 	_world.reset( new ecs::World() );
 	_window.reset( new window::Window( args.title, window::WindowMode::Windowed ) );
 
 	_resouceSystem.reset( new resources::ResourceSystem( *_appData ) );
 	rendering::GfxDeviceArgs deviceArgs = _resouceSystem->getGfxDeviceArgs( _window->getSize() );
-	rendering::GfxShaderArgs shaderArgs = _resouceSystem->getShaderArgs();
 
 	rendering::GfxDeviceFactory deviceFactory{ deviceArgs };
 	_gfxWorker.reset( new rendering::GfxWorker{ deviceFactory } );
 	_gfxWorker->setApi( api::OPENGL );
-	_gfxWorker->compileShaders( shaderArgs );
 
 	_systemContainer = SystemContainer::Builder::create()
 		.withSystem( std::make_unique<ecs::InputSystem>( *_window ) )
@@ -62,15 +102,34 @@ MainLoop::MainLoop( Args args ) {
 	_editor.reset( new editor::Editor( *_window, *_world, *_resouceSystem.get(), *_appData ) );
 }
 
-MainLoop::~MainLoop() {}
+static const AsyncResult<bool>& compileShadersAsync( std::function<void()> gen, window::Window& w, resources::ResourceSystem& r, rendering::GfxWorker& gw )
+{
+	window::Window shaderContext{ "Shader Compilation Context", w };
+	static AsyncResult<bool> compileShadersResult( [shaderContext, gen, &r, &gw]() mutable {
+		gen();
+		
+		rendering::GfxShaderArgs shaderArgs = r.getShaderArgs();
+		
+		shaderContext.use(); 
+		gw.compileShaders( shaderArgs );
+		shaderContext.close();
+		shaderContext.stopUsing();
+
+		return true;
+	} );
+
+	return compileShadersResult;
+}
 
 void MainLoop::run()
 {
 	_profilerConnected = PROFILER_ENABLED;
-
+	
 	float timeSinceLastUpdate = 0.0f;
 	Time previousUpdateTime;
 
+
+	const AsyncResult<bool>& compileShadersResult = compileShadersAsync( [this]() { generateSpirv(); }, *_window, *_resouceSystem, *_gfxWorker );
 	do
 	{
 		handleProfilerConnectedChanged();
@@ -87,11 +146,24 @@ void MainLoop::run()
 			previousUpdateTime = Clock::now();
 		}
 
-		render( global::FRAME_TIME_SECONDS );
-		
+		if (compileShadersResult.get().success)
+		{
+			_window->use();
+			render( global::FRAME_TIME_SECONDS );
+		}
+		else 
+		{
+			glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
+			glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+			_editor->render( global::FRAME_TIME_SECONDS );
+			_window->present();
+		}
+
 		FRAME_MARK;
 
 	} while (running());
+
+	compileShadersResult.wait();
 
 	cleanup();
 }
@@ -141,6 +213,7 @@ void MainLoop::update( float deltaTime )
 
 void MainLoop::render( float deltaTime )
 {
+	_gfxWorker->render();
 	_editor->render( deltaTime );
 	_window->present();
 }

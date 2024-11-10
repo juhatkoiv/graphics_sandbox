@@ -123,7 +123,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CTR_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>include;.;include/GL/glad/;tracy/src/tracy;$(SolutionDir)/Hashing/xxHash/;$(SolutionDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;include;include/GL/glad/;tracy/src/tracy;$(SolutionDir)/Hashing/xxHash/;$(SolutionDir)/imgui;$(SolutionDir)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Precompiled/Precompiled.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)Precompiled.pch</PrecompiledHeaderOutputFile>
@@ -186,6 +186,7 @@ xcopy "$(ProjectDir)data\*.*" "$(SolutionDir)x64\Debug\data" /Y /I /E</Command>
     <ClCompile Include="Editor\Editor.cpp" />
     <ClCompile Include="Editor\EditorManager.cpp" />
     <ClCompile Include="Editor\EditorMenus.cpp" />
+    <ClCompile Include="Editor\EditorMenus\ApplicationStatusMenu.cpp" />
     <ClCompile Include="Editor\EditorMenus\InstructionsMenu.cpp" />
     <ClCompile Include="Editor\EditorMenus\RenderGraphMenu.cpp" />
     <ClCompile Include="Editor\EditorMenus\RenderingSettingsMenu.cpp" />
@@ -274,6 +275,7 @@ xcopy "$(ProjectDir)data\*.*" "$(SolutionDir)x64\Debug\data" /Y /I /E</Command>
     <ClInclude Include="Editor\Editor.h" />
     <ClInclude Include="Editor\EditorManager.h" />
     <ClInclude Include="Editor\EditorMenus.h" />
+    <ClInclude Include="Editor\EditorMenus\ApplicationStatusMenu.h" />
     <ClInclude Include="Editor\EditorMenus\IMenu.h" />
     <ClInclude Include="Editor\EditorMenus\InstructionsMenu.h" />
     <ClInclude Include="Editor\EditorMenus\RenderGraphMenu.h" />

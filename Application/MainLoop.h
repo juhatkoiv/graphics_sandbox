@@ -25,9 +25,10 @@ public:
 		ApplicationMode appMode = ApplicationMode::NONE;
 	};
 
-	MainLoop( Args args );
+	MainLoop();
 	~MainLoop();
 
+	void initialize( Args args );
 	void run();
 
 private:

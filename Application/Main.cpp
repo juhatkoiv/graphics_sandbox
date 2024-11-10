@@ -130,7 +130,8 @@ int main( int argc, char** argv ) {
 		.appMode = mode
 	};
 
-	MainLoop mainLoop( args );
+	MainLoop mainLoop{};
+	mainLoop.initialize( args );
 	mainLoop.run();
 	
 	return 0;
