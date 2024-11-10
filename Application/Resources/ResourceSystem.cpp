@@ -249,18 +249,6 @@ rendering::GfxDeviceArgs ResourceSystem::getGfxDeviceArgs( glm::vec2 windowSize 
 	rendering::GfxDeviceArgs deviceArgs{};
 	deviceArgs.windowSize = windowSize;
 
-	auto shaderSources = _config.getShaderSources();
-	if (shaderSources.empty()) {
-		LOG_ERROR( "No shader sources found!" );
-		exit( EXIT_FAILURE );
-	}
-
-	for (const auto& shaderSource : shaderSources) {
-		deviceArgs.shaderIds.push_back( shader::getShaderId( shaderSource.name.c_str() ) );
-		deviceArgs.vertexShaderFiles.push_back( shaderSource.vertexSourceFile.c_str() );
-		deviceArgs.fragmentShaderFiles.push_back( shaderSource.fragmentSourceFile.c_str() );
-	}
-
 	const auto& textureData = _container.getTextureMap();
 
 	for (const auto& [handle, param] : textureData) {

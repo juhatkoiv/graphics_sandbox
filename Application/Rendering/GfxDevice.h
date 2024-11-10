@@ -100,9 +100,6 @@ struct ShaderArgs
 struct GfxDeviceArgs
 {
 	glm::vec2 windowSize{};
-	std::vector<id::ShaderId> shaderIds{};
-	std::vector<const char*> vertexShaderFiles{};
-	std::vector<const char*> fragmentShaderFiles{};
 
 	std::vector<const rendering::VertexData*> vertexData{};
 	std::vector<id::MeshId> meshIds{};
