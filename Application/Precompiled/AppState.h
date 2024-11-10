@@ -60,7 +60,7 @@ inline const AppState getAppState()
     return getAppStateMutable();
 }
 
-inline void ToggleState(AppState flag)
+inline void toggleState(AppState flag)
 {
     getAppStateMutable() ^= flag;
 }

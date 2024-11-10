@@ -106,10 +106,16 @@ static const AsyncResult<bool>& compileShadersAsync( std::function<void()> gen, 
 {
 	window::Window shaderContext{ "Shader Compilation Context", w };
 	static AsyncResult<bool> compileShadersResult( [shaderContext, gen, &r, &gw]() mutable {
+		
+		app::toggleState( app::AppState::GeneratingSpirv );
 		gen();
-		
+		app::toggleState( app::AppState::GeneratingSpirv );
+
+
+		app::toggleState( app::AppState::CompilingShaders );
 		rendering::GfxShaderArgs shaderArgs = r.getShaderArgs();
-		
+		app::toggleState( app::AppState::CompilingShaders );
+
 		shaderContext.use(); 
 		gw.compileShaders( shaderArgs );
 		shaderContext.close();

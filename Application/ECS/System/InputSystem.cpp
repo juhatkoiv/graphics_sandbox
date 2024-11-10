@@ -101,24 +101,24 @@ namespace
             input::InputEvent event = buttonInput;
 
             if (event == input::InputEvent::KEY_ESC)
-                app::ToggleState(app::AppState::Quits);
+                app::toggleState(app::AppState::Quits);
 
             if (event == input::InputEvent::KEY_F9)
-                app::ToggleState(app::AppState::ToggleSceneCamera);
+                app::toggleState(app::AppState::ToggleSceneCamera);
             
             if (event == input::InputEvent::KEY_F10)
-                app::ToggleState(app::AppState::InstructionsVisible);
+                app::toggleState(app::AppState::InstructionsVisible);
             
             if (event == input::InputEvent::KEY_F11)
-                app::ToggleState(app::AppState::FpsVisible);
+                app::toggleState(app::AppState::FpsVisible);
             
             if (event == input::InputEvent::KEY_TAB)
-                app::ToggleState(app::AppState::ToggleEditorGui);
+                app::toggleState(app::AppState::ToggleEditorGui);
             
             if (event == input::InputEvent::KEY_SPACE)
             {
                 input::getInputStateMutable().cursorVisibleChanged = true;
-                app::ToggleState(app::AppState::CursorVisible);
+                app::toggleState(app::AppState::CursorVisible);
             }
             input::keyInputFound(event);
         }
@@ -174,7 +174,7 @@ namespace
 
     void setInitialCursorState() 
     {
-        app::ToggleState(app::AppState::CursorVisible);
+        app::toggleState(app::AppState::CursorVisible);
         toggleCursorVisibility();
     }
 }
