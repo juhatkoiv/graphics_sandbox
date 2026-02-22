@@ -199,6 +199,7 @@ id::ShaderId ResourceSystem::findShaderId( const std::string& shaderName ) const
 
 SkyboxArgs ResourceSystem::getSkyboxArgs( const std::string& skyboxName ) const
 {
+    (void)skyboxName; // TODO - use this to load skybox config
 	id::MeshId meshId = findMeshId( "data//meshes//cube.obj" );
 
 	auto [hadle, desc] = _container.getTextureDescriptorMap().front();

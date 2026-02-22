@@ -24,7 +24,7 @@ namespace memory
 	template<typename type>
 	void deallocArray( type* ptr, size_t size )
 	{
-		for (int i = 0; i < size; i++)
+		for (size_t i = 0; i < size; i++)
 		{
 			ptr[i].~type();
 		}

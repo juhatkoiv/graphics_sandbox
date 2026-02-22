@@ -83,7 +83,7 @@ EditorManager::EditorManager( ecs::World& world, resources::ResourceSystem& reso
 void EditorManager::syncWithScene( scene::SceneData& scene )
 {
 	auto sceneEntities = scene.sceneEntities;
-	for (int i = 0; i < sceneEntities.size(); i++)
+	for (size_t i = 0; i < sceneEntities.size(); i++)
 	{
 		auto id = sceneEntities[i];
 
@@ -374,7 +374,7 @@ void EditorManager::setEffect( id::EntityId id, rendering::RenderEffect effect )
 void EditorManager::setFullScreenEffect( rendering::PostProcessingEffects effect )
 {
 	auto cameras = _world.getAllMutable<ecs::Camera>();
-	for (int i = 0; i < cameras.size(); i++)
+	for (size_t i = 0; i < cameras.size(); i++)
 	{
 		auto* camera = cameras[i];
 		camera->renderingSettings.fullScreenEffect = effect;
@@ -393,7 +393,7 @@ void EditorManager::setSelected( id::EntityId id )
 void EditorManager::setBlurSettings( const rendering::FullScreenBlurSettings& blurSettings )
 {
 	auto cameraEntities = _world.getEntitiesWith<ecs::Camera>();
-	for (int i = 0; i < cameraEntities.size(); i++)
+	for (size_t i = 0; i < cameraEntities.size(); i++)
 	{
 		auto* camera = _world.getMutable<ecs::Camera>( cameraEntities[i] );
 		camera->renderingSettings.fullScreenBlurSettings = blurSettings;
@@ -403,7 +403,7 @@ void EditorManager::setBlurSettings( const rendering::FullScreenBlurSettings& bl
 void EditorManager::setPixelationSettings( const rendering::PixelatedSettings& pixelationSettings )
 {
 	auto cameraEntities = _world.getEntitiesWith<ecs::Camera>();
-	for (int i = 0; i < cameraEntities.size(); i++)
+	for (size_t i = 0; i < cameraEntities.size(); i++)
 	{
 		auto* camera = _world.getMutable<ecs::Camera>( cameraEntities[i] );
 		camera->renderingSettings.pixelatedSettings = pixelationSettings;
@@ -413,7 +413,7 @@ void EditorManager::setPixelationSettings( const rendering::PixelatedSettings& p
 void EditorManager::setColorCorrectionSettings( const rendering::ColorCorrectionSettings& colorCorrectionSettings )
 {
 	auto cameraEntities = _world.getEntitiesWith<ecs::Camera>();
-	for (int i = 0; i < cameraEntities.size(); i++)
+	for (size_t i = 0; i < cameraEntities.size(); i++)
 	{
 		auto* camera = _world.getMutable<ecs::Camera>( cameraEntities[i] );
 		camera->renderingSettings.colorCorrectionSettings = colorCorrectionSettings;
@@ -423,7 +423,7 @@ void EditorManager::setColorCorrectionSettings( const rendering::ColorCorrection
 void EditorManager::setChromeAberrationSettings( const rendering::ChromeAberrationSettings& chromeAberrationSettings )
 {
 	auto cameraEntities = _world.getEntitiesWith<ecs::Camera>();
-	for (int i = 0; i < cameraEntities.size(); i++)
+	for (size_t i = 0; i < cameraEntities.size(); i++)
 	{
 		auto* camera = _world.getMutable<ecs::Camera>( cameraEntities[i] );
 		camera->renderingSettings.chromeAberrationSettings = chromeAberrationSettings;
@@ -433,7 +433,7 @@ void EditorManager::setChromeAberrationSettings( const rendering::ChromeAberrati
 void EditorManager::setLightingSettings( const rendering::LightingSettings& lightingSettings )
 {
 	auto cameraEntities = _world.getEntitiesWith<ecs::Camera>();
-	for (int i = 0; i < cameraEntities.size(); i++)
+	for (size_t i = 0; i < cameraEntities.size(); i++)
 	{
 		auto* camera = _world.getMutable<ecs::Camera>( cameraEntities[i] );
 		camera->renderingSettings.lightingSettings = lightingSettings;
@@ -443,7 +443,7 @@ void EditorManager::setLightingSettings( const rendering::LightingSettings& ligh
 void EditorManager::setClearSettings( const rendering::ClearSettings& clearSettings )
 {
 	auto cameraEntities = _world.getEntitiesWith<ecs::Camera>();
-	for (int i = 0; i < cameraEntities.size(); i++)
+	for (size_t i = 0; i < cameraEntities.size(); i++)
 	{
 		auto* camera = _world.getMutable<ecs::Camera>( cameraEntities[i] );
 		camera->renderingSettings.clearSettings = clearSettings;
@@ -545,11 +545,13 @@ void EditorManager::ImportScene( const std::string& sceneName, SceneData& scene 
 
 void EditorManager::ClearScene( SceneData& scene )
 {
+    (void)scene;
 	clearEditorScene();
 }
 
 void EditorManager::NewScene( SceneData& scene )
 {
+    (void)scene;
 	clearEditorScene();
 }
 

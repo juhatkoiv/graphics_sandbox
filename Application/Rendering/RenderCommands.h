@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <array>
+#include <variant>
 
 #include "Rendering/Texture.h"
 #include "Rendering/Vertex.h"
@@ -149,7 +150,6 @@ struct RenderCommand
 	};
 };
 
-#include <variant>
 // new
 
 struct CreateTextureCmd2

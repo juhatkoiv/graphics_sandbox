@@ -3,6 +3,16 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+# CMake build directories
+build/
+build-*/
+
+# vcpkg installed packages
+third_party/vcpkg_installed/
+
+# Build logs
+build_log*
+
 # User-specific files
 *.rsuser
 *.suo
@@ -403,11 +413,6 @@ asm/
 asm/*
 *.asm
 
-# Asset models
-!data/*
-!data/**/*
-!Graphics_Sandbox/data/meshes/*.obj
-!Graphics_Sandbox/data/**/*
-!Graphics_Sandbox/data/*
-!models/*
-!models/**/*
+# Asset models — keep Blender-exported OBJ files in Application/data/models/
+!Application/data/models/*.obj
+!Application/data/models/*.mtl

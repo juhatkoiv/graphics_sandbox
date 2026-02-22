@@ -14,7 +14,9 @@ public:
 
 	void bind();
 
-	void setConstBuffer( unsigned bindPosition, const uint8_t* buffer, size_t size, unsigned usage ) {}
+	void setConstBuffer( unsigned bindPosition, const uint8_t* buffer, size_t size, unsigned usage ) {
+		(void)bindPosition; (void)size; (void)buffer; (void)usage;
+	}
 
 	void setBool( int bindPosition, bool value ) const;
 	void setInt( int bindPosition, int value ) const;

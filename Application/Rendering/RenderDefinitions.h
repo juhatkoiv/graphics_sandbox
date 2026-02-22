@@ -107,11 +107,11 @@ struct WindowSize
 
 	bool hasChanged( glm::vec2 newSize )
 	{
-		assert( abs( newSize.x ) > FLT_EPSILON );
-		assert( abs( newSize.y ) > FLT_EPSILON );
+		assert( std::abs( newSize.x ) > FLT_EPSILON );
+		assert( std::abs( newSize.y ) > FLT_EPSILON );
 
-		return (abs( value.x - newSize.x ) > FLT_EPSILON ||
-			abs( value.y - newSize.y ) > FLT_EPSILON);
+		return (std::abs( value.x - newSize.x ) > FLT_EPSILON ||
+			std::abs( value.y - newSize.y ) > FLT_EPSILON);
 	}
 
 	GLuint getHeight() const { return static_cast<GLuint>(value.y); }

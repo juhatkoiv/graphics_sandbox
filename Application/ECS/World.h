@@ -320,7 +320,7 @@ struct ComponentLookups
 	template<IsComponent T>
 	inline void remove( id::EntityId id )
 	{
-		if (!has<T>( id )
+		if (!has<T>( id ))
 			return;
 
 		size_t componentId = T::getId();
