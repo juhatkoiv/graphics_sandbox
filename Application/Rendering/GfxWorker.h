@@ -8,7 +8,7 @@ DECLARE1( class, rendering, RenderCommandQueue );
 DECLARE1( struct, rendering, GfxShaderArgs );
 DECLARE1( class, rendering, GfxDeviceFactory );
 DECLARE1( class, resources, ResourceContainer );
-
+DECLARE1( struct, rendering, RenderCommand2 );
 BEGIN_NAMESPACE1( rendering )
 
 class NonCopyable 
@@ -63,6 +63,7 @@ private:
 	//////// EXECUTION ////////
 	
 	void executeRenderCommand( const RenderCommand& cmd );
+	void executeRenderCommand2( const RenderCommand2& cmd );
 };
 
 END_NAMESPACE1

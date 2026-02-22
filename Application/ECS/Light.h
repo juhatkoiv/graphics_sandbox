@@ -9,12 +9,19 @@ BEGIN_NAMESPACE1(ecs)
 
 const glm::vec3 DEFAULT_LIGHT_COLOR = { 1,1,1 };
 
+enum class LightType
+{
+	Point,
+	Directional,
+	Spot
+};
+
 struct Light : public Component<cid::LIGHT>
 {
 	glm::vec3 lightColor = DEFAULT_LIGHT_COLOR;
+	LightType type = LightType::Point;
 	float intensity = 1.0f;
 	float attenuation = 1.0f;
-
 };
 DECLARE_SERIALIZABLE(Light, lightColor, intensity, attenuation);
 

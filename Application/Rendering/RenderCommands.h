@@ -149,4 +149,119 @@ struct RenderCommand
 	};
 };
 
+#include <variant>
+// new
+
+struct CreateTextureCmd2
+{
+	CreateTextureCmd2() = default;
+	
+	const rendering::TextureData* textureData = nullptr;
+	id::TextureId textureId = id::InvalidTextureId;
+	rendering::TextureType type = rendering::TextureType::None;
+};
+
+struct CreateMeshCmd2 
+{
+	const rendering::VertexData* vertexData = nullptr;
+	id::MeshId meshId = id::InvalidMeshId;
+};
+
+struct SetTextureCmd2
+{
+	id::TextureId textureId = id::InvalidTextureId;
+	TextureType type = TextureType::None;
+};
+
+struct SubmitToEffectQueueCmd2
+{
+	rendering::RenderEffect effects = rendering::RenderEffect::None;
+};
+
+struct SetSkyBoxCmd2
+{
+	id::TextureId textureId = id::InvalidTextureId;
+	id::MeshId meshId = id::InvalidMeshId;
+};
+
+struct UpdateWindowCmd2
+{
+	glm::uvec2 windowSize = {};
+	glm::ivec2 windowPosition = {};
+};
+
+struct UpdateProjectionMatrixCmd2
+{
+	glm::mat4 projectionMatrix = {};
+};
+
+struct UpdateCameraTransformCmd2
+{
+	glm::vec3 viewPosition = {};
+	glm::mat4 viewMatrix = {};
+};
+
+struct SetEntityMeshCmd2
+{
+	id::MeshId meshId = id::InvalidMeshId;
+};
+
+struct UpdateModelMatrixCmd2
+{
+	glm::mat4 modelMatrix = {};
+};
+
+struct SetLightCmd2
+{
+	glm::vec3 lightColor = ecs::DEFAULT_LIGHT_COLOR;
+	float intensity = 1.0f;
+	float attenuation = 0.0f;
+};
+
+struct DestroyEntityCmd2
+{
+	// TODO - add entity id and logic
+};
+
+struct SetEntityMaterialCmd2
+{
+	glm::vec4 meshColor{};
+	id::ShaderId shaderId;
+	int queue = -1;
+};
+
+struct SetFullScreenQuadCmd2
+{
+	id::MeshId meshId = id::InvalidMeshId;
+};
+
+struct UpdateCameraRenderSettingsCmd2
+{
+	rendering::RenderingSettings settings;
+};
+
+using CommandType2 = std::variant
+	<SubmitToEffectQueueCmd2, 
+	UpdateWindowCmd2, 
+	UpdateProjectionMatrixCmd2, 
+	UpdateCameraTransformCmd2, 
+	CreateMeshCmd2, 
+	CreateTextureCmd2, 
+	SetTextureCmd2, 
+	DestroyEntityCmd2, 
+	SetLightCmd2, 
+	SetEntityMaterialCmd2, 
+	SetEntityMeshCmd2, 
+	UpdateModelMatrixCmd2, 
+	SetFullScreenQuadCmd2, 
+	UpdateCameraRenderSettingsCmd2, 
+	SetSkyBoxCmd2>;
+
+struct RenderCommand2
+{
+	CommandType2 commandType;
+	unsigned id = ~0u;
+	unsigned resourceSlot = ~0u;
+};
+
 END_NAMESPACE1
