@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Application",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/Application/Application",
+            "args": [],
+            "cwd": "${workspaceFolder}/build/Application",
+            "preLaunchTask": "Build"
+        }
+    ]
+}

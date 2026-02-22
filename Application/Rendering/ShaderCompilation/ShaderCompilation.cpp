@@ -42,7 +42,7 @@ namespace {
 
 	std::string parseSpvFileName( const std::string& tempPathStr, ShaderType shaderType ) {
 
-		size_t lastFolderSeparatorIndex = tempPathStr.find_last_of( "\\" );
+		size_t lastFolderSeparatorIndex = tempPathStr.find_last_of( "/\\" );
 		std::string fileName = tempPathStr.substr( lastFolderSeparatorIndex + 1 );
 
 		size_t index = static_cast<size_t>(shaderType);
@@ -100,10 +100,16 @@ CompilationResult shader_compilation::generate_spirv() {
 	CompilationResult result{};
 
 	fs::path shadersFolder = fs::current_path().append( SHADER_INPUT_FOLDER ).append( "glsl" );
-	if (!fs::exists( shadersFolder )) throw;
+	if (!fs::exists( shadersFolder )) {
+		result.errors.push_back( "Shader source folder not found: " + shadersFolder.string() );
+		return result;
+	}
 
 	fs::path outputFolder = fs::current_path().append( SHADER_INPUT_FOLDER ).append( "spv" );
-	if (!fs::exists( outputFolder )) throw;
+	if (!fs::exists( outputFolder )) {
+		result.errors.push_back( "Shader output folder not found: " + outputFolder.string() );
+		return result;
+	}
 
 	auto di = fs::directory_iterator( shadersFolder );
 
@@ -131,11 +137,11 @@ CompilationResult shader_compilation::generate_spirv() {
 		std::ofstream output{ finalOutputPath, std::ios::binary };
 		if (!output.is_open()) {
 			std::cerr << "Failed to open output file." << std::endl;
-			throw;
+			result.errors.push_back(std::string{"Failed to open output file:"} + finalOutputPath );
+			continue;
 		}
 
 		output.write( reinterpret_cast<const char*>(spirv.data()), spirv.size() * sizeof( uint32_t ) );
-		output.close();
 	}
 
 	return result;

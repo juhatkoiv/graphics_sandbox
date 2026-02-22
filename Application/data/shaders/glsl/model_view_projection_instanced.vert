@@ -13,7 +13,7 @@ struct PerObjectData
     mat4 model;
 };
 
-layout(std140, binding = 4) uniform PerObjectBuffer {
+layout(std140, binding = 20) uniform PerObjectBuffer {
     PerObjectData perObjectBuffer[100];
 };
 

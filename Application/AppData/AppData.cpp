@@ -212,7 +212,7 @@ void AppData::initialize() {
 
 	for (const auto& path : appDefaults.folders) {
 		if (!std::filesystem::exists( path )) {
-			throw std::runtime_error( "Folder does not exist: " + path );
+			Logger::LogError( "Folder does not exist: " + path );
 		}
 	}
 
@@ -255,11 +255,11 @@ void AppData::initialize() {
 
 	assets::JsonFileSystem::LoadFromJson( _renderGraph, RENDER_GRAPH_FILE );
 	if (_renderGraph.queues.empty())
-		throw;
+		Logger::LogError( std::string{"Render graph has no queues - check "} + RENDER_GRAPH_FILE );
 
 	assets::JsonFileSystem::LoadFromJson( _renderResources, FRAME_RESOURCES_FILE );
 	if (_renderResources.empty())
-		throw;
+		Logger::LogError( std::string{"Render resources are empty - check "} + FRAME_RESOURCES_FILE );
 
 	//JsonFileSystem::LoadFromJson<std::vector<TextureManifest>>( _skyBoxManifests, SKYBOX_LIST_FILE );
 }
